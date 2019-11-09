@@ -1,0 +1,7 @@
+# Build artifacts
+build/**
+.gradle/**
+gradle/**
+
+# Editor settings
+.idea/**
