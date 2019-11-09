@@ -1,4 +1,4 @@
-image: gradle:alpine
+image: gradle:5.6-jdk12
 
 stages:
   - build
