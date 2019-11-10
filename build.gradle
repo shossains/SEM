@@ -1,7 +1,9 @@
+import com.github.spotbugs.SpotBugsTask
+
 plugins {
     id 'java'
-    id 'eclipse' // optional (to generate Eclipse project files)
-    id 'idea' // optional (to generate IntelliJ IDEA project files)
+//    id 'eclipse' // optional (to generate Eclipse project files)
+//    id 'idea' // optional (to generate IntelliJ IDEA project files)
 
     // Test coverage
     id 'jacoco'
@@ -11,6 +13,9 @@ plugins {
 
     // PMD
     id 'pmd'
+
+    // FindBugs / SpotBugs
+    id "com.github.spotbugs" version "2.0.1"
 }
 
 group 'nl.tudelft.cse.sem.template'
@@ -34,6 +39,7 @@ test {
 
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
 
 jacocoTestCoverageVerification {
@@ -59,6 +65,20 @@ checkstyle {
 
 pmd {
     incrementalAnalysis = true
+}
+
+spotbugs {
+    sourceSets = [sourceSets.main]
+    ignoreFailures = false
+    effort = "default"
+    reportLevel = "high"
+    visitors = ["FindSqlInjection", "SwitchFallthrough"]
+    excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
+}
+
+tasks.withType(SpotBugsTask) {
+    reports.xml.enabled = false
+    reports.html.enabled = true
 }
 
 wrapper {
