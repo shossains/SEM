@@ -21,7 +21,7 @@ plugins {
 group 'nl.tudelft.cse.sem.template'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 12
+sourceCompatibility = 13
 
 repositories {
     mavenCentral()
@@ -74,6 +74,7 @@ spotbugs {
     reportLevel = "high"
     visitors = ["FindSqlInjection", "SwitchFallthrough"]
     excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
+    toolVersion = '4.0.0-beta4'
 }
 
 tasks.withType(SpotBugsTask) {
