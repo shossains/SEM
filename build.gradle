@@ -1,4 +1,4 @@
-//import com.github.spotbugs.SpotBugsTask
+import com.github.spotbugs.SpotBugsTask
 
 plugins {
 
@@ -80,10 +80,10 @@ spotbugs {
     toolVersion = '4.0.0-beta4'
 }
 
-/*tasks.withType(SpotBugsTask) {
+tasks.withType(SpotBugsTask) {
       reports.xml.enabled = false
       reports.html.enabled = true
-  } */
+  }
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
