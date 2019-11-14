@@ -1,6 +1,9 @@
-import com.github.spotbugs.SpotBugsTask
+//import com.github.spotbugs.SpotBugsTask
 
 plugins {
+
+    id "application"
+
     id 'java'
 //    id 'eclipse' // optional (to generate Eclipse project files)
 //    id 'idea' // optional (to generate IntelliJ IDEA project files)
@@ -77,11 +80,20 @@ spotbugs {
     toolVersion = '4.0.0-beta4'
 }
 
-tasks.withType(SpotBugsTask) {
-    reports.xml.enabled = false
-    reports.html.enabled = true
-}
+/*tasks.withType(SpotBugsTask) {
+      reports.xml.enabled = false
+      reports.html.enabled = true
+  } */
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
+}
+
+apply plugin : "java"
+ext {
+    javaMainClass = "HelloWorld"
+}
+
+application {
+    mainClassName = javaMainClass
 }
