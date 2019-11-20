@@ -18,67 +18,25 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyGdxGame extends Game {
 
-	private Stage stage;
-	private Texture myTexture;
-	private TextureRegion myTextureRegion;
-	private TextureRegionDrawable myTexRegionDrawable;
-	private ImageButton button;
-	private Label outputLabel;
-	private SpriteBatch spriteBatch;
-	private BitmapFont font;
+
+	public SpriteBatch spriteBatch;
+	public BitmapFont font;
+	public int dd;
 
 	@Override
 	public void create () {
-		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
-		ImageButton button = createButton("login.png");
-		ImageButton button2 = createButton("register.png");
-		button.setPosition(300, 200);
-		button2.setPosition(300, 100);
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
-		font.setColor(Color.RED);
-		stage.addActor(button);
-		stage.addActor(button2);
-		outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
-		outputLabel.setText("Please log in before playing the game.");
-		outputLabel.setPosition(200, 400);
-		button.add(outputLabel).expand().fill();
-		stage.addActor(outputLabel);
-	}
-
-	public ImageButton createButton(String path) {
-		myTexture = new Texture(Gdx.files.internal(path));
-		myTextureRegion = new TextureRegion(myTexture);
-		myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		button = new ImageButton(myTexRegionDrawable); //Set the button up
-		button.setHeight(100);
-		button.setWidth(200);
-		button.addListener(
-				new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						System.out.print("button pressed");
-						outputLabel.setText("pressed");
-					};
-				});
-		return button;
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		spriteBatch.begin();
-		stage.act();
-		font.draw(spriteBatch, "Hello", 200, 200);
-		stage.draw();
-		spriteBatch.end();
+		super.render();
 	}
 
 	@Override
 	public void dispose () {
-		stage.dispose();
 		spriteBatch.dispose();
 		font.dispose();
 	}
