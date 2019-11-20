@@ -91,7 +91,7 @@ wrapper {
 
 apply plugin : "java"
 ext {
-    javaMainClass = "DesktopLauncher"
+    javaMainClass = "HelloWorld"
 }
 
 application {
