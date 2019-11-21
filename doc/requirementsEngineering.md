@@ -95,8 +95,8 @@ process of the system.
 
 * The game shall be playable on Windows10 and MacOS (10.13 (High Sierra) and up)
 * The program shall be implemented in Java13
-* The program 
-* The game makes use of libraries:
+* The program shall be implemented according to the test driven development principles
+* The program makes use of libraries:
     * LibGDX
     *
     *
