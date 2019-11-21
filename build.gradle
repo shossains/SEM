@@ -43,6 +43,8 @@ test {
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+    compile group: 'com.oracle.ojdbc', name: 'ojdbc10', version: '19.3.0.0'
+
 }
 
 jacocoTestCoverageVerification {
