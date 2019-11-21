@@ -57,3 +57,50 @@ Within these functional requirements four categories can be identified using the
 * When the user opens the scoreboard the program shall show ten finished games with the shortest duration 
   and the names of the players that played in those games.
 * After the user presses the Exit button the program closes. 
+
+
+## 1.2 Should Haves : 
+* When the program starts the user is presented a welcome screen with authentication options.
+* The program has a verifying mechanism for safe registration.
+* The program gives feedback in case of an unsuccessful try to log in.
+* The program should take the user to the main menu after a successful login.
+* The main menu has a settings tab with options the user can adjust.
+* The player is able to start a game from the main menu.
+* The player is able to pause or quit the game during its progress.
+* The games board, the puck and the paddles shall be easily distinguishable and good-looking.
+* The player is able to control his/her paddle with a keyboard/mouse controls.
+* The game outputs sound effects during the game.
+    * At the beginning and the end of the game.
+    * On collision of the puck and a paddle and the puck and a side of the board. 
+* The game shall adjust the puck's momentum after a collision.
+
+## 1.3 Could Haves : 
+* The user can select different game modes: 
+    * The user may choose to play a game against another user locally.
+    * The user may choose to play a game against another player online.
+    * The user may choose to play a game against AI.
+    * The user may choose to play a nonstandard version of air-hockey.
+* The user has an option to play his/her own music in the background of the program.
+
+## 1.4 Won't Haves : 
+*
+*
+*
+
+# 2 Non-Functional Requirements : 
+Besides the provided functionality and services, design constraints need to be included in the
+requirements specification as well. These requirements do not indicate what the system
+should do, but instead indicate the constraints that apply to the system or the development
+process of the system.
+
+* The game shall be playable on Windows10 and MacOS (10.13 (High Sierra) and up)
+* The program shall be implemented in Java13
+* The program 
+* The game makes use of libraries:
+    * LibGDX
+    *
+    *
+ *
+
+
+
