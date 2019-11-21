@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MainMenuScreen implements Screen {
+public class LoginScreen implements Screen {
 
     final MyGdxGame game;
 
@@ -27,7 +27,7 @@ public class MainMenuScreen implements Screen {
     public ImageButton button;
     public Label outputLabel;
 
-    public MainMenuScreen(final MyGdxGame game) {
+    public LoginScreen(final MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
