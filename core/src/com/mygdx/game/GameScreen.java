@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         //background colour
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0, 1);
+        Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //update the camera
@@ -90,6 +90,8 @@ public class GameScreen implements Screen {
         }
         if (puck.y > 300 - puck.radius) {
             puck.y = 300 - puck.radius;
+
+            initMove = false;
         }
     }
 
