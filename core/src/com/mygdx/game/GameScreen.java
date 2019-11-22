@@ -71,6 +71,23 @@ public class GameScreen implements Screen {
         }
         //we need to add the functionality to check that if the puck has hit the boundaries
         //or has been hit by a paddle
+
+        //boundary detection
+        if (puck.x < 0) {
+            puck.x = 0;
+        }
+        if (puck.x > 400 - puck.radius*2) {
+            puck.x = 400 - puck.radius*2;
+        }
+
+        if (puck.y < 0) {
+            puck.y = 0;
+            //also set the initMove to false;
+            initMove = false;
+        }
+        if (puck.y > 300 - puck.radius*2) {
+            puck.y = 300 - puck.radius*2;
+        }
     }
 
     @Override
