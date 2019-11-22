@@ -59,7 +59,9 @@ public class GameScreen implements Screen {
         game.spriteBatch.begin();
 
         //draw the puck as the texture and in the place that the puck exists
-        game.spriteBatch.draw(puckImage, puck.x - puck.radius/2, puck.y-puck.radius/2, puck.radius, puck.radius);
+        //Maybe there is some border, or the radius doesn't perfectly scale up the image
+        //the boundary is still not totally correct
+        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y-puck.radius, puck.radius*2, puck.radius*2);
 
         game.spriteBatch.end();
 
@@ -67,26 +69,27 @@ public class GameScreen implements Screen {
         //until it either hits a wall, or gets hit by a paddle
         //initially I will set the puck to go downwards
         if (initMove) {
-            puck.y -= 15*Gdx.graphics.getDeltaTime();
+            puck.y += 30*Gdx.graphics.getDeltaTime();
         }
         //we need to add the functionality to check that if the puck has hit the boundaries
         //or has been hit by a paddle
 
         //boundary detection
-        if (puck.x < 0) {
-            puck.x = 0;
+        //the puck.x and y represent the center of the circle
+        if (puck.x - puck.radius < 0) {
+            puck.x = 0 + puck.radius;
         }
-        if (puck.x > 400 - puck.radius*2) {
-            puck.x = 400 - puck.radius*2;
+        if (puck.x > 400 - puck.radius) {
+            puck.x = 400 - puck.radius;
         }
 
-        if (puck.y < 0) {
-            puck.y = 0;
+        if (puck.y - puck.radius < 0) {
+            puck.y = 0 + puck.radius;
             //also set the initMove to false;
             initMove = false;
         }
-        if (puck.y > 300 - puck.radius*2) {
-            puck.y = 300 - puck.radius*2;
+        if (puck.y > 300 - puck.radius) {
+            puck.y = 300 - puck.radius;
         }
     }
 
