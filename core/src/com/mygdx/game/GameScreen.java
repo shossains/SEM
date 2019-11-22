@@ -57,7 +57,7 @@ public class GameScreen implements Screen {
         game.spriteBatch.begin();
 
         //draw the puck as the texture and in the place that the puck exists
-        game.spriteBatch.draw(puckImage, puck.x, puck.y, puck.radius*2, puck.radius*2);
+        game.spriteBatch.draw(puckImage, puck.x - puck.radius/2, puck.y-puck.radius/2, puck.radius, puck.radius);
 
         game.spriteBatch.end();
     }
