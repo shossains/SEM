@@ -27,7 +27,7 @@ public class MyGdxGame extends Game {
 	public void create () {
 		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
-		myTexture = new Texture(Gdx.files.internal("flower.png"));
+		myTexture = new Texture(Gdx.files.internal("pink.jpg"));
 		myTextureRegion = new TextureRegion(myTexture);
 		myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		button = new ImageButton(myTexRegionDrawable); //Set the button up
