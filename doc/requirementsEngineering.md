@@ -85,9 +85,9 @@ Within these functional requirements four categories can be identified using the
 * The user has an option to play his/her own music in the background of the program.
 
 ## 1.4 Won't Haves : 
-*
-*
-*
+* 3D Graphics
+* Complex AI
+* iOS version of the game
 
 # 2 Non-Functional Requirements : 
 Besides the provided functionality and services, design constraints need to be included in the
@@ -97,12 +97,11 @@ process of the system.
 
 * The game shall be playable on Windows10 and MacOS (10.13 (High Sierra) and up)
 * The program shall be implemented in Java13
-* The program shall be implemented according to the test driven development principles
+* The program shall be implemented according to the pull-based development principles
 * The program makes use of libraries:
     * LibGDX
-    *
-    *
- *
+    * PostgresJDBC
+ * The program should work smoothly
 
 
 
