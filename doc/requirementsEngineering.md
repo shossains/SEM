@@ -51,6 +51,8 @@ Within these functional requirements four categories can be identified using the
  * The winner of the game is :
     * The player who scores eleven points before the other player does.
     * The player with more points when the clock stops.
+    * The player who is till in game if the other player left the current game session.
+* The game ends with a tie if both players have the same amount of points when the clock stops.
 * The game shall not allow any movement on the board after the winner was announced.
 * The score, the duration of the game and the names of the players are stored in the database after the game.
 * The program shall take the user back to the main menu after the game ends.
