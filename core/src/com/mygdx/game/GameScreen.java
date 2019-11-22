@@ -18,6 +18,8 @@ public class GameScreen implements Screen {
 
     OrthographicCamera camera;
 
+    boolean initMove = true;
+
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
@@ -60,6 +62,15 @@ public class GameScreen implements Screen {
         game.spriteBatch.draw(puckImage, puck.x - puck.radius/2, puck.y-puck.radius/2, puck.radius, puck.radius);
 
         game.spriteBatch.end();
+
+        //when the game starts, I want the puck only to move either up or down (random)
+        //until it either hits a wall, or gets hit by a paddle
+        //initially I will set the puck to go downwards
+        if (initMove) {
+            puck.y -= 15*Gdx.graphics.getDeltaTime();
+        }
+        //we need to add the functionality to check that if the puck has hit the boundaries
+        //or has been hit by a paddle
     }
 
     @Override
