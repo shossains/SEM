@@ -102,6 +102,6 @@ process of the system.
     * LibGDX
     * PostgresJDBC
  * The program should work smoothly
-
+ * The game should bring joy to anyone who plays it
 
 
