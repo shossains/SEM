@@ -18,14 +18,13 @@ public class Query extends Adapter {
      *      I.E.: the first select query appears in the return array first, the second second.
      *      Returns an empty array if no SELECT queries were specified.
      */
-    public static ResultSet[] runQueries(String query[], Query db) {
+    public static ResultSet[] runQueries(String[] query, Query db) {
         if (db == null) {
             db = new Query();
             db.connect();
         }
 
         try {
-            Statement stmnt = conn.createStatement();
             conn.setAutoCommit(false);
             ArrayList<ResultSet> resultSets = new ArrayList<>();
 
@@ -44,8 +43,8 @@ public class Query extends Adapter {
                 } else {
                     //Not a SELECT query, so it can be safely added to the batch.
                     try {
-                        stmnt.addBatch(query[i]);
-                        stmnt.executeUpdate(query[i]);
+                        conn.createStatement().addBatch(query[i]);
+                        conn.createStatement().executeUpdate(query[i]);
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -68,7 +67,7 @@ public class Query extends Adapter {
      * @param query Queries to be executed as a string
      * @return Array of result sets for the select queries.
      */
-    public static ResultSet[] runQueries(String query[]) {
+    public static ResultSet[] runQueries(String[] query) {
         return runQueries(query, null);
     }
 
@@ -80,7 +79,7 @@ public class Query extends Adapter {
      * @return The result of the queries same as in the other one,
      *      but null if authentication fails.
      */
-    public static ResultSet[] runQueries(String query[], String username, String password) {
+    public static ResultSet[] runQueries(String[] query, String username, String password) {
         Query db = new Query();
         db.connect();
         //auth
@@ -90,13 +89,13 @@ public class Query extends Adapter {
             PreparedStatement select = conn.prepareStatement(sql);
             ResultSet resultSet = select.executeQuery();
             resultSet.next();
-            String passHash = resultSet.getString("password");
+            //String passHash = resultSet.getString("password");
             return runQueries(query, db);
-//            if (BCrypt.checkpw(password, passHash)) {
-//                return runQueries(query, db);
-//            } else {
-//                System.out.println("Authentication error");
-//            }
+            //if (BCrypt.checkpw(password, passHash)) {
+            //   return runQueries(query, db);
+            // } else {
+            //    System.out.println("Authentication error");
+            // }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error executing authentication SELECT query");
