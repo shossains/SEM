@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
     Texture puckImage;
 
     //we can use the circle class for the puck
-    Circle puck;
+    Puck puck;
 
     OrthographicCamera camera;
 
@@ -29,13 +29,9 @@ public class GameScreen implements Screen {
         //we can change the resolution to whatever is appropriate later
         camera.setToOrtho(false, 400, 300);
 
-        puck = new Circle();
-        //will have to play around with these settings
-        puck.radius = 15;
+        //we should later change it to the res0lution and so on...
+        puck = new Puck(200f, 150f, 0f, 30f, 15f);
 
-        //Start it in the center of the screen
-        puck.x = 200;
-        puck.y = 150;
     }
 
     @Override
@@ -65,34 +61,11 @@ public class GameScreen implements Screen {
 
         game.spriteBatch.end();
 
-        //when the game starts, I want the puck only to move either up or down (random)
-        //until it either hits a wall, or gets hit by a paddle
-        //initially I will set the puck to go downwards
-        if (initMove) {
-            puck.y += 30*Gdx.graphics.getDeltaTime();
-        }
-        //we need to add the functionality to check that if the puck has hit the boundaries
-        //or has been hit by a paddle
+        //move the puck
+        puck.movePuck(Gdx.graphics.getDeltaTime());
+        //ensure it is within boundaries
+        puck.FixPosition();
 
-        //boundary detection
-        //the puck.x and y represent the center of the circle
-        if (puck.x - puck.radius < 0) {
-            puck.x = 0 + puck.radius;
-        }
-        if (puck.x > 400 - puck.radius) {
-            puck.x = 400 - puck.radius;
-        }
-
-        if (puck.y - puck.radius < 0) {
-            puck.y = 0 + puck.radius;
-            //also set the initMove to false;
-            initMove = false;
-        }
-        if (puck.y > 300 - puck.radius) {
-            puck.y = 300 - puck.radius;
-
-            initMove = false;
-        }
     }
 
     @Override
