@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+@SuppressWarnings("PMD.CloseResource")
 public class Query extends Adapter {
 
     /**
@@ -57,7 +58,8 @@ public class Query extends Adapter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        ArrayList<ResultSet> nulll = new ArrayList<>();
+        return nulll.toArray(new ResultSet[nulll.size()]);
     }
 
     /**

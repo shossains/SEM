@@ -4,6 +4,7 @@ import java.sql.SQLException;
 /**
  * The main class which will start up the game.
  */
+@SuppressWarnings("PMD.CloseResource")
 public class HelloWorld {
     /**
      * Main method.

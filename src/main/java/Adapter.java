@@ -16,7 +16,8 @@ public class Adapter {
             + "compute.amazonaws.com:5432/dains1dt33rtkd";
 
     private transient String username = "lfxghibojyjdle";
-    private transient String password = "0dc939d4eb5bd22284f2fe0aed23351b366c098a2bf6cf42f9fc697c0d6ba6d7";
+    private transient String password =
+            "0dc939d4eb5bd22284f2fe0aed23351b366c098a2bf6cf42f9fc697c0d6ba6d7";
 
     /* 03 Constructor for DbAdapter ------------------------ */
     public Adapter() {
