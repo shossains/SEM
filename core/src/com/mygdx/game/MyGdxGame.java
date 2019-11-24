@@ -14,7 +14,7 @@ public class MyGdxGame extends Game {
 	public void create () {
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new LoginScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
