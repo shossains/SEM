@@ -2,7 +2,10 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,6 +20,8 @@ public class Credentials implements Screen {
     public transient Stage stage;
     private transient String username;
     private transient String password;
+    private transient Animation<TextureRegion> animation;
+    private transient float elapsed;
 
     public Credentials(MyGdxGame game) {
         this.game = game;
@@ -33,7 +38,7 @@ public class Credentials implements Screen {
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
 
-
+        animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("scooby.gif").read());
         TextButton button = new TextButton("Done!", skin);
         button.setPosition(100, 300);
         button.setSize(100, 50);
@@ -58,11 +63,16 @@ public class Credentials implements Screen {
 
     @Override
     public void render(float delta) {
+        elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
         game.spriteBatch.begin();
+        game.font.setColor(Color.ROYAL);
+        game.font.draw(game.spriteBatch, "username", 130, 225);
+        game.font.draw(game.spriteBatch, "password", 130, 125);
+        game.spriteBatch.draw(animation.getKeyFrame(elapsed), 300.0f, 300.0f);
         game.spriteBatch.end();
     }
 
@@ -89,5 +99,6 @@ public class Credentials implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        game.spriteBatch.dispose();
     }
 }
