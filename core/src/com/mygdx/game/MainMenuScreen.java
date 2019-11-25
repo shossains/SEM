@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -18,20 +17,19 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
 
-    final MyGdxGame game;
+    final transient MyGdxGame game;
 
-    public Stage stage;
-    public ImageButton playButton;
-    public ImageButton settingsButton;
-    public ImageButton logoutButton;
-    public ImageButton exitButton;
-    public Texture myTexture;
-    public TextureRegion myTextureRegion;
-    public TextureRegionDrawable myTexRegionDrawable;
-    public Label outputLabel;
+    public transient Stage stage;
+    public transient ImageButton playButton;
+    public transient Texture myTexture1;
+    public transient TextureRegion myTextureRegion1;
+    public transient TextureRegionDrawable myTexRegionDrawable1;
+    public transient Texture myTexture2;
+    public transient TextureRegion myTextureRegion2;
+    public transient TextureRegionDrawable myTexRegionDrawable2;
+    public transient Label outputLabel;
 
     public MainMenuScreen(MyGdxGame game) {
-
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -136,7 +134,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
+        Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
