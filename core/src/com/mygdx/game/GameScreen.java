@@ -31,8 +31,8 @@ public class GameScreen implements Screen {
 
         puckImage = new Texture(Gdx.files.internal("hockey-puck.png"));
 
-        paddle1Image = new Texture(Gdx.files.internal("bluePaddle.png"));
-        paddle2Image = new Texture(Gdx.files.internal("redPaddle.png"));
+        paddle1Image = new Texture(Gdx.files.internal("redPaddle.png"));
+        paddle2Image = new Texture(Gdx.files.internal("bluePaddle.png"));
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
@@ -42,9 +42,9 @@ public class GameScreen implements Screen {
         puck = new Puck(200f, 150f, 0f, 30f, 15f);
 
         //add the pucks
-        paddle1 = new Paddle(100f, 150f, 0f, 0f, 20f);
+        paddle1 = new Paddle(300f, 150f, 0f, 0f, 20f);
 
-        paddle2 = new Paddle(300f, 150f, 0f, 0f, 25f);
+        paddle2 = new Paddle(100f, 150f, 0f, 0f, 25f);
 
     }
 
@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
 
         paddle1.movePaddle(rightPressed1, leftPressed1, upPressed1, downPressed1, deltaTime);
         paddle2.movePaddle(rightPressed2, leftPressed2, upPressed2, downPressed2, deltaTime);
-        
+
     }
 
     @Override

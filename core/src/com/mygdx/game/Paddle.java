@@ -55,14 +55,7 @@ public class Paddle extends Circle {
      * Method to ensure the puck is within the correct boundaries
      */
     public void FixPosition() {
-        //we need to add the functionality to check that if the puck has hit the boundaries
-        //or has been hit by a paddle
 
-        //boundary detection
-        //the puck.x and y represent the center of the circle
-
-        //change later to reverse the speed and so on, but we need a co-efficient of friction
-        //and more physics stuff
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
         }
