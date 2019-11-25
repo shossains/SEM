@@ -22,12 +22,11 @@ public class MainMenuScreen implements Screen {
 
     public Stage stage;
     public ImageButton playButton;
-    public Texture myTexture1;
-    public TextureRegion myTextureRegion1;
-    public TextureRegionDrawable myTexRegionDrawable1;
-    public Texture myTexture2;
-    public TextureRegion myTextureRegion2;
-    public TextureRegionDrawable myTexRegionDrawable2;
+    public ImageButton settingsButton;
+    public ImageButton exitButton;
+    public Texture myTexture;
+    public TextureRegion myTextureRegion;
+    public TextureRegionDrawable myTexRegionDrawable;
     public Label outputLabel;
 
     public MainMenuScreen(MyGdxGame game) {
@@ -35,13 +34,14 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        ImageButton playButton = createButton("start_button_inactive.png", "start_button_active.png");
-        ImageButton button2 = createButton("register.png", "register.png");
-        playButton.setPosition(300, 200);
-        button2.setPosition(300, 100);
+        playButton = createPlayButton("play.png");
+
+        settingsButton = createSettingsButton("settings.png");
+
+        exitButton = createExitButton("exit.png");
+
         game.font.setColor(Color.RED);
-        stage.addActor(playButton);
-        stage.addActor(button2);
+
         outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
         outputLabel.setText("Please log in before playing the game.");
         outputLabel.setPosition(200, 400);
@@ -49,17 +49,23 @@ public class MainMenuScreen implements Screen {
         stage.addActor(outputLabel);
     }
 
-    public ImageButton createButton(String path1, String path2) {
-        myTexture1 = new Texture(Gdx.files.internal(path1));
-        myTextureRegion1 = new TextureRegion(myTexture1);
-        myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
-        myTexture2 = new Texture(Gdx.files.internal(path2));
-        myTextureRegion2 = new TextureRegion(myTexture2);
-        myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
-        playButton = new ImageButton(myTexRegionDrawable1, myTexRegionDrawable2); //Set the button up
-        playButton.setHeight(100);
-        playButton.setWidth(200);
-        playButton.addListener(
+
+
+    private ImageButton createButton(String path) {
+        myTexture = new Texture(Gdx.files.internal(path));
+        myTextureRegion = new TextureRegion(myTexture);
+        myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+        ImageButton button = new ImageButton(myTexRegionDrawable); //Set the button up
+        button.setHeight(100);
+        button.setWidth(200);
+        return button;
+    }
+
+
+
+    private ImageButton createPlayButton(String path) {
+        ImageButton pButton = createButton(path);
+        pButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -68,7 +74,34 @@ public class MainMenuScreen implements Screen {
                     };
 
                 });
-        return playButton;
+        pButton.setPosition(280, 300);
+        stage.addActor(pButton);
+        return pButton;
+    }
+
+    private ImageButton createSettingsButton(String path) {
+        ImageButton sButton = createButton(path);
+        sButton.setPosition(230, 200);
+        stage.addActor(sButton);
+        return sButton;
+    }
+
+    private ImageButton createExitButton(String path) {
+        ImageButton eButton = createButton(path);
+        eButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        Gdx.app.exit();
+                        System.exit(0);
+                    };
+
+                });
+        eButton.setPosition(230, 100);
+        stage.addActor(eButton);
+
+        return eButton;
     }
 
     @Override
