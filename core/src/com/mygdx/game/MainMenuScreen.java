@@ -21,54 +21,110 @@ public class MainMenuScreen implements Screen {
 
     public transient Stage stage;
     public transient ImageButton playButton;
-    public transient Texture myTexture1;
-    public transient TextureRegion myTextureRegion1;
-    public transient TextureRegionDrawable myTexRegionDrawable1;
-    public transient Texture myTexture2;
-    public transient TextureRegion myTextureRegion2;
-    public transient TextureRegionDrawable myTexRegionDrawable2;
+    public transient ImageButton settingsButton;
+    public transient ImageButton logoutButton;
+    public transient ImageButton exitButton;
+    public transient Texture myTexture;
+    public transient TextureRegion myTextureRegion;
+    public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
 
     public MainMenuScreen(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        ImageButton playButton = createButton("start_button_inactive.png",
-                "start_button_active.png");
-        ImageButton button2 = createButton("register.png", "register.png");
-        playButton.setPosition(300, 200);
-        button2.setPosition(300, 100);
+        playButton = createPlayButton("play.png");
+
+        settingsButton = createSettingsButton("settings.png");
+
+        logoutButton = createLogoutButton("logout.png");
+
+        exitButton = createExitButton("exit.png");
+
         game.font.setColor(Color.RED);
-        stage.addActor(playButton);
-        stage.addActor(button2);
-        outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
-        outputLabel.setText("Please log in before playing the game.");
-        outputLabel.setPosition(200, 400);
-        playButton.add(outputLabel).expand().fill();
-        stage.addActor(outputLabel);
+
+
     }
 
-    public ImageButton createButton(String path1, String path2) {
-        myTexture1 = new Texture(Gdx.files.internal(path1));
-        myTextureRegion1 = new TextureRegion(myTexture1);
-        myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
-        myTexture2 = new Texture(Gdx.files.internal(path2));
-        myTextureRegion2 = new TextureRegion(myTexture2);
-        myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
-        playButton = new ImageButton(myTexRegionDrawable1,
-                myTexRegionDrawable2);
-        playButton.setHeight(100);
-        playButton.setWidth(200);
-        playButton.addListener(
+
+
+    private ImageButton createButton(String path) {
+        myTexture = new Texture(Gdx.files.internal(path));
+        myTextureRegion = new TextureRegion(myTexture);
+        myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+        ImageButton button = new ImageButton(myTexRegionDrawable); //Set the button up
+        button.setHeight(100);
+        button.setWidth(200);
+        return button;
+    }
+
+
+
+    private ImageButton createPlayButton(String path) {
+        ImageButton pButton = createButton(path);
+        pButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        System.out.print("button pressed");
-                        outputLabel.setText("pressed");
-                    }
-                }
-                );
-        return playButton;
+                        dispose();
+                        game.setScreen(new ChooseGameScreen(game));
+                    };
+
+                });
+        pButton.setPosition(230, 320);
+        stage.addActor(pButton);
+        return pButton;
+    }
+
+    private ImageButton createSettingsButton(String path) {
+        ImageButton sButton = createButton(path);
+        sButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        game.setScreen(new SettingsScreen(game));
+                    };
+
+                });
+        sButton.setPosition(230, 250);
+        stage.addActor(sButton);
+        return sButton;
+    }
+
+    private ImageButton createLogoutButton(String path) {
+        ImageButton loButton = createButton(path);
+        loButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        game.setScreen(new LoginScreen(game));
+                    };
+
+                });
+        loButton.setPosition(230, 180);
+        stage.addActor(loButton);
+
+        return loButton;
+    }
+
+    private ImageButton createExitButton(String path) {
+        ImageButton eButton = createButton(path);
+        eButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        Gdx.app.exit();
+                        System.exit(0);
+                    };
+
+                });
+        eButton.setPosition(230, 110);
+        stage.addActor(eButton);
+
+        return eButton;
     }
 
     @Override
@@ -80,10 +136,11 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.spriteBatch.begin();
         stage.act();
-        game.font.draw(game.spriteBatch, "Hello", 200, 200);
         stage.draw();
+        game.spriteBatch.begin();
+        game.font.getData().setScale(1.4f);
+        game.font.draw(game.spriteBatch, "Welcome, " + "<username>" + "!!!", 230, 450);
         game.spriteBatch.end();
     }
 
