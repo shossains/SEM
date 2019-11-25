@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -22,6 +24,7 @@ public class Credentials implements Screen {
     private transient String password;
     private transient Animation<TextureRegion> animation;
     private transient float elapsed;
+    private transient Music sound;
 
     public Credentials(MyGdxGame game) {
         this.game = game;
@@ -37,7 +40,9 @@ public class Credentials implements Screen {
         passwordTextField.setSize(300, 50);
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
-
+        sound = Gdx.audio.newMusic(Gdx.files.internal("test.ogg"));
+        sound.setLooping(true);
+        sound.play();
         animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("scooby.gif").read());
         TextButton button = new TextButton("Done!", skin);
         button.setPosition(100, 300);
@@ -98,7 +103,6 @@ public class Credentials implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
         game.spriteBatch.dispose();
     }
 }
