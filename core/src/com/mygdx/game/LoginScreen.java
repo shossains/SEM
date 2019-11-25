@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -92,6 +93,13 @@ public class LoginScreen implements Screen {
         stage.act();
         stage.draw();
         game.spriteBatch.end();
+
+        //start here if the play button is pushed, we start a new game
+        //add for play button later, initially start game on space bar press
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            game.setScreen(new GameScreen(game));
+            dispose();
+        }
     }
 
     @Override
