@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
     public Stage stage;
     public ImageButton playButton;
     public ImageButton settingsButton;
+    public ImageButton logoutButton;
     public ImageButton exitButton;
     public Texture myTexture;
     public TextureRegion myTextureRegion;
@@ -37,6 +38,8 @@ public class MainMenuScreen implements Screen {
         playButton = createPlayButton("play.png");
 
         settingsButton = createSettingsButton("settings.png");
+
+        logoutButton = createLogoutButton("logout.png");
 
         exitButton = createExitButton("exit.png");
 
@@ -74,16 +77,33 @@ public class MainMenuScreen implements Screen {
                     };
 
                 });
-        pButton.setPosition(280, 300);
+        pButton.setPosition(280, 320);
         stage.addActor(pButton);
         return pButton;
     }
 
     private ImageButton createSettingsButton(String path) {
         ImageButton sButton = createButton(path);
-        sButton.setPosition(230, 200);
+        sButton.setPosition(230, 250);
         stage.addActor(sButton);
         return sButton;
+    }
+
+    private ImageButton createLogoutButton(String path) {
+        ImageButton loButton = createButton(path);
+        loButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        game.setScreen(new LoginScreen(game));
+                    };
+
+                });
+        loButton.setPosition(230, 180);
+        stage.addActor(loButton);
+
+        return loButton;
     }
 
     private ImageButton createExitButton(String path) {
@@ -98,7 +118,7 @@ public class MainMenuScreen implements Screen {
                     };
 
                 });
-        eButton.setPosition(230, 100);
+        eButton.setPosition(230, 110);
         stage.addActor(eButton);
 
         return eButton;
