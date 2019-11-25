@@ -16,17 +16,17 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class ChooseGameScreen implements Screen {
 
-    final MyGdxGame game;
+    final transient MyGdxGame game;
 
-    public Stage stage;
-    public ImageButton backButton;
-    public ImageButton localGameButton;
-    public ImageButton vsAIGameButton;
-    public ImageButton onlineGameButton;
-    public Texture myTexture;
-    public TextureRegion myTextureRegion;
-    public TextureRegionDrawable myTexRegionDrawable;
-    public Label outputLabel;
+    public transient Stage stage;
+    public transient ImageButton backButton;
+    public transient ImageButton localGameButton;
+    public transient ImageButton vsAIGameButton;
+    public transient ImageButton onlineGameButton;
+    public transient Texture myTexture;
+    public transient TextureRegion myTextureRegion;
+    public transient TextureRegionDrawable myTexRegionDrawable;
+    public transient Label outputLabel;
 
     public ChooseGameScreen(MyGdxGame game) {
         this.game = game;

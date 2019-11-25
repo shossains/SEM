@@ -21,12 +21,12 @@ public class MainMenuScreen implements Screen {
 
     public transient Stage stage;
     public transient ImageButton playButton;
-    public transient Texture myTexture1;
-    public transient TextureRegion myTextureRegion1;
-    public transient TextureRegionDrawable myTexRegionDrawable1;
-    public transient Texture myTexture2;
-    public transient TextureRegion myTextureRegion2;
-    public transient TextureRegionDrawable myTexRegionDrawable2;
+    public transient ImageButton settingsButton;
+    public transient ImageButton logoutButton;
+    public transient ImageButton exitButton;
+    public transient Texture myTexture;
+    public transient TextureRegion myTextureRegion;
+    public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
 
     public MainMenuScreen(MyGdxGame game) {

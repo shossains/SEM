@@ -16,14 +16,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SettingsScreen implements Screen {
 
-    final MyGdxGame game;
+    final transient MyGdxGame game;
 
-    public Stage stage;
-    public ImageButton backButton;
-    public Texture myTexture;
-    public TextureRegion myTextureRegion;
-    public TextureRegionDrawable myTexRegionDrawable;
-    public Label outputLabel;
+    public transient Stage stage;
+    public transient ImageButton backButton;
+    public transient Texture myTexture;
+    public transient TextureRegion myTextureRegion;
+    public transient TextureRegionDrawable myTexRegionDrawable;
+    public transient Label outputLabel;
 
     public SettingsScreen(MyGdxGame game) {
         this.game = game;
