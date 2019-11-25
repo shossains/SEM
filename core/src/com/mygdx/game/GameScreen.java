@@ -10,16 +10,12 @@ import com.badlogic.gdx.math.Circle;
 
 public class GameScreen implements Screen {
     final MyGdxGame game;
-
     //initially we need a texture for the paddle
     Texture puckImage;
-
     Texture paddle1Image;
     Texture paddle2Image;
 
-    //we can use the circle class for the puck
     Puck puck;
-
     Paddle paddle1, paddle2;
 
     OrthographicCamera camera;
@@ -30,20 +26,16 @@ public class GameScreen implements Screen {
         this.game = game;
 
         puckImage = new Texture(Gdx.files.internal("hockey-puck.png"));
-
         paddle1Image = new Texture(Gdx.files.internal("redPaddle.png"));
         paddle2Image = new Texture(Gdx.files.internal("bluePaddle.png"));
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
         camera.setToOrtho(false, 400, 300);
-
-        //we should later change it to the res0lution and so on...
+        //we should later change it to the resolution and so on...
         puck = new Puck(200f, 150f, 0f, 30f, 15f);
 
-        //add the pucks
         paddle1 = new Paddle(300f, 150f, 0f, 0f, 20f);
-
         paddle2 = new Paddle(100f, 150f, 0f, 0f, 25f);
 
     }
