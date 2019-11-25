@@ -72,8 +72,8 @@ public class MainMenuScreen implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        System.out.print("button pressed");
-                        outputLabel.setText("pressed");
+                        dispose();
+                        game.setScreen(new ChooseGameScreen(game));
                     };
 
                 });
@@ -84,6 +84,15 @@ public class MainMenuScreen implements Screen {
 
     private ImageButton createSettingsButton(String path) {
         ImageButton sButton = createButton(path);
+        sButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        game.setScreen(new SettingsScreen(game));
+                    };
+
+                });
         sButton.setPosition(230, 250);
         stage.addActor(sButton);
         return sButton;
