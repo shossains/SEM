@@ -45,11 +45,7 @@ public class MainMenuScreen implements Screen {
 
         game.font.setColor(Color.RED);
 
-        outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
-        outputLabel.setText("Please log in before playing the game.");
-        outputLabel.setPosition(200, 400);
-        playButton.add(outputLabel).expand().fill();
-        stage.addActor(outputLabel);
+
     }
 
 
@@ -77,7 +73,7 @@ public class MainMenuScreen implements Screen {
                     };
 
                 });
-        pButton.setPosition(280, 320);
+        pButton.setPosition(230, 320);
         stage.addActor(pButton);
         return pButton;
     }
@@ -142,10 +138,11 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.spriteBatch.begin();
         stage.act();
-        game.font.draw(game.spriteBatch, "Hello", 200, 200);
         stage.draw();
+        game.spriteBatch.begin();
+        game.font.getData().setScale(1.4f);
+        game.font.draw(game.spriteBatch, "Welcome, " + "<username>" + "!!!", 230, 450);
         game.spriteBatch.end();
     }
 
