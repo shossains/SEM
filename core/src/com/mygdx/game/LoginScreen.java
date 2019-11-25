@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -17,30 +18,28 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class LoginScreen implements Screen {
 
-    final MyGdxGame game;
-
-    public Stage stage;
-    public Texture myTexture;
-    public TextureRegion myTextureRegion;
-    public TextureRegionDrawable myTexRegionDrawable;
-    public ImageButton button;
-    public Label outputLabel;
+    final transient MyGdxGame game;
+    public transient Stage stage;
+    public transient Texture myTexture;
+    public transient TextureRegion myTextureRegion;
+    public transient TextureRegionDrawable myTexRegionDrawable;
+    public transient ImageButton button;
+    public transient Label outputLabel;
 
     public LoginScreen(final MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        ImageButton button = createButton("login.png");
-        ImageButton button2 = createButton("register.png");
-        button.setPosition(300, 200);
-        button2.setPosition(300, 100);
+        ImageButton loginButton = createLoginButton("login.png");
+        ImageButton registerButton = createRegisterButton("register.png");
+        loginButton.setPosition(300, 200);
+        registerButton.setPosition(300, 100);
         game.font.setColor(Color.RED);
-        stage.addActor(button);
-        stage.addActor(button2);
+        stage.addActor(loginButton);
+        stage.addActor(registerButton);
         outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
         outputLabel.setText("Please log in before playing the game.");
         outputLabel.setPosition(200, 400);
-        button.add(outputLabel).expand().fill();
         stage.addActor(outputLabel);
     }
 
@@ -51,25 +50,46 @@ public class LoginScreen implements Screen {
         button = new ImageButton(myTexRegionDrawable); //Set the button up
         button.setHeight(100);
         button.setWidth(200);
-        button.addListener(
+        return button;
+    }
+
+    public ImageButton createLoginButton(String path) {
+        ImageButton loginButton = createButton(path);
+        loginButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        System.out.print("button pressed");
+                        dispose();
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                Credentials(game));
+                        outputLabel.setText("pressed");
+                    }
+                }
+                );
+        return loginButton;
+    }
+
+    public ImageButton createRegisterButton(String path) {
+        ImageButton registerButton = createButton(path);
+        registerButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         System.out.print("button pressed");
                         outputLabel.setText("pressed");
-                    };
-                });
-        return button;
+                    }
+                }
+                );
+        return registerButton;
     }
 
     @Override
     public void render(float delta) {
-
-        Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
+        Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.spriteBatch.begin();
         stage.act();
-        game.font.draw(game.spriteBatch, "Hello", 200, 200);
         stage.draw();
         game.spriteBatch.end();
     }

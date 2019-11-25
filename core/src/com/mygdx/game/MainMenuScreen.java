@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -18,24 +17,24 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
 
-    final MyGdxGame game;
+    final transient MyGdxGame game;
 
-    public Stage stage;
-    public ImageButton playButton;
-    public Texture myTexture1;
-    public TextureRegion myTextureRegion1;
-    public TextureRegionDrawable myTexRegionDrawable1;
-    public Texture myTexture2;
-    public TextureRegion myTextureRegion2;
-    public TextureRegionDrawable myTexRegionDrawable2;
-    public Label outputLabel;
+    public transient Stage stage;
+    public transient ImageButton playButton;
+    public transient Texture myTexture1;
+    public transient TextureRegion myTextureRegion1;
+    public transient TextureRegionDrawable myTexRegionDrawable1;
+    public transient Texture myTexture2;
+    public transient TextureRegion myTextureRegion2;
+    public transient TextureRegionDrawable myTexRegionDrawable2;
+    public transient Label outputLabel;
 
     public MainMenuScreen(MyGdxGame game) {
-
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        ImageButton playButton = createButton("start_button_inactive.png", "start_button_active.png");
+        ImageButton playButton = createButton("start_button_inactive.png",
+                "start_button_active.png");
         ImageButton button2 = createButton("register.png", "register.png");
         playButton.setPosition(300, 200);
         button2.setPosition(300, 100);
@@ -56,7 +55,8 @@ public class MainMenuScreen implements Screen {
         myTexture2 = new Texture(Gdx.files.internal(path2));
         myTextureRegion2 = new TextureRegion(myTexture2);
         myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
-        playButton = new ImageButton(myTexRegionDrawable1, myTexRegionDrawable2); //Set the button up
+        playButton = new ImageButton(myTexRegionDrawable1,
+                myTexRegionDrawable2);
         playButton.setHeight(100);
         playButton.setWidth(200);
         playButton.addListener(
@@ -65,9 +65,9 @@ public class MainMenuScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         System.out.print("button pressed");
                         outputLabel.setText("pressed");
-                    };
-
-                });
+                    }
+                }
+                );
         return playButton;
     }
 
@@ -78,7 +78,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
+        Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.spriteBatch.begin();
         stage.act();
