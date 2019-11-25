@@ -90,6 +90,21 @@ public class GameScreen implements Screen {
         //ensure it is within boundaries
         puck.FixPosition();
 
+        //the movement variables for player 1
+        boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean leftPressed1 = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean upPressed1 = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean downPressed1 = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+
+        //the movement variables for player 2
+        boolean rightPressed2 = Gdx.input.isKeyPressed(Input.Keys.D);
+        boolean leftPressed2 = Gdx.input.isKeyPressed(Input.Keys.A);
+        boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
+        boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
+
+        paddle1.movePaddle(rightPressed1, leftPressed1, upPressed1, downPressed1, deltaTime);
+        paddle2.movePaddle(rightPressed2, leftPressed2, upPressed2, downPressed2, deltaTime);
+        
     }
 
     @Override

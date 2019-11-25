@@ -42,11 +42,11 @@ public class Paddle extends Circle {
         }
 
         if (upPressed) {
-            this.x += 30*deltaTime;
+            this.y += 30*deltaTime;
         }
 
         if (downPressed) {
-            this.x -= 30*deltaTime;
+            this.y -= 30*deltaTime;
         }
 
     }
