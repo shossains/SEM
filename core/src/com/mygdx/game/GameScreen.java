@@ -71,7 +71,7 @@ public class GameScreen implements Screen {
         //draw the puck as the texture and in the place that the puck exists
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
         //the boundary is still not totally correct
-        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y-puck.radius,
+        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
                 puck.radius*2, puck.radius*2);
 
         game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
@@ -88,7 +88,7 @@ public class GameScreen implements Screen {
 
         puck.movePuck(deltaTime);
         //ensure it is within boundaries
-        puck.FixPosition();
+        puck.fixPosition();
 
         //the movement variables for player 1
         boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
@@ -105,6 +105,8 @@ public class GameScreen implements Screen {
         paddle1.movePaddle(rightPressed1, leftPressed1, upPressed1, downPressed1, deltaTime);
         paddle2.movePaddle(rightPressed2, leftPressed2, upPressed2, downPressed2, deltaTime);
 
+        paddle1.fixPosition();
+        paddle2.fixPosition();
     }
 
     @Override

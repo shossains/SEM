@@ -40,7 +40,7 @@ public class Puck extends Circle {
     /**
      * Method to ensure the puck is within the correct boundaries
      */
-    public void FixPosition() {
+    public void fixPosition() {
         //we need to add the functionality to check that if the puck has hit the boundaries
         //or has been hit by a paddle
 

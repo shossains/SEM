@@ -54,7 +54,7 @@ public class Paddle extends Circle {
     /**
      * Method to ensure the puck is within the correct boundaries
      */
-    public void FixPosition() {
+    public void fixPosition() {
 
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
