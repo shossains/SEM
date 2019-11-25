@@ -3,13 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -22,15 +21,18 @@ public class Credentials implements Screen {
     public transient Stage stage;
     private transient String username;
     private transient String password;
-    private transient Animation<TextureRegion> animation;
-    private transient float elapsed;
+    private transient Image image;
     private transient Music sound;
 
+    /**
+     * Constructor for credentials screen.
+     * Here every used object is created.
+     * @param game the current game.
+     */
     public Credentials(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         final TextField usernameTextField = new TextField("", skin);
         final TextField passwordTextField = new TextField("", skin);
@@ -43,7 +45,8 @@ public class Credentials implements Screen {
         sound = Gdx.audio.newMusic(Gdx.files.internal("test.ogg"));
         sound.setLooping(true);
         sound.play();
-        animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("scooby.gif").read());
+        image = new Image(new Texture("air3.png"));
+        stage.addActor(image);
         TextButton button = new TextButton("Done!", skin);
         button.setPosition(100, 300);
         button.setSize(100, 50);
@@ -68,7 +71,6 @@ public class Credentials implements Screen {
 
     @Override
     public void render(float delta) {
-        elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
@@ -77,7 +79,8 @@ public class Credentials implements Screen {
         game.font.setColor(Color.ROYAL);
         game.font.draw(game.spriteBatch, "username", 130, 225);
         game.font.draw(game.spriteBatch, "password", 130, 125);
-        game.spriteBatch.draw(animation.getKeyFrame(elapsed), 300.0f, 300.0f);
+        image.setSize(150, 150);
+        image.setPosition(350, 300);
         game.spriteBatch.end();
     }
 
