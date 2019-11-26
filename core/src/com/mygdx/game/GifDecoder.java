@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.NullAssignment", "PMD.AvoidLiteralsInIfCondition", "PMD.MissingBreakInSwitch"})
 public class GifDecoder {
     /**
      * File read status: No errors.
@@ -26,42 +27,42 @@ public class GifDecoder {
      */
     public static final int STATUS_OPEN_ERROR = 2;
     /** max decoder pixel stack size */
-    protected static final int MAX_STACK_SIZE = 4096;
-    protected InputStream in;
-    protected int status;
-    protected int width; // full image width
-    protected int height; // full image height
-    protected boolean gctFlag; // global color table used
-    protected int gctSize; // size of global color table
-    protected int loopCount = 1; // iterations; 0 = repeat forever
-    protected int[] gct; // global color table
-    protected int[] lct; // local color table
-    protected int[] act; // active color table
-    protected int bgIndex; // background color index
-    protected int bgColor; // background color
-    protected int lastBgColor; // previous bg color
-    protected int pixelAspect; // pixel aspect ratio
-    protected boolean lctFlag; // local color table flag
-    protected boolean interlace; // interlace flag
-    protected int lctSize; // local color table size
-    protected int ix, iy, iw, ih; // current image rectangle
-    protected int lrx, lry, lrw, lrh;
-    protected DixieMap image; // current frame
-    protected DixieMap lastPixmap; // previous frame
-    protected byte[] block = new byte[256]; // current data block
-    protected int blockSize = 0; // block size last graphic control extension info
-    protected int dispose = 0; // 0=no action; 1=leave in place; 2=restore to bg; 3=restore to prev
-    protected int lastDispose = 0;
-    protected boolean transparency = false; // use transparent color
-    protected int delay = 0; // delay in milliseconds
-    protected int transIndex; // transparent color index
+    private static final int MAX_STACK_SIZE = 4096;
+    transient protected InputStream in;
+    transient protected int status;
+    transient protected int width; // full image width
+    transient protected int height; // full image height
+    transient protected boolean gctFlag; // global color table used
+    transient protected int gctSize; // size of global color table
+    transient protected int loopCount = 1; // iterations; 0 = repeat forever
+    transient protected int[] gct; // global color table
+    transient protected int[] lct; // local color table
+    transient protected int[] act; // active color table
+    transient protected int bgIndex; // background color index
+    transient protected int bgColor; // background color
+    transient protected int lastBgColor; // previous bg color
+    transient protected int pixelAspect; // pixel aspect ratio
+    transient protected boolean lctFlag; // local color table flag
+    transient protected boolean interlace; // interlace flag
+    transient protected int lctSize; // local color table size
+    transient protected int ix, iy, iw, ih; // current image rectangle
+    transient protected int lrx, lry, lrw, lrh;
+    transient protected DixieMap image; // current frame
+    transient protected DixieMap lastPixmap; // previous frame
+    transient protected byte[] block = new byte[256]; // current data block
+    transient protected int blockSize = 0; // block size last graphic control extension info
+    transient protected int dispose = 0; // 0=no action; 1=leave in place; 2=restore to bg; 3=restore to prev
+    transient protected int lastDispose = 0;
+    transient protected boolean transparency = false; // use transparent color
+    transient protected int delay = 0; // delay in milliseconds
+    transient protected int transIndex; // transparent color index
     // LZW decoder working arrays
-    protected short[] prefix;
-    protected byte[] suffix;
-    protected byte[] pixelStack;
-    protected byte[] pixels;
-    protected Vector<GifFrame> frames; // frames read from current file
-    protected int frameCount;
+    transient protected short[] prefix;
+    transient protected byte[] suffix;
+    transient protected byte[] pixelStack;
+    transient protected byte[] pixels;
+    transient protected Vector<GifFrame> frames; // frames read from current file
+    transient protected int frameCount;
 
     private static class DixieMap extends Pixmap {
         DixieMap(int w, int h, Pixmap.Format f) {
@@ -85,17 +86,15 @@ public class GifDecoder {
         }
 
         void getPixels(int[] pixels, int offset, int stride, int x, int y, int width, int height) {
-            java.nio.ByteBuffer bb = getPixels();
-
             int k, l;
 
             for(k = y;  k < y + height; k++) {
-                int _offset = offset;
+                int voffset = offset;
                 for(l = x; l < x + width; l++) {
-                    int pxl = bb.getInt(4 * (l + k * width));
+                    int pxl = getPixels().getInt(4 * (l + k * width));
 
                     // convert RGBA8888 > ARGB8888
-                    pixels[_offset++] = ((pxl >> 8) & 0x00ffffff) | ((pxl << 24) & 0xff000000);
+                    pixels[voffset++] = ((pxl >> 8) & 0x00ffffff) | ((pxl << 24) & 0xff000000);
                 }
                 offset += stride;
             }
@@ -108,8 +107,8 @@ public class GifDecoder {
             delay = del;
         }
 
-        public DixieMap image;
-        public int delay;
+        transient public DixieMap image;
+        transient public int delay;
     }
 
     /**
@@ -278,6 +277,7 @@ public class GifDecoder {
         try {
             is.close();
         } catch (Exception e) {
+            System.err.println("Caught Exception: " + e.getMessage());
         }
         return status;
     }
