@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@SuppressWarnings("PMD.CloseResource")
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;
@@ -73,7 +74,7 @@ public class Credentials implements Screen {
                             };
                             dialog.setColor(Color.RED);
                             dialog.setSize(400, 200);
-                            dialog.text("Please fill in all fields.");
+                            dialog.text("Please fill in all fields!");
                             dialog.button("Ok", false);
                             dialog.show(stage);
                         } else {
