@@ -23,7 +23,6 @@ public class HelloWorld {
             while (rs.next()) {
                 System.out.print(rs.getString(1) + " ");
                 System.out.print(rs.getString(2) + " ");
-                System.out.println(rs.getString(3));
             }
             rs.close();
         } catch (SQLException e) {

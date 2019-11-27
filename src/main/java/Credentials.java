@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -12,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Credentials implements Screen {
 
@@ -54,12 +58,41 @@ public class Credentials implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         username = usernameTextField.getText();
                         password = passwordTextField.getText();
-                        System.out.print(username + " " + password);
 
+                        try {
+                            if (checkCred(username, password)) {
+                                MainMenuScreen m = new MainMenuScreen(game);
+                                m.username = username;
+                                ((Game)Gdx.app.getApplicationListener()).setScreen(m);
+                            } else {
+                                System.out.println("Wrong user/pass");
+                                //TODO Create a label saying invalid user/pass
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
         stage.addActor(button);
+    }
 
+    private boolean checkCred(String user, String pass) throws SQLException {
+        String[] queries = {"SELECT username, password FROM users WHERE username = '" + user + "';"};
+        ResultSet rs = Query.runQueries(queries)[0];
+        try {
+            while (rs.next()) {
+                String usern = rs.getString(1);
+                String passw = rs.getString(2);
+
+                if (usern.equals(user) && passw.equals(pass)) {
+                    return true;
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
