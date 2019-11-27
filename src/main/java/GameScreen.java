@@ -1,11 +1,12 @@
 
+import GameLogic.Paddle;
+import GameLogic.Puck;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Circle;
 
 public class GameScreen implements Screen {
     final transient MyGdxGame game;
