@@ -1,6 +1,10 @@
 import com.badlogic.gdx.math.Rectangle;
 
-public class Board extends Rectangle {
+import java.io.Serializable;
+
+public class Board extends Rectangle implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The board object.
