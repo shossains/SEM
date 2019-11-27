@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
         board = new Board(0, 0, 1280, 720);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 0f, 30f, 30f);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f);
 
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f);
         paddle2 = new Paddle(360f, 360f, 0f, 0f, 40f);
