@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -83,6 +84,11 @@ public class Registration implements Screen {
                             dialog.button("Ok", false);
                             dialog.show(stage);
                         }
+                        else {
+                            dispose();
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                    MainMenuScreen(game));
+                        }
                     }
                 });
         stage.addActor(button);
@@ -132,6 +138,6 @@ public class Registration implements Screen {
 
     @Override
     public void dispose() {
-        game.spriteBatch.dispose();
+       // game.spriteBatch.dispose();
     }
 }

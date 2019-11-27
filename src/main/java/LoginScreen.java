@@ -35,13 +35,35 @@ public class LoginScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         ImageButton loginButton = createLoginButton("assets/login.png");
         ImageButton registerButton = createRegisterButton("assets/register.png");
+        ImageButton exitButton = createImageButton("assets/exit2.png");
+        exitButton.setPosition(500, 400);
         loginButton.setPosition(300, 200);
         registerButton.setPosition(300, 100);
         game.font.setColor(Color.RED);
         stage.addActor(loginButton);
+        stage.addActor(exitButton);
         stage.addActor(registerButton);
         image = new Image(new Texture("assets/air.png"));
         stage.addActor(image);
+    }
+
+    /**
+     * Method for creating a new exit button.
+     * @param path of the image used.
+     * @return a new exit button.
+     */
+    private ImageButton createImageButton(String path) {
+        ImageButton exitButton = createButton(path);
+        exitButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        Gdx.app.exit();
+                    }
+                }
+        );
+        return exitButton;
     }
 
     /**

@@ -24,9 +24,9 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
-        puckImage = new Texture(Gdx.files.internal("hockey-puck.png"));
-        paddle1Image = new Texture(Gdx.files.internal("redPaddle.png"));
-        paddle2Image = new Texture(Gdx.files.internal("bluePaddle.png"));
+        puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
+        paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
+        paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
