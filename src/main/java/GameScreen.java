@@ -9,11 +9,13 @@ import com.badlogic.gdx.math.Circle;
 
 public class GameScreen implements Screen {
     final transient MyGdxGame game;
-    //initially we need a texture for the paddle
+
     transient Texture puckImage;
     transient Texture paddle1Image;
     transient Texture paddle2Image;
+    transient Texture boardImage;
 
+    transient Board board;
     transient Puck puck;
     transient Paddle paddle1, paddle2;
 
@@ -24,18 +26,23 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
-        puckImage = new Texture(Gdx.files.internal("hockey-puck.png"));
-        paddle1Image = new Texture(Gdx.files.internal("redPaddle.png"));
-        paddle2Image = new Texture(Gdx.files.internal("bluePaddle.png"));
+        boardImage = new Texture(Gdx.files.internal("assets/table.png"));
+        puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
+        paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
+        paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
-        camera.setToOrtho(false, 400, 300);
-        //we should later change it to the resolution and so on...
-        puck = new Puck(200f, 150f, 0f, 30f, 15f);
+        camera.setToOrtho(false, 1280, 720);
 
-        paddle1 = new Paddle(300f, 150f, 0f, 0f, 20f);
-        paddle2 = new Paddle(100f, 150f, 0f, 0f, 25f);
+        // Create the board
+        board = new Board(0, 0, 1280, 720);
+
+        //we should later change it to the resolution and so on...
+        puck = new Puck(640f, 360f, 30f, 0f, 30f);
+
+        paddle1 = new Paddle(360f, 360f, 0f, 0f, 40f);
+        paddle2 = new Paddle(1000f, 360f, 0f, 0f, 40f);
 
     }
 
@@ -58,6 +65,9 @@ public class GameScreen implements Screen {
         game.spriteBatch.setProjectionMatrix(camera.combined);
 
         game.spriteBatch.begin();
+
+        // Draw the board
+        game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
 
         //draw the puck as the texture and in the place that the puck exists
         //Maybe there is some border, or the radius doesn't perfectly scale up the image

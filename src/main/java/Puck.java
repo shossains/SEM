@@ -52,8 +52,8 @@ public class Puck extends Circle implements java.io.Serializable {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
         }
-        if (this.x > 400 - this.radius) {
-            this.x = 400 - this.radius;
+        if (this.x > 1280 - this.radius) {
+            this.x = 1280 - this.radius;
         }
 
         if (this.y - this.radius < 0) {
@@ -61,8 +61,8 @@ public class Puck extends Circle implements java.io.Serializable {
             //also set the initMove to false;
             initMove = false;
         }
-        if (this.y > 300 - this.radius) {
-            this.y = 300 - this.radius;
+        if (this.y > 720 - this.radius) {
+            this.y = 720 - this.radius;
 
             initMove = false;
         }
