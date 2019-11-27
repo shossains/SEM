@@ -59,7 +59,6 @@ test:
   script:
     gradle check
 
-
 #coverage:
 #  stage: coverage
 #  ## use the previous report

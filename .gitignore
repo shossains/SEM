@@ -1,5 +1,7 @@
 # Build artifacts
 build/**
+core/build/**
+desktop/build/**
 .gradle/**
 
 # Not strictly necessary, however, *.jar files are often ignored and this one is required by the Gradle wrapper.
@@ -7,3 +9,5 @@ build/**
 
 # Editor settings
 .idea/**
+
+core/build/
