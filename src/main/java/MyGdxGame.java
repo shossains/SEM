@@ -3,6 +3,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends Game {
+
+    public static final int S_WIDTH = 1280;
+    public static final int S_HEIGHT = 720;
+
     protected transient SpriteBatch spriteBatch;
     protected transient BitmapFont font;
 
