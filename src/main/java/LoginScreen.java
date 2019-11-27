@@ -1,15 +1,15 @@
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -22,8 +22,13 @@ public class LoginScreen implements Screen {
     public transient TextureRegion myTextureRegion;
     public transient TextureRegionDrawable myTexRegionDrawable;
     public transient ImageButton button;
-    public transient Label outputLabel;
+    public transient Image image;
 
+    /**
+     * Constructor for the login page.
+     * Every object from this page is created below.
+     * @param game the current game.
+     */
     public LoginScreen(final MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
@@ -35,12 +40,15 @@ public class LoginScreen implements Screen {
         game.font.setColor(Color.RED);
         stage.addActor(loginButton);
         stage.addActor(registerButton);
-        outputLabel = new Label("label ",new Label.LabelStyle(new BitmapFont(),Color.BLUE));
-        outputLabel.setText("Please log in before playing the game.");
-        outputLabel.setPosition(200, 400);
-        stage.addActor(outputLabel);
+        image = new Image(new Texture("assets/air.png"));
+        stage.addActor(image);
     }
 
+    /**
+     * Helper method for creating a button.
+     * @param path of the image used for texture.
+     * @return a new button.
+     */
     public ImageButton createButton(String path) {
         myTexture = new Texture(Gdx.files.internal(path));
         myTextureRegion = new TextureRegion(myTexture);
@@ -51,34 +59,43 @@ public class LoginScreen implements Screen {
         return button;
     }
 
+    /**
+     * Method that creates a login button.
+     * @param path of image used for the texture.
+     * @return new created button.
+     */
     public ImageButton createLoginButton(String path) {
         ImageButton loginButton = createButton(path);
         loginButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        System.out.print("button pressed");
                         dispose();
                         ((Game)Gdx.app.getApplicationListener()).setScreen(new
                                 Credentials(game));
-                        outputLabel.setText("pressed");
                     }
                 }
-                );
+        );
         return loginButton;
     }
 
+    /**
+     * Method for creating a register button.
+     * @param path of the image for the texture.
+     * @return a new register button.
+     */
     public ImageButton createRegisterButton(String path) {
         ImageButton registerButton = createButton(path);
         registerButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        System.out.print("button pressed");
-                        outputLabel.setText("pressed");
+                        dispose();
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                Registration(game));
                     }
                 }
-                );
+        );
         return registerButton;
     }
 
@@ -90,6 +107,14 @@ public class LoginScreen implements Screen {
         stage.act();
         stage.draw();
         game.spriteBatch.end();
+        image.setPosition(5, 200);
+        image.setSize(300, 300);
+        //start here if the play button is pushed, we start a new game
+        //add for play button later, initially start game on space bar press
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            game.setScreen(new GameScreen(game));
+            dispose();
+        }
     }
 
     @Override

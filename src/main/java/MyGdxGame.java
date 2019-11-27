@@ -7,20 +7,20 @@ public class MyGdxGame extends Game {
     protected transient BitmapFont font;
 
     @Override
-	public void create() {
-    	spriteBatch = new SpriteBatch();
-		font = new BitmapFont();
-		this.setScreen(new LoginScreen(this));
-	}
+    public void create() {
+        spriteBatch = new SpriteBatch();
+        font = new BitmapFont();
+        this.setScreen(new LoginScreen(this));
+    }
 
-	@Override
-	public void render() {
-		super.render();
-	}
+    @Override
+    public void render() {
+        super.render();
+    }
 
-	@Override
-	public void dispose() {
-		spriteBatch.dispose();
-		font.dispose();
-	}
+    @Override
+    public void dispose() {
+        spriteBatch.dispose();
+        font.dispose();
+    }
 }
