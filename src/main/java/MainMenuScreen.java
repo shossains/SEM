@@ -16,7 +16,7 @@ public class MainMenuScreen implements Screen {
 
     final transient MyGdxGame game;
 
-    public String username;
+    public transient String username;
     public transient Stage stage;
     public transient ImageButton playButton;
     public transient ImageButton settingsButton;

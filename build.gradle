@@ -52,6 +52,7 @@ dependencies {
     compile "com.badlogicgames.gdx:gdx-box2d-platform:1.9.10:natives-desktop"
     compile "com.badlogicgames.gdx:gdx:1.9.10"
     compile "com.badlogicgames.gdx:gdx-box2d:1.9.10"
+    compile "com.badlogicgames.gdx:gdx-freetype:1.9.10"
 }
 
 jacocoTestCoverageVerification {

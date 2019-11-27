@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Circle;
 
 public class GameScreen implements Screen {
     final transient MyGdxGame game;
@@ -63,13 +62,13 @@ public class GameScreen implements Screen {
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
         //the boundary is still not totally correct
         game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
-                puck.radius*2, puck.radius*2);
+                puck.radius * 2, puck.radius * 2);
 
-        game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
-                paddle1.radius*2, paddle1.radius*2);
+        game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius,
+                paddle1.y - paddle1.radius,paddle1.radius * 2, paddle1.radius * 2);
 
-        game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
-                paddle2.radius*2, paddle2.radius*2);
+        game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius,
+                paddle2.y - paddle2.radius,paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
 

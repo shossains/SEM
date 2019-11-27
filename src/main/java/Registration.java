@@ -6,7 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -29,7 +33,7 @@ public class Registration implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 //        FreeTypeFontGenerator generator =
-//                new FreeTypeFontGenerator(Gdx.files.internal("ostrich-regular.ttf"));
+//                new FreeTypeFontGenerator(Gdx.files.internal("assets/ostrich-regular.ttf"));
 //        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
 //                new FreeTypeFontGenerator.FreeTypeFontParameter();
 //        parameter.size = 26;
@@ -40,17 +44,21 @@ public class Registration implements Screen {
         assetManager.finishLoading();
         final String skinPath = "assets/uiskin.json";
         final TextField usernameTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         final TextField emailTextField = new TextField("", assetManager.get(skinPath, Skin.class));
+        final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         final TextField passwordAgainTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         usernameTextField.setPosition(300,250);
         usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(300, 150);
         passwordTextField.setSize(300, 50);
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('*');
         emailTextField.setPosition(300, 350);
         emailTextField.setSize(300, 50);
         passwordAgainTextField.setPosition(300, 50);
         passwordAgainTextField.setSize(300, 50);
+        passwordAgainTextField.setPasswordMode(true);
+        passwordAgainTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
         stage.addActor(emailTextField);
@@ -69,11 +77,22 @@ public class Registration implements Screen {
                         password = passwordTextField.getText();
                         email = emailTextField.getText();
                         passwordAgain = passwordAgainTextField.getText();
-                        if (!passwordAgain.equals(password)) {
-                            Dialog dialog = new Dialog("Warning - wrong password", assetManager.get(skinPath, Skin.class), "dialog") {
+                        if (username.equals("") || password.equals("") || email.equals("") || passwordAgain.equals("")) {
+                            Dialog dialoga = new Dialog("Empty fields",
+                                    assetManager.get(skinPath, Skin.class),
+                                    "dialog") {
                                 public void result(Object obj) {
                                     System.out.println("result " + obj);
                                 }
+                            };
+                            dialoga.setColor(Color.RED);
+                            dialoga.setSize(400, 200);
+                            dialoga.text("Please fill in all fields.");
+                            dialoga.button("Ok", false);
+                            dialoga.show(stage);
+                        } else if  (!passwordAgain.equals(password)) {
+                            Dialog dialog = new Dialog("Warning - wrong password",
+                                    assetManager.get(skinPath, Skin.class), "dialog") {
                             };
                             dialog.setColor(Color.ROYAL);
                             dialog.setSize(400, 200);
