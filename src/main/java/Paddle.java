@@ -1,10 +1,10 @@
-package com.mygdx.game;
-
 import com.badlogic.gdx.math.Circle;
 
-public class Paddle extends Circle {
+public class Paddle extends Circle implements java.io.Serializable {
 
-    public float xSpeed, ySpeed;
+    public static final transient long serialVersionUID = 4328743;
+
+    public transient float xSpeed, ySpeed;
 
     /**
      * Constructor

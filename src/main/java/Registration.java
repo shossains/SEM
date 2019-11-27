@@ -1,18 +1,12 @@
-package com.mygdx.game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -34,18 +28,21 @@ public class Registration implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        FreeTypeFontGenerator generator =
-                new FreeTypeFontGenerator(Gdx.files.internal("ostrich-regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
-                new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 26;
-        this.game.font = generator.generateFont(parameter);
-        generator.dispose();
-        final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-        final TextField usernameTextField = new TextField("", skin);
-        final TextField passwordTextField = new TextField("", skin);
-        final TextField emailTextField = new TextField("", skin);
-        final TextField passwordAgainTextField = new TextField("", skin);
+//        FreeTypeFontGenerator generator =
+//                new FreeTypeFontGenerator(Gdx.files.internal("ostrich-regular.ttf"));
+//        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
+//                new FreeTypeFontGenerator.FreeTypeFontParameter();
+//        parameter.size = 26;
+//        this.game.font = generator.generateFont(parameter);
+//        generator.dispose();
+        AssetManager assetManager = new AssetManager();
+        assetManager.load("assets/uiskin.json", Skin.class);
+        assetManager.finishLoading();
+        final String skinPath = "assets/uiskin.json";
+        final TextField usernameTextField = new TextField("", assetManager.get(skinPath, Skin.class));
+        final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
+        final TextField emailTextField = new TextField("", assetManager.get(skinPath, Skin.class));
+        final TextField passwordAgainTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         usernameTextField.setPosition(300,250);
         usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(300, 150);
@@ -58,9 +55,9 @@ public class Registration implements Screen {
         stage.addActor(passwordTextField);
         stage.addActor(emailTextField);
         stage.addActor(passwordAgainTextField);
-        image = new Image(new Texture("air2.png"));
+        image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
-        TextButton button = new TextButton("Done", skin);
+        TextButton button = new TextButton("Done", assetManager.get(skinPath, Skin.class));
         button.setColor(Color.ROYAL);
         button.setPosition(20, 400);
         button.setSize(100, 50);
@@ -73,7 +70,7 @@ public class Registration implements Screen {
                         email = emailTextField.getText();
                         passwordAgain = passwordAgainTextField.getText();
                         if (!passwordAgain.equals(password)) {
-                            Dialog dialog = new Dialog("Warning - wrong password", skin, "dialog") {
+                            Dialog dialog = new Dialog("Warning - wrong password", assetManager.get(skinPath, Skin.class), "dialog") {
                                 public void result(Object obj) {
                                     System.out.println("result " + obj);
                                 }

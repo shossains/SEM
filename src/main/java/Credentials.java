@@ -43,7 +43,7 @@ public class Credentials implements Screen {
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
         sound.setLooping(true);
         sound.play();
-        image = new Image(new Texture("air3.png"));
+        image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
         TextButton button = new TextButton("Done!", skin);
         button.setPosition(100, 300);

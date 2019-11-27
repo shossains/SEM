@@ -31,13 +31,13 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        playButton = createPlayButton("play.png");
+        playButton = createPlayButton("assets/play.png");
 
-        settingsButton = createSettingsButton("settings.png");
+        settingsButton = createSettingsButton("assets/settings.png");
 
-        logoutButton = createLogoutButton("logout.png");
+        logoutButton = createLogoutButton("assets/logout.png");
 
-        exitButton = createExitButton("exit.png");
+        exitButton = createExitButton("assets/exit.png");
 
         game.font.setColor(Color.RED);
 
@@ -115,7 +115,6 @@ public class MainMenuScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         Gdx.app.exit();
-                        System.exit(0);
                     };
 
                 });

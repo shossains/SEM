@@ -1,16 +1,16 @@
-package com.mygdx.game;
-
 import com.badlogic.gdx.math.Circle;
 
-public class Puck extends Circle {
+public class Puck extends Circle implements java.io.Serializable {
+
+    public static final transient long serialVersionUID = 4328743;
 
     //add extra attributes
     //It needs speed in x and y direction
 
-    public float xSpeed;
-    public float ySpeed;
+    public transient float xSpeed;
+    public transient float ySpeed;
 
-    private boolean initMove;
+    private transient boolean initMove;
 
     /**
      * Constructor

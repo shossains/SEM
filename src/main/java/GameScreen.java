@@ -1,4 +1,3 @@
-package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,18 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 
 public class GameScreen implements Screen {
-    final MyGdxGame game;
+    final transient MyGdxGame game;
     //initially we need a texture for the paddle
-    Texture puckImage;
-    Texture paddle1Image;
-    Texture paddle2Image;
+    transient Texture puckImage;
+    transient Texture paddle1Image;
+    transient Texture paddle2Image;
 
-    Puck puck;
-    Paddle paddle1, paddle2;
+    transient Puck puck;
+    transient Paddle paddle1, paddle2;
 
-    OrthographicCamera camera;
+    transient OrthographicCamera camera;
 
-    boolean initMove = true;
+    transient boolean initMove = true;
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;

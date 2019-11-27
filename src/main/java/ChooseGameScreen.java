@@ -1,4 +1,3 @@
-package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -32,10 +31,10 @@ public class ChooseGameScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        backButton = createBackButton("back.png");
-        localGameButton = createLocalGameButton("local.png");
-        vsAIGameButton = createVsAIButton("vsAI.png");
-        onlineGameButton = createOnlineButton("online.png");
+        backButton = createBackButton("assets/back.png");
+        localGameButton = createLocalGameButton("assets/local.png");
+        vsAIGameButton = createVsAIButton("assets/vsAI.png");
+        onlineGameButton = createOnlineButton("assets/online.png");
         game.font.setColor(Color.RED);
     }
 

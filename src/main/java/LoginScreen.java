@@ -40,7 +40,7 @@ public class LoginScreen implements Screen {
         game.font.setColor(Color.RED);
         stage.addActor(loginButton);
         stage.addActor(registerButton);
-        image = new Image(new Texture("air.png"));
+        image = new Image(new Texture("assets/air.png"));
         stage.addActor(image);
     }
 
