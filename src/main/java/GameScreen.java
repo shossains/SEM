@@ -1,4 +1,5 @@
 
+import GameLogic.CollisionsEngine;
 import GameLogic.Paddle;
 import GameLogic.Puck;
 import com.badlogic.gdx.Gdx;
@@ -19,6 +20,8 @@ public class GameScreen implements Screen {
     transient Board board;
     transient Puck puck;
     transient Paddle paddle1, paddle2;
+
+    transient CollisionsEngine collisionsEngine;
 
     transient OrthographicCamera camera;
 
@@ -44,6 +47,8 @@ public class GameScreen implements Screen {
 
         paddle1 = new Paddle(360f, 360f, 0f, 0f, 40f);
         paddle2 = new Paddle(1000f, 360f, 0f, 0f, 40f);
+
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
 
     }
 
@@ -104,8 +109,13 @@ public class GameScreen implements Screen {
         boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
         boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
 
-        paddle1.movePaddle(rightPressed1, leftPressed1, upPressed1, downPressed1, deltaTime);
-        paddle2.movePaddle(rightPressed2, leftPressed2, upPressed2, downPressed2, deltaTime);
+        paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
+        paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
+
+        paddle1.movePaddle(deltaTime);
+        paddle2.movePaddle(deltaTime);
+
+        collisionsEngine.Collide();
 
         paddle1.fixPosition();
         paddle2.fixPosition();

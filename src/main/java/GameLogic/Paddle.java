@@ -31,27 +31,29 @@ public class Paddle extends Circle implements java.io.Serializable {
      * @param leftPressed If left is pressed.
      * @param upPressed If up is pressed.
      * @param downPressed If down is pressed.
-     * @param deltaTime Delta time from gdx.
      */
-    public void movePaddle(boolean rightPressed, boolean leftPressed,
-                           boolean upPressed, boolean downPressed,
-                           float deltaTime) {
+    public void setSpeeds(boolean rightPressed, boolean leftPressed,
+                           boolean upPressed, boolean downPressed) {
         if (rightPressed) {
-            this.x += 100*deltaTime;
+            this.setxSpeed(100);
         }
 
         if (leftPressed) {
-            this.x -= 100*deltaTime;
+            this.setxSpeed(-100);
         }
 
         if (upPressed) {
-            this.y += 100*deltaTime;
+            this.setySpeed(100);
         }
 
         if (downPressed) {
-            this.y -= 100*deltaTime;
+            this.setySpeed(-100);
         }
+    }
 
+    public void movePaddle(double deltaTime) {
+        this.x += this.xSpeed*deltaTime;
+        this.y += this.ySpeed*deltaTime;
     }
 
     /**
