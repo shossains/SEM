@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -62,7 +59,19 @@ public class Credentials implements Screen {
                     }
                 });
         stage.addActor(button);
+        TextButton exit = new TextButton("Back", skin);
+        exit.setPosition(900, 600);
+        exit.setSize(100, 50);
+        exit.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                LoginScreen(game));
 
+                    }
+                });
+        stage.addActor(exit);
     }
 
     @Override

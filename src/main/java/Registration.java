@@ -93,6 +93,19 @@ public class Registration implements Screen {
                     }
                 });
         stage.addActor(button);
+        TextButton exit = new TextButton("Back", assetManager.get(skinPath, Skin.class));
+        exit.setPosition(900, 600);
+        exit.setSize(100, 50);
+        exit.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                LoginScreen(game));
+
+                    }
+                });
+        stage.addActor(exit);
     }
 
     @Override
