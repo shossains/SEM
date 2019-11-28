@@ -1,4 +1,4 @@
-package GameLogic;
+package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
@@ -6,23 +6,23 @@ public class Paddle extends Circle implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
-    public transient float xSpeed;
-    public transient float ySpeed;
+    public transient float xspeed;
+    public transient float yspeed;
 
     /**
      * Constructor.
      * @param x x coordinate.
      * @param y y coordinate.
-     * @param xSpeed Speed in y direction.
-     * @param ySpeed Speed in x direction.
+     * @param xspeed Speed in y direction.
+     * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xSpeed, float ySpeed, float radius) {
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius) {
 
         super(x, y, radius);
 
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
+        this.xspeed = xspeed;
+        this.yspeed = yspeed;
     }
 
     /**
@@ -31,27 +31,37 @@ public class Paddle extends Circle implements java.io.Serializable {
      * @param leftPressed If left is pressed.
      * @param upPressed If up is pressed.
      * @param downPressed If down is pressed.
-     * @param deltaTime Delta time from gdx.
      */
-    public void movePaddle(boolean rightPressed, boolean leftPressed,
-                           boolean upPressed, boolean downPressed,
-                           float deltaTime) {
+    public void setSpeeds(boolean rightPressed, boolean leftPressed,
+                           boolean upPressed, boolean downPressed) {
         if (rightPressed) {
-            this.x += 100*deltaTime;
+            this.setXspeed(100);
         }
 
         if (leftPressed) {
-            this.x -= 100*deltaTime;
+            this.setXspeed(-100);
+        }
+
+        if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
+            this.setXspeed(0);
         }
 
         if (upPressed) {
-            this.y += 100*deltaTime;
+            this.setYspeed(100);
         }
 
         if (downPressed) {
-            this.y -= 100*deltaTime;
+            this.setYspeed(-100);
         }
 
+        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
+            this.setYspeed(0);
+        }
+    }
+
+    public void movePaddle(double deltaTime) {
+        this.x += this.xspeed * deltaTime;
+        this.y += this.yspeed * deltaTime;
     }
 
     /**
@@ -73,20 +83,21 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.y = 720 - this.radius;
         }
     }
-    public float getxSpeed() {
-        return xSpeed;
+
+    public float getXspeed() {
+        return xspeed;
     }
 
-    public void setxSpeed(float xSpeed) {
-        this.xSpeed = xSpeed;
+    public void setXspeed(float xspeed) {
+        this.xspeed = xspeed;
     }
 
-    public float getySpeed() {
-        return ySpeed;
+    public float getYspeed() {
+        return yspeed;
     }
 
-    public void setySpeed(float ySpeed) {
-        this.ySpeed = ySpeed;
+    public void setYspeed(float yspeed) {
+        this.yspeed = yspeed;
     }
 
 

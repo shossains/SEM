@@ -1,6 +1,7 @@
 
-import GameLogic.Paddle;
-import GameLogic.Puck;
+import gamelogic.CollisionsEngine;
+import gamelogic.Paddle;
+import gamelogic.Puck;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -18,12 +19,19 @@ public class GameScreen implements Screen {
 
     transient Board board;
     transient Puck puck;
-    transient Paddle paddle1, paddle2;
+    transient Paddle paddle1;
+    transient Paddle paddle2;
+
+    transient CollisionsEngine collisionsEngine;
 
     transient OrthographicCamera camera;
 
     transient boolean initMove = true;
 
+    /**
+     * Constructor.
+     * @param game The game object.
+     */
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
@@ -42,8 +50,10 @@ public class GameScreen implements Screen {
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f);
 
-        paddle1 = new Paddle(360f, 360f, 0f, 0f, 40f);
-        paddle2 = new Paddle(1000f, 360f, 0f, 0f, 40f);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
+
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
 
     }
 
@@ -74,13 +84,13 @@ public class GameScreen implements Screen {
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
         //the boundary is still not totally correct
         game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
-                puck.radius*2, puck.radius*2);
+                puck.radius * 2, puck.radius * 2);
 
         game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
-                paddle1.radius*2, paddle1.radius*2);
+                paddle1.radius * 2, paddle1.radius * 2);
 
         game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
-                paddle2.radius*2, paddle2.radius*2);
+                paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
 
@@ -104,8 +114,13 @@ public class GameScreen implements Screen {
         boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
         boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
 
-        paddle1.movePaddle(rightPressed1, leftPressed1, upPressed1, downPressed1, deltaTime);
-        paddle2.movePaddle(rightPressed2, leftPressed2, upPressed2, downPressed2, deltaTime);
+        paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
+        paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
+
+        paddle1.movePaddle(deltaTime);
+        paddle2.movePaddle(deltaTime);
+
+        collisionsEngine.collide();
 
         paddle1.fixPosition();
         paddle2.fixPosition();
