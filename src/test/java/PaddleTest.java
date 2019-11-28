@@ -32,8 +32,8 @@ public class PaddleTest {
 
         paddle1.movePaddle(true, false, true, false, deltaTime1);
 
-        assertEquals(100 + 150, paddle1.x);
-        assertEquals(100 + 150, paddle1.y);
+        assertEquals(600, paddle1.x);
+        assertEquals(600, paddle1.y);
     }
 
     @Test
@@ -43,8 +43,8 @@ public class PaddleTest {
 
         paddle1.movePaddle(false, true, false, true, deltaTime1);
 
-        assertEquals(100 - 150, paddle1.x);
-        assertEquals(100 - 150, paddle1.y);
+        assertEquals(-400, paddle1.x);
+        assertEquals(-400, paddle1.y);
     }
 
     @Test
@@ -91,8 +91,8 @@ public class PaddleTest {
 
         paddle2.fixPosition();
 
-        assertEquals(400 - paddle2.radius, paddle2.x);
-        assertEquals(300 - paddle2.radius, paddle2.y);
+        assertEquals(600, paddle2.x);
+        assertEquals(500, paddle2.y);
     }
 
 }
