@@ -23,6 +23,11 @@ public class SettingsScreen implements Screen {
     public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
 
+
+    /**
+     * Constructor for this Screen.
+     * @param game the current game instance
+     */
     public SettingsScreen(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
@@ -46,19 +51,19 @@ public class SettingsScreen implements Screen {
 
 
     private ImageButton createBackButton(String path) {
-        ImageButton bButton = createButton(path);
-        bButton.addListener(
+        ImageButton bacButton = createButton(path);
+        bacButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         game.setScreen(new MainMenuScreen(game));
-                    };
+                    }
 
                 });
-        bButton.setPosition(220, 100);
-        stage.addActor(bButton);
-        return bButton;
+        bacButton.setPosition(220, 100);
+        stage.addActor(bacButton);
+        return bacButton;
     }
 
     @Override
@@ -68,7 +73,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
+        Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
