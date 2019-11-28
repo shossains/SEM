@@ -27,6 +27,11 @@ public class MainMenuScreen implements Screen {
     public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
 
+
+    /**
+     * Constructor for this Screen.
+     * @param game the current game instance
+     */
     public MainMenuScreen(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
@@ -59,35 +64,35 @@ public class MainMenuScreen implements Screen {
 
 
     private ImageButton createPlayButton(String path) {
-        ImageButton pButton = createButton(path);
-        pButton.addListener(
+        ImageButton plButton = createButton(path);
+        plButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         game.setScreen(new ChooseGameScreen(game));
-                    };
+                    }
 
                 });
-        pButton.setPosition(230, 320);
-        stage.addActor(pButton);
-        return pButton;
+        plButton.setPosition(230, 320);
+        stage.addActor(plButton);
+        return plButton;
     }
 
     private ImageButton createSettingsButton(String path) {
-        ImageButton sButton = createButton(path);
-        sButton.addListener(
+        ImageButton settButton = createButton(path);
+        settButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         game.setScreen(new SettingsScreen(game));
-                    };
+                    }
 
                 });
-        sButton.setPosition(230, 250);
-        stage.addActor(sButton);
-        return sButton;
+        settButton.setPosition(230, 250);
+        stage.addActor(settButton);
+        return settButton;
     }
 
     private ImageButton createLogoutButton(String path) {
@@ -98,7 +103,7 @@ public class MainMenuScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         game.setScreen(new LoginScreen(game));
-                    };
+                    }
 
                 });
         loButton.setPosition(230, 180);
@@ -108,20 +113,20 @@ public class MainMenuScreen implements Screen {
     }
 
     private ImageButton createExitButton(String path) {
-        ImageButton eButton = createButton(path);
-        eButton.addListener(
+        ImageButton exButton = createButton(path);
+        exButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         Gdx.app.exit();
-                    };
+                    }
 
                 });
-        eButton.setPosition(230, 110);
-        stage.addActor(eButton);
+        exButton.setPosition(230, 110);
+        stage.addActor(exButton);
 
-        return eButton;
+        return exButton;
     }
 
     @Override

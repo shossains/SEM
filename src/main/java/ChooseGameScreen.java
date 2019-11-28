@@ -21,20 +21,25 @@ public class ChooseGameScreen implements Screen {
     public transient Stage stage;
     public transient ImageButton backButton;
     public transient ImageButton localGameButton;
-    public transient ImageButton vsAIGameButton;
+    public transient ImageButton vsAiGameButton;
     public transient ImageButton onlineGameButton;
     public transient Texture myTexture;
     public transient TextureRegion myTextureRegion;
     public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
 
+
+    /**
+     * Constructor for this Screen.
+     * @param game the current game instance
+     */
     public ChooseGameScreen(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         backButton = createBackButton("assets/back.png");
         localGameButton = createLocalGameButton("assets/local.png");
-        vsAIGameButton = createVsAIButton("assets/vsAI.png");
+        vsAiGameButton = createVsAiButton("assets/vsAI.png");
         onlineGameButton = createOnlineButton("assets/online.png");
         game.font.setColor(Color.RED);
     }
@@ -50,10 +55,9 @@ public class ChooseGameScreen implements Screen {
     }
 
     private ImageButton createLocalGameButton(String path) {
-        ImageButton lButton = createButton(path);
-
-        lButton.setPosition(220, 300);
-        lButton.addListener(
+        ImageButton locButton = createButton(path);
+        locButton.setPosition(220, 300);
+        locButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -63,40 +67,40 @@ public class ChooseGameScreen implements Screen {
 
                     }
                 });
-        stage.addActor(lButton);
-        return lButton;
+        stage.addActor(locButton);
+        return locButton;
     }
 
-    private ImageButton createVsAIButton(String path) {
-        ImageButton vButton = createButton(path);
+    private ImageButton createVsAiButton(String path) {
+        ImageButton vsButton = createButton(path);
 
-        vButton.setPosition(220, 230);
-        stage.addActor(vButton);
-        return vButton;
+        vsButton.setPosition(220, 230);
+        stage.addActor(vsButton);
+        return vsButton;
     }
 
     private ImageButton createOnlineButton(String path) {
-        ImageButton oButton = createButton(path);
+        ImageButton onButton = createButton(path);
 
-        oButton.setPosition(220, 160);
-        stage.addActor(oButton);
-        return oButton;
+        onButton.setPosition(220, 160);
+        stage.addActor(onButton);
+        return onButton;
     }
 
     private ImageButton createBackButton(String path) {
-        ImageButton bButton = createButton(path);
-        bButton.addListener(
+        ImageButton bacButton = createButton(path);
+        bacButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
                         game.setScreen(new MainMenuScreen(game));
-                    };
+                    }
 
                 });
-        bButton.setPosition(220, 90);
-        stage.addActor(bButton);
-        return bButton;
+        bacButton.setPosition(220, 90);
+        stage.addActor(bacButton);
+        return bacButton;
     }
 
     @Override
@@ -106,7 +110,7 @@ public class ChooseGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor((float)204/255, (float)204/255, 1, 1);
+        Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
