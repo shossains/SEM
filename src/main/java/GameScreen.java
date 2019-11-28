@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
+        boardImage = new Texture(Gdx.files.internal("assets/table.png"));
         puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
         paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));

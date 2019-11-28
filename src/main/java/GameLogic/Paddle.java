@@ -36,7 +36,6 @@ public class Paddle extends Circle implements java.io.Serializable {
     public void movePaddle(boolean rightPressed, boolean leftPressed,
                            boolean upPressed, boolean downPressed,
                            float deltaTime) {
-
         if (rightPressed) {
             this.x += 100*deltaTime;
         }
