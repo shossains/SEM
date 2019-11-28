@@ -67,6 +67,9 @@ public class Credentials implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         username = usernameTextField.getText();
                         password = passwordTextField.getText();
+                        dispose();
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                MainMenuScreen(game));
 
                         if (username.equals("") || password.equals("")) {
                             Dialog dialog = new Dialog("Empty fields",
@@ -102,27 +105,19 @@ public class Credentials implements Screen {
                     }
                 });
         stage.addActor(button);
-    }
+        TextButton exit = new TextButton("Back", skin);
+        exit.setPosition(900, 600);
+        exit.setSize(100, 50);
+        exit.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                LoginScreen(game));
 
-    private boolean checkCred(String user, String pass) throws SQLException {
-        String[] queries = {"SELECT username, password FROM users WHERE username = '" + user + "';"};
-        ResultSet rs = Query.runQueries(queries)[0];
-        try {
-            while (rs.next()) {
-                String usern = rs.getString(1);
-                String passw = rs.getString(2);
-
-                if (usern.equals(user) && BCrypt.checkpw(pass, passw)) {
-                    rs.close();
-                    return true;
-                }
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        rs.close();
-        return false;
+                    }
+                });
+        stage.addActor(exit);
     }
 
     @Override
@@ -177,6 +172,6 @@ public class Credentials implements Screen {
 
     @Override
     public void dispose() {
-        game.spriteBatch.dispose();
+        //game.spriteBatch.dispose();
     }
 }

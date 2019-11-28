@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -32,30 +33,25 @@ public class Registration implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-//        FreeTypeFontGenerator generator =
-//                new FreeTypeFontGenerator(Gdx.files.internal("assets/ostrich-regular.ttf"));
-//        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
-//                new FreeTypeFontGenerator.FreeTypeFontParameter();
-//        parameter.size = 26;
-//        this.game.font = generator.generateFont(parameter);
-//        generator.dispose();
         AssetManager assetManager = new AssetManager();
         assetManager.load("assets/uiskin.json", Skin.class);
         assetManager.finishLoading();
         final String skinPath = "assets/uiskin.json";
-        final TextField usernameTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField emailTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField passwordAgainTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        usernameTextField.setPosition(300,250);
+        final TextField usernameTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField passwordTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField emailTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField passwordAgainTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        usernameTextField.setPosition(500,250);
         usernameTextField.setSize(300, 50);
-        passwordTextField.setPosition(300, 150);
+        passwordTextField.setPosition(500, 150);
         passwordTextField.setSize(300, 50);
-        passwordTextField.setPasswordMode(true);
-        passwordTextField.setPasswordCharacter('*');
-        emailTextField.setPosition(300, 350);
+        emailTextField.setPosition(500, 350);
         emailTextField.setSize(300, 50);
-        passwordAgainTextField.setPosition(300, 50);
+        passwordAgainTextField.setPosition(500, 50);
         passwordAgainTextField.setSize(300, 50);
         passwordAgainTextField.setPasswordMode(true);
         passwordAgainTextField.setPasswordCharacter('*');
@@ -67,7 +63,7 @@ public class Registration implements Screen {
         stage.addActor(image);
         TextButton button = new TextButton("Done", assetManager.get(skinPath, Skin.class));
         button.setColor(Color.ROYAL);
-        button.setPosition(20, 400);
+        button.setPosition(50, 500);
         button.setSize(100, 50);
         button.addListener(
                 new ClickListener() {
@@ -97,14 +93,30 @@ public class Registration implements Screen {
                             dialog.setColor(Color.ROYAL);
                             dialog.setSize(400, 200);
                             dialog.text("Please enter the password again."
-                                    +
-                                    " Your passwords do not match.");
+                                    + " Your passwords do not match.");
                             dialog.button("Ok", false);
                             dialog.show(stage);
+                        } else {
+                            dispose();
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                    MainMenuScreen(game));
                         }
                     }
                 });
         stage.addActor(button);
+        TextButton exit = new TextButton("Back", assetManager.get(skinPath, Skin.class));
+        exit.setPosition(900, 600);
+        exit.setSize(100, 50);
+        exit.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                LoginScreen(game));
+
+                    }
+                });
+        stage.addActor(exit);
     }
 
     @Override
@@ -122,10 +134,10 @@ public class Registration implements Screen {
         image.setSize(200, 200);
         image.setPosition(10, 100);
         game.font.setColor(Color.ROYAL);
-        game.font.draw(game.spriteBatch, "Email:", 200, 382);
-        game.font.draw(game.spriteBatch, "Username:", 200, 282);
-        game.font.draw(game.spriteBatch, "Password:", 200, 182);
-        game.font.draw(game.spriteBatch, "Password:", 200, 82);
+        game.font.draw(game.spriteBatch, "Email:", 400, 382);
+        game.font.draw(game.spriteBatch, "Username:", 400, 282);
+        game.font.draw(game.spriteBatch, "Password:", 400, 182);
+        game.font.draw(game.spriteBatch, "Password:", 400, 82);
         game.spriteBatch.end();
     }
 
@@ -151,6 +163,6 @@ public class Registration implements Screen {
 
     @Override
     public void dispose() {
-        game.spriteBatch.dispose();
+       // game.spriteBatch.dispose();
     }
 }
