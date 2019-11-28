@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -111,7 +112,7 @@ public class Credentials implements Screen {
                 String usern = rs.getString(1);
                 String passw = rs.getString(2);
 
-                if (usern.equals(user) && passw.equals(pass)) {
+                if (usern.equals(user) && BCrypt.checkpw(pass, passw)) {
                     rs.close();
                     return true;
                 }
@@ -142,6 +143,16 @@ public class Credentials implements Screen {
         image.setSize(150, 150);
         image.setPosition(350, 300);
         game.spriteBatch.end();
+    }
+
+    /**
+     * Takes in raw password and salt, returns a SHA512 hash from that.
+     *
+     * @param password The raw password to be hashed.
+     * @return A String that is the SHA512 hash of the password and salt.
+     */
+    public static String getHashedPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt(10));
     }
 
     @Override
