@@ -49,7 +49,7 @@ public class PuckTest {
         puck1.movePuck(deltaTime2);
         puck1.fixPosition();
 
-        assertEquals(300-puck1.radius, puck1.y);
+        assertEquals(400, puck1.y);
     }
 
     @Test
@@ -57,8 +57,8 @@ public class PuckTest {
         puck2.movePuck(deltaTime1);
         puck2.fixPosition();
 
-        assertEquals(300-puck2.radius, puck2.y);
-        assertEquals(400-puck2.radius, puck2.x);
+        assertEquals(300, puck2.y);
+        assertEquals(400, puck2.x);
     }
 
     @Test
