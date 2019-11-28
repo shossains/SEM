@@ -53,18 +53,22 @@ public class Puck extends Circle implements java.io.Serializable {
         //and more physics stuff
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
+            this.setxSpeed(-this.getxSpeed());
         }
         if (this.x > 1280 - this.radius) {
             this.x = 1280 - this.radius;
+            this.setxSpeed(-this.getxSpeed());
         }
 
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
+            this.setySpeed(-this.getySpeed());
             initMove = false;
         }
         if (this.y > 720 - this.radius) {
             this.y = 720 - this.radius;
+            this.setySpeed(-this.getySpeed());
 
             initMove = false;
         }

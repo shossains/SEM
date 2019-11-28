@@ -16,9 +16,9 @@ public class PuckTest {
 
     @BeforeEach
     public void setUpTests() {
-        puck1 = new Puck(10, 100, 0, 30, 15);
-        puck2 = new Puck(200, 150, 40, 30, 15);
-        puck3 = new Puck(200, 150, -40, -30, 15);
+        puck1 = new Puck(10, 100, 0, 100, 15);
+        puck2 = new Puck(640, 360, 64, 36, 15);
+        puck3 = new Puck(640, 360, -64, -36, 15);
 
     }
 
@@ -30,7 +30,7 @@ public class PuckTest {
     @Test
     public void testGetters() {
         assertEquals(0, puck1.getxSpeed());
-        assertEquals(30, puck1.getySpeed());
+        assertEquals(100, puck1.getySpeed());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PuckTest {
         puck1.movePuck(deltaTime1);
 
         assertEquals(10, puck1.x);
-        assertEquals(100+150, puck1.y);
+        assertEquals(100+500, puck1.y);
     }
 
     @Test
@@ -49,16 +49,25 @@ public class PuckTest {
         puck1.movePuck(deltaTime2);
         puck1.fixPosition();
 
-        assertEquals(400, puck1.y);
+        assertEquals(720-puck1.radius, puck1.y);
+
+        puck1.movePuck(deltaTime1);
+
+        assertEquals(720-puck1.radius-500, puck1.y);
     }
 
     @Test
     public void testBoundaries2() {
-        puck2.movePuck(deltaTime1);
+        puck2.movePuck(deltaTime2);
         puck2.fixPosition();
 
-        assertEquals(300, puck2.y);
-        assertEquals(400, puck2.x);
+        assertEquals(705, puck2.y);
+        assertEquals(1265, puck2.x);
+
+        puck2.movePuck(deltaTime1);
+
+        assertEquals(1265-64*5, puck2.x);
+        assertEquals(705-36*5, puck2.y);
     }
 
     @Test
@@ -66,7 +75,12 @@ public class PuckTest {
         puck3.movePuck(deltaTime2);
         puck3.fixPosition();
 
-        assertEquals(puck3.radius, puck3.y);
-        assertEquals(puck3.radius, puck3.x);
+        assertEquals(15, puck3.y);
+        assertEquals(15, puck3.x);
+
+        puck3.movePuck(deltaTime1);
+
+        assertEquals(15+64*5, puck3.x);
+        assertEquals(15+36*5, puck3.y);
     }
 }

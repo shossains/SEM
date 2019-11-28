@@ -22,13 +22,13 @@ public class CollisionsEngine {
 
     public void Collide() {
         if (isIntersecting(puck, paddle1)) {
-            this.puck.setxSpeed(paddle1.getxSpeed());
-            this.puck.setySpeed(paddle1.getySpeed());
+            this.puck.setxSpeed(paddle1.getxSpeed()+20);
+            this.puck.setySpeed(paddle1.getySpeed()+20);
         }
 
         if (isIntersecting(puck, paddle2)) {
-            this.puck.setxSpeed(paddle2.getxSpeed());
-            this.puck.setySpeed(paddle2.getySpeed());
+            this.puck.setxSpeed(paddle2.getxSpeed()+20);
+            this.puck.setySpeed(paddle2.getySpeed()+20);
         }
 
     }

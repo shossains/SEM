@@ -42,12 +42,20 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.setxSpeed(-100);
         }
 
+        if((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
+            this.setxSpeed(0);
+        }
+
         if (upPressed) {
             this.setySpeed(100);
         }
 
         if (downPressed) {
             this.setySpeed(-100);
+        }
+
+        if((!upPressed & !downPressed) || (upPressed & downPressed)) {
+            this.setySpeed(0);
         }
     }
 
