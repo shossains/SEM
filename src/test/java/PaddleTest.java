@@ -1,20 +1,20 @@
-import GameLogic.Paddle;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import gamelogic.Paddle;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PaddleTest {
 
     private transient Paddle paddle1;
     private transient Paddle paddle2;
 
-    private static transient final int deltaTime1 = 5;
-    private static transient final int deltaTime2 = 3;
+    private transient int deltaTime1 = 5;
+    private transient int deltaTime2 = 3;
 
     @BeforeEach
-    public void setUpTests() {
+    void setupTestEnvironment() {
         paddle1 = new Paddle(100, 100, 0, 0, 15);
         paddle2 = new Paddle(300, 200, 0, 0, 15);
 

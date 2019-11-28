@@ -1,4 +1,4 @@
-package GameLogic;
+package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
@@ -25,13 +25,13 @@ public class CollisionsEngine {
      */
     public void collide() {
         if (isIntersecting(puck, paddle1)) {
-            this.puck.setxSpeed(paddle1.getxSpeed() + 20);
-            this.puck.setySpeed(paddle1.getySpeed() + 20);
+            this.puck.setXspeed(paddle1.getXspeed() + 50);
+            this.puck.setYspeed(paddle1.getYspeed() + 50);
         }
 
         if (isIntersecting(puck, paddle2)) {
-            this.puck.setxSpeed(paddle2.getxSpeed() + 20);
-            this.puck.setySpeed(paddle2.getySpeed() + 20);
+            this.puck.setXspeed(paddle2.getXspeed() + 50);
+            this.puck.setYspeed(paddle2.getYspeed() + 50);
         }
 
     }

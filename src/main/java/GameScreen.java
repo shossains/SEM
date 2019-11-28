@@ -1,7 +1,7 @@
 
-import GameLogic.CollisionsEngine;
-import GameLogic.Paddle;
-import GameLogic.Puck;
+import gamelogic.CollisionsEngine;
+import gamelogic.Paddle;
+import gamelogic.Puck;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
