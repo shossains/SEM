@@ -36,9 +36,9 @@ public class LoginScreen implements Screen {
         ImageButton loginButton = createLoginButton("assets/login.png");
         ImageButton registerButton = createRegisterButton("assets/register.png");
         ImageButton exitButton = createImageButton("assets/exit2.png");
-        exitButton.setPosition(500, 400);
-        loginButton.setPosition(300, 200);
-        registerButton.setPosition(300, 100);
+        exitButton.setPosition(1130, 640);
+        loginButton.setPosition(500, 200);
+        registerButton.setPosition(500, 100);
         game.font.setColor(Color.RED);
         stage.addActor(loginButton);
         stage.addActor(exitButton);
@@ -129,7 +129,7 @@ public class LoginScreen implements Screen {
         stage.act();
         stage.draw();
         game.spriteBatch.end();
-        image.setPosition(5, 200);
+        image.setPosition(5, 300);
         image.setSize(300, 300);
         //start here if the play button is pushed, we start a new game
         //add for play button later, initially start game on space bar press

@@ -44,13 +44,13 @@ public class Registration implements Screen {
         final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         final TextField emailTextField = new TextField("", assetManager.get(skinPath, Skin.class));
         final TextField passwordAgainTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        usernameTextField.setPosition(300,250);
+        usernameTextField.setPosition(500,250);
         usernameTextField.setSize(300, 50);
-        passwordTextField.setPosition(300, 150);
+        passwordTextField.setPosition(500, 150);
         passwordTextField.setSize(300, 50);
-        emailTextField.setPosition(300, 350);
+        emailTextField.setPosition(500, 350);
         emailTextField.setSize(300, 50);
-        passwordAgainTextField.setPosition(300, 50);
+        passwordAgainTextField.setPosition(500, 50);
         passwordAgainTextField.setSize(300, 50);
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
@@ -60,7 +60,7 @@ public class Registration implements Screen {
         stage.addActor(image);
         TextButton button = new TextButton("Done", assetManager.get(skinPath, Skin.class));
         button.setColor(Color.ROYAL);
-        button.setPosition(20, 400);
+        button.setPosition(50, 500);
         button.setSize(100, 50);
         button.addListener(
                 new ClickListener() {
@@ -109,10 +109,10 @@ public class Registration implements Screen {
         image.setSize(200, 200);
         image.setPosition(10, 100);
         game.font.setColor(Color.ROYAL);
-        game.font.draw(game.spriteBatch, "Email:", 200, 382);
-        game.font.draw(game.spriteBatch, "Username:", 200, 282);
-        game.font.draw(game.spriteBatch, "Password:", 200, 182);
-        game.font.draw(game.spriteBatch, "Password:", 200, 82);
+        game.font.draw(game.spriteBatch, "Email:", 400, 382);
+        game.font.draw(game.spriteBatch, "Username:", 400, 282);
+        game.font.draw(game.spriteBatch, "Password:", 400, 182);
+        game.font.draw(game.spriteBatch, "Password:", 400, 82);
         game.spriteBatch.end();
     }
 
