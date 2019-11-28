@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -29,21 +33,18 @@ public class Registration implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-//        FreeTypeFontGenerator generator =
-//                new FreeTypeFontGenerator(Gdx.files.internal("ostrich-regular.ttf"));
-//        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
-//                new FreeTypeFontGenerator.FreeTypeFontParameter();
-//        parameter.size = 26;
-//        this.game.font = generator.generateFont(parameter);
-//        generator.dispose();
         AssetManager assetManager = new AssetManager();
         assetManager.load("assets/uiskin.json", Skin.class);
         assetManager.finishLoading();
         final String skinPath = "assets/uiskin.json";
-        final TextField usernameTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField passwordTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField emailTextField = new TextField("", assetManager.get(skinPath, Skin.class));
-        final TextField passwordAgainTextField = new TextField("", assetManager.get(skinPath, Skin.class));
+        final TextField usernameTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField passwordTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField emailTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
+        final TextField passwordAgainTextField = new TextField("",
+                assetManager.get(skinPath, Skin.class));
         usernameTextField.setPosition(500,250);
         usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(500, 150);
@@ -71,7 +72,9 @@ public class Registration implements Screen {
                         email = emailTextField.getText();
                         passwordAgain = passwordAgainTextField.getText();
                         if (!passwordAgain.equals(password)) {
-                            Dialog dialog = new Dialog("Warning - wrong password", assetManager.get(skinPath, Skin.class), "dialog") {
+                            Dialog dialog = new Dialog("Warning - wrong password",
+                                    assetManager.get(skinPath, Skin.class),
+                                    "dialog") {
                                 public void result(Object obj) {
                                     System.out.println("result " + obj);
                                 }
@@ -79,12 +82,10 @@ public class Registration implements Screen {
                             dialog.setColor(Color.ROYAL);
                             dialog.setSize(400, 200);
                             dialog.text("Please enter the password again."
-                                    +
-                                    " Your passwords do not match.");
+                                    + " Your passwords do not match.");
                             dialog.button("Ok", false);
                             dialog.show(stage);
-                        }
-                        else {
+                        } else {
                             dispose();
                             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                                     MainMenuScreen(game));
