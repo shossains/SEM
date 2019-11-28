@@ -35,13 +35,35 @@ public class LoginScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         ImageButton loginButton = createLoginButton("assets/login.png");
         ImageButton registerButton = createRegisterButton("assets/register.png");
-        loginButton.setPosition(300, 200);
-        registerButton.setPosition(300, 100);
+        ImageButton exitButton = createImageButton("assets/exit2.png");
+        exitButton.setPosition(1130, 640);
+        loginButton.setPosition(500, 200);
+        registerButton.setPosition(500, 100);
         game.font.setColor(Color.RED);
         stage.addActor(loginButton);
+        stage.addActor(exitButton);
         stage.addActor(registerButton);
         image = new Image(new Texture("assets/air.png"));
         stage.addActor(image);
+    }
+
+    /**
+     * Method for creating a new exit button.
+     * @param path of the image used.
+     * @return a new exit button.
+     */
+    private ImageButton createImageButton(String path) {
+        ImageButton exitButton = createButton(path);
+        exitButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        Gdx.app.exit();
+                    }
+                }
+        );
+        return exitButton;
     }
 
     /**
@@ -107,7 +129,7 @@ public class LoginScreen implements Screen {
         stage.act();
         stage.draw();
         game.spriteBatch.end();
-        image.setPosition(5, 200);
+        image.setPosition(5, 300);
         image.setSize(300, 300);
         //start here if the play button is pushed, we start a new game
         //add for play button later, initially start game on space bar press
