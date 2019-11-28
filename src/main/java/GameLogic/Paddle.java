@@ -42,7 +42,7 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.setxSpeed(-100);
         }
 
-        if((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
+        if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
             this.setxSpeed(0);
         }
 
@@ -54,14 +54,14 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.setySpeed(-100);
         }
 
-        if((!upPressed & !downPressed) || (upPressed & downPressed)) {
+        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
             this.setySpeed(0);
         }
     }
 
     public void movePaddle(double deltaTime) {
-        this.x += this.xSpeed*deltaTime;
-        this.y += this.ySpeed*deltaTime;
+        this.x += this.xSpeed * deltaTime;
+        this.y += this.ySpeed * deltaTime;
     }
 
     /**
@@ -83,6 +83,7 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.y = 720 - this.radius;
         }
     }
+
     public float getxSpeed() {
         return xSpeed;
     }

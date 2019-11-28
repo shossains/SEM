@@ -19,7 +19,8 @@ public class GameScreen implements Screen {
 
     transient Board board;
     transient Puck puck;
-    transient Paddle paddle1, paddle2;
+    transient Paddle paddle1;
+    transient Paddle paddle2;
 
     transient CollisionsEngine collisionsEngine;
 
@@ -27,6 +28,10 @@ public class GameScreen implements Screen {
 
     transient boolean initMove = true;
 
+    /**
+     * Constructor.
+     * @param game The game object.
+     */
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
@@ -79,13 +84,13 @@ public class GameScreen implements Screen {
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
         //the boundary is still not totally correct
         game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
-                puck.radius*2, puck.radius*2);
+                puck.radius * 2, puck.radius * 2);
 
         game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
-                paddle1.radius*2, paddle1.radius*2);
+                paddle1.radius * 2, paddle1.radius * 2);
 
         game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
-                paddle2.radius*2, paddle2.radius*2);
+                paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
 
@@ -115,7 +120,7 @@ public class GameScreen implements Screen {
         paddle1.movePaddle(deltaTime);
         paddle2.movePaddle(deltaTime);
 
-        collisionsEngine.Collide();
+        collisionsEngine.collide();
 
         paddle1.fixPosition();
         paddle2.fixPosition();

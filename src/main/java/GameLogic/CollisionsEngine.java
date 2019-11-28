@@ -4,9 +4,9 @@ import com.badlogic.gdx.math.Circle;
 
 public class CollisionsEngine {
 
-    private Puck puck;
-    private Paddle paddle1;
-    private Paddle paddle2;
+    private transient Puck puck;
+    private transient Paddle paddle1;
+    private transient Paddle paddle2;
 
     /**
      * Constructor.
@@ -20,24 +20,27 @@ public class CollisionsEngine {
         this.paddle2 = paddle2;
     }
 
-    public void Collide() {
+    /**
+     * Method that calculates the collisions between the puck and paddles.
+     */
+    public void collide() {
         if (isIntersecting(puck, paddle1)) {
-            this.puck.setxSpeed(paddle1.getxSpeed()+20);
-            this.puck.setySpeed(paddle1.getySpeed()+20);
+            this.puck.setxSpeed(paddle1.getxSpeed() + 20);
+            this.puck.setySpeed(paddle1.getySpeed() + 20);
         }
 
         if (isIntersecting(puck, paddle2)) {
-            this.puck.setxSpeed(paddle2.getxSpeed()+20);
-            this.puck.setySpeed(paddle2.getySpeed()+20);
+            this.puck.setxSpeed(paddle2.getxSpeed() + 20);
+            this.puck.setySpeed(paddle2.getySpeed() + 20);
         }
 
     }
 
-    public double Dist(Circle c1, Circle c2) {
+    public double distance(Circle c1, Circle c2) {
         return Math.pow((c1.x - c2.x), 2) + Math.pow((c1.y - c2.y), 2);
     }
 
     public boolean isIntersecting(Circle c1, Circle c2) {
-        return Dist(c1, c2) <= Math.pow((c1.radius + c2.radius), 2);
+        return distance(c1, c2) <= Math.pow((c1.radius + c2.radius), 2);
     }
 }

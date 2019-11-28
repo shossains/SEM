@@ -15,12 +15,12 @@ public class Puck extends Circle implements java.io.Serializable {
     private transient boolean initMove;
 
     /**
-     * Constructor
-     * @param x
-     * @param y
-     * @param xSpeed
-     * @param ySpeed
-     * @param radius
+     * Constructor.
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     * @param xSpeed Speed in x direction.
+     * @param ySpeed Speed in y direction.
+     * @param radius The radius.
      */
     public Puck(float x, float y, float xSpeed, float ySpeed, float radius) {
 
@@ -31,16 +31,16 @@ public class Puck extends Circle implements java.io.Serializable {
     }
 
     /**
-     * Method to move the puck
-     * @param deltaTime
+     * Method to move the puck.
+     * @param deltaTime GDX deltaTime.
      */
     public void movePuck(float deltaTime) {
-        this.x += this.xSpeed*deltaTime;
-        this.y += this.ySpeed*deltaTime;
+        this.x += this.xSpeed * deltaTime;
+        this.y += this.ySpeed * deltaTime;
     }
 
     /**
-     * Method to ensure the puck is within the correct boundaries
+     * Method to ensure the puck is within the correct boundaries.
      */
     public void fixPosition() {
         //we need to add the functionality to check that if the puck has hit the boundaries
@@ -53,22 +53,22 @@ public class Puck extends Circle implements java.io.Serializable {
         //and more physics stuff
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
-            this.setxSpeed(-this.getxSpeed());
+            this.setxSpeed(- this.getxSpeed());
         }
         if (this.x > 1280 - this.radius) {
             this.x = 1280 - this.radius;
-            this.setxSpeed(-this.getxSpeed());
+            this.setxSpeed(- this.getxSpeed());
         }
 
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
-            this.setySpeed(-this.getySpeed());
+            this.setySpeed(- this.getySpeed());
             initMove = false;
         }
         if (this.y > 720 - this.radius) {
             this.y = 720 - this.radius;
-            this.setySpeed(-this.getySpeed());
+            this.setySpeed(- this.getySpeed());
 
             initMove = false;
         }
