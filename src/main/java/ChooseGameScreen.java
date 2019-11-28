@@ -1,4 +1,5 @@
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -55,8 +56,17 @@ public class ChooseGameScreen implements Screen {
 
     private ImageButton createLocalGameButton(String path) {
         ImageButton locButton = createButton(path);
-
         locButton.setPosition(220, 300);
+        locButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                GameScreen(game));
+
+                    }
+                });
         stage.addActor(locButton);
         return locButton;
     }

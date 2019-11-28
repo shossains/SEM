@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -54,7 +55,9 @@ public class Credentials implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         username = usernameTextField.getText();
                         password = passwordTextField.getText();
-                        System.out.print(username + " " + password);
+                        dispose();
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                MainMenuScreen(game));
 
                     }
                 });
@@ -104,6 +107,6 @@ public class Credentials implements Screen {
 
     @Override
     public void dispose() {
-        game.spriteBatch.dispose();
+        //game.spriteBatch.dispose();
     }
 }

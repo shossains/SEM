@@ -168,6 +168,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+//        stage.dispose();
     }
 }
