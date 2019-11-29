@@ -3,7 +3,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +16,7 @@ public class MainMenuScreen implements Screen {
 
     final transient MyGdxGame game;
 
+    public transient String username;
     public transient Stage stage;
     public transient ImageButton playButton;
     public transient ImageButton settingsButton;
@@ -142,7 +142,7 @@ public class MainMenuScreen implements Screen {
         stage.draw();
         game.spriteBatch.begin();
         game.font.getData().setScale(1.4f);
-        game.font.draw(game.spriteBatch, "Welcome, " + "<username>" + "!!!", 230, 450);
+        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 450);
         game.spriteBatch.end();
     }
 

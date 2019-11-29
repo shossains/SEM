@@ -1,19 +1,26 @@
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+
+@SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;
@@ -31,14 +38,19 @@ public class Credentials implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
-        Skin skin = new Skin(Gdx.files.internal("assets/uiSkin.json"));
+        AssetManager assetManager = new AssetManager();
+        assetManager.load("assets/uiskin.json", Skin.class);
+        assetManager.finishLoading();
+        final String skinPath = "assets/uiskin.json";
+        Skin skin = new Skin(Gdx.files.internal(skinPath));
         final TextField usernameTextField = new TextField("", skin);
         final TextField passwordTextField = new TextField("", skin);
         usernameTextField.setPosition(250,200);
         usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(250, 100);
         passwordTextField.setSize(300, 50);
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
@@ -55,10 +67,38 @@ public class Credentials implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         username = usernameTextField.getText();
                         password = passwordTextField.getText();
-                        dispose();
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                MainMenuScreen(game));
 
+                        if (username.equals("") || password.equals("")) {
+                            Dialog dialog = new Dialog("Empty fields",
+                                    assetManager.get(skinPath, Skin.class),
+                                    "dialog") {
+                            };
+                            dialog.setColor(Color.RED);
+                            dialog.setSize(400, 200);
+                            dialog.text("Please fill in all fields!");
+                            dialog.button("Ok", false);
+                            dialog.show(stage);
+                        } else {
+                            try {
+                                if (checkCred(username, password)) {
+                                    MainMenuScreen m = new MainMenuScreen(game);
+                                    m.username = username;
+                                    ((Game) Gdx.app.getApplicationListener()).setScreen(m);
+                                } else {
+                                    Dialog dialog = new Dialog("Incorrect credentials",
+                                            assetManager.get(skinPath, Skin.class),
+                                            "dialog") {
+                                    };
+                                    dialog.setColor(Color.RED);
+                                    dialog.setSize(400, 200);
+                                    dialog.text("Incorrect user and/or password");
+                                    dialog.button("Ok", false);
+                                    dialog.show(stage);
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 });
         stage.addActor(button);
@@ -96,6 +136,29 @@ public class Credentials implements Screen {
         image.setPosition(350, 300);
         game.spriteBatch.end();
     }
+
+    private boolean checkCred(String user, String pass) throws SQLException {
+        String[] queries = {"SELECT username,"
+                + " password FROM users WHERE username = '" + user + "';"};
+        ResultSet rs = Query.runQueries(queries)[0];
+        try {
+            while (rs.next()) {
+                String usern = rs.getString(1);
+                String passw = rs.getString(2);
+
+                if (usern.equals(user) && BCrypt.checkpw(pass, passw)) {
+                    rs.close();
+                    return true;
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        rs.close();
+        return false;
+    }
+
 
     @Override
     public void resize(int width, int height) {

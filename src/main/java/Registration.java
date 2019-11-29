@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Registration implements Screen {
     private transient MyGdxGame game;
@@ -53,6 +54,8 @@ public class Registration implements Screen {
         emailTextField.setSize(300, 50);
         passwordAgainTextField.setPosition(500, 50);
         passwordAgainTextField.setSize(300, 50);
+        passwordAgainTextField.setPasswordMode(true);
+        passwordAgainTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
         stage.addActor(emailTextField);
@@ -71,13 +74,23 @@ public class Registration implements Screen {
                         password = passwordTextField.getText();
                         email = emailTextField.getText();
                         passwordAgain = passwordAgainTextField.getText();
-                        if (!passwordAgain.equals(password)) {
-                            Dialog dialog = new Dialog("Warning - wrong password",
+                        if (username.equals("") || password.equals("")
+                                || email.equals("") || passwordAgain.equals("")) {
+                            Dialog dialoga = new Dialog("Empty fields",
                                     assetManager.get(skinPath, Skin.class),
                                     "dialog") {
                                 public void result(Object obj) {
                                     System.out.println("result " + obj);
                                 }
+                            };
+                            dialoga.setColor(Color.RED);
+                            dialoga.setSize(400, 200);
+                            dialoga.text("Please fill in all fields.");
+                            dialoga.button("Ok", false);
+                            dialoga.show(stage);
+                        } else if  (!passwordAgain.equals(password)) {
+                            Dialog dialog = new Dialog("Warning - wrong password",
+                                    assetManager.get(skinPath, Skin.class), "dialog") {
                             };
                             dialog.setColor(Color.ROYAL);
                             dialog.setSize(400, 200);
@@ -128,6 +141,16 @@ public class Registration implements Screen {
         game.font.draw(game.spriteBatch, "Password:", 400, 182);
         game.font.draw(game.spriteBatch, "Password:", 400, 82);
         game.spriteBatch.end();
+    }
+
+    /**
+     * Takes in raw password and salt, returns a SHA512 hash from that.
+     *
+     * @param password The raw password to be hashed.
+     * @return A String that is the SHA512 hash of the password and salt.
+     */
+    public static String getHashedPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt(10));
     }
 
     @Override
