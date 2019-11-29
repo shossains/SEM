@@ -15,12 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
-@SuppressWarnings("PMD.CloseResource")
+
+@SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;
@@ -138,7 +138,8 @@ public class Credentials implements Screen {
     }
 
     private boolean checkCred(String user, String pass) throws SQLException {
-        String[] queries = {"SELECT username, password FROM users WHERE username = '" + user + "';"};
+        String[] queries = {"SELECT username,"
+                + " password FROM users WHERE username = '" + user + "';"};
         ResultSet rs = Query.runQueries(queries)[0];
         try {
             while (rs.next()) {

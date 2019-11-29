@@ -74,7 +74,8 @@ public class Registration implements Screen {
                         password = passwordTextField.getText();
                         email = emailTextField.getText();
                         passwordAgain = passwordAgainTextField.getText();
-                        if (username.equals("") || password.equals("") || email.equals("") || passwordAgain.equals("")) {
+                        if (username.equals("") || password.equals("")
+                                || email.equals("") || passwordAgain.equals("")) {
                             Dialog dialoga = new Dialog("Empty fields",
                                     assetManager.get(skinPath, Skin.class),
                                     "dialog") {
