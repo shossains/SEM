@@ -30,7 +30,7 @@ Within these functional requirements four categories can be identified using the
     * Start a new game
     * See the scoreboard
     * Exit the game
- * When the user starts a new game he/she is taken to a new game session.
+ * When the user starts a new game he/she is taken to a new local game session.
  * The game shows a board with one puck and two paddles before the game starts.    
  * The game's board has a clear layout with two goals, one for each player.    
  * The game shall let the puck slide to one of the player's halves when the game starts.
