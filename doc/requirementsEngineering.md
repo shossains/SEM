@@ -38,6 +38,16 @@ Within these functional requirements four categories can be identified using the
  * The game's score should reset when the game starts.
  * The game shall randomly slide the puck into one of the players halves when the game starts.
  * The player shall be able to move his/her paddle in all directions.
+ * The paddle of player one moves:  
+    * To the left when the player one presses 'A' on the keyboard.   
+    * To the right when the player one presses 'D' on the keyboard.  
+    * Down when the player one presses 'S' on the keyboard.  
+    * Up when the player one presses 'W' on the keyboard.  
+* The paddle of player two moves:  
+    * To the left when the player two presses "left arrow key" on the keyboard.  
+    * To the right when the player two presses "right arrow key" on the keyboard.  
+    * Down when the player two presses "down arrow key" on the keyboard.  
+    * Up when the player two presses "up arrow key" on the keyboard.
  * The game shall not allow the player to move his/her paddle outside of the board.
  * The game shall not allow the puck to move outside of the board.
  * The game shall not allow for the puck and the paddle to overlap.
@@ -48,17 +58,22 @@ Within these functional requirements four categories can be identified using the
  * The game shall add one point to the score of the player when the puck crosses the goal line of the other player.
  * The game shall reset the paddles and the puck to the initial state after the goal.
  * The game shall slide the puck into the half of the player that lost a point.
- * The winner of the game is :
-    * The player who scores eleven points before the other player does.
-    * The player with more points when the clock stops.
-    * The player who is till in game if the other player left the current game session.
-* The game ends with a tie if both players have the same amount of points when the clock stops.
-* The game shall not allow any movement on the board after the winner was announced.
-* The score, the duration of the game and the names of the players are stored in the database after the game.
-* The program shall take the user back to the main menu after the game ends.
-* When the user opens the scoreboard the program shall show ten finished games with the shortest duration 
-  and the names of the players that played in those games.
-* After the user presses the Exit button the program closes. 
+ * The game is finished when:  
+    * A player wins the game:  
+        * The player scores eleven points before the other player.
+        * The player has more points than the other player when the clock stops.  
+        * The player is still in the game after the other player left the current game session.  
+    * The players tie the game: 
+        * The clock runs out and both players have the same amount of points.  
+    * The player loses the game:  
+        * The opposing player scores eleven points.  
+        * The opposing player has more points than the player when the clock stops.  
+        * The player left the game while the game was still being played.  
+ * The game shall not allow any movement on the board after the winner was announced.
+ * At the end of each play, the user should be able to enter his/her name together with the recorded score. The data is stored in the database.  
+ * At the end of each play, the game should show the top 5 scores that have ever been recorded.  
+ * The program shall take the user back to the main menu after the game ends.  
+ * After the user presses the Exit button the program closes. 
 
 
 ## 1.2 Should Haves : 
@@ -101,7 +116,8 @@ process of the system.
 * The program makes use of libraries:
     * LibGDX
     * PostgresJDBC
- * The program should work smoothly
- * The game should bring joy to anyone who plays it
+* The program should use prepared statements in Java to avoid code-injection vulnerabilities.  
+* The program should work smoothly
+* The game should bring joy to anyone who plays it
 
 
