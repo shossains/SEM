@@ -2,12 +2,9 @@ package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
-public class Paddle extends Circle implements java.io.Serializable {
+public class Paddle extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
-
-    public transient float xspeed;
-    public transient float yspeed;
 
     /**
      * Constructor.
@@ -17,12 +14,9 @@ public class Paddle extends Circle implements java.io.Serializable {
      * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xspeed, float yspeed, float radius) {
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass) {
 
-        super(x, y, radius);
-
-        this.xspeed = xspeed;
-        this.yspeed = yspeed;
+        super(x, y, radius, xspeed, yspeed, mass);
     }
 
     /**
@@ -59,11 +53,6 @@ public class Paddle extends Circle implements java.io.Serializable {
         }
     }
 
-    public void movePaddle(double deltaTime) {
-        this.x += this.xspeed * deltaTime;
-        this.y += this.yspeed * deltaTime;
-    }
-
     /**
      * Method to ensure the puck is within the correct boundaries.
      */
@@ -83,22 +72,4 @@ public class Paddle extends Circle implements java.io.Serializable {
             this.y = 720 - this.radius;
         }
     }
-
-    public float getXspeed() {
-        return xspeed;
-    }
-
-    public void setXspeed(float xspeed) {
-        this.xspeed = xspeed;
-    }
-
-    public float getYspeed() {
-        return yspeed;
-    }
-
-    public void setYspeed(float yspeed) {
-        this.yspeed = yspeed;
-    }
-
-
 }

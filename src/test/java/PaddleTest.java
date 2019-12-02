@@ -15,8 +15,8 @@ public class PaddleTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(100, 100, 0, 0, 15);
-        paddle2 = new Paddle(300, 200, 0, 0, 15);
+        paddle1 = new Paddle(100, 100, 0, 0, 15, 10);
+        paddle2 = new Paddle(300, 200, 0, 0, 15, 10);
 
     }
 
@@ -32,7 +32,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(true, false, true, false);
 
-        paddle1.movePaddle(deltaTime1);
+        paddle1.move(deltaTime1);
         assertEquals(600, paddle1.x);
         assertEquals(600, paddle1.y);
     }
@@ -44,7 +44,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(false, true, false, true);
 
-        paddle1.movePaddle(deltaTime1);
+        paddle1.move(deltaTime1);
         assertEquals(-400, paddle1.x);
         assertEquals(-400, paddle1.y);
     }
@@ -56,7 +56,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(true, true, true, true);
 
-        paddle1.movePaddle(deltaTime1);
+        paddle1.move(deltaTime1);
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
     }
@@ -68,7 +68,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(false, false, false, false);
 
-        paddle1.movePaddle(deltaTime1);
+        paddle1.move(deltaTime1);
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
     }
@@ -80,7 +80,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(false, true, false, true);
 
-        paddle1.movePaddle(deltaTime2);
+        paddle1.move(deltaTime2);
         paddle1.fixPosition();
 
         assertEquals(paddle1.radius, paddle1.y);
@@ -94,7 +94,7 @@ public class PaddleTest {
 
         paddle2.setSpeeds(true, false, true, false);
 
-        paddle2.movePaddle(deltaTime2);
+        paddle2.move(deltaTime2);
         paddle2.fixPosition();
 
         assertEquals(600, paddle2.x);

@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class CollisionsEngine {
 
     private transient Puck puck;
@@ -36,11 +34,11 @@ public class CollisionsEngine {
 
     }
 
-    public double distance(Circle c1, Circle c2) {
+    public double distance(Collidable c1, Collidable c2) {
         return Math.pow((c1.x - c2.x), 2) + Math.pow((c1.y - c2.y), 2);
     }
 
-    public boolean isIntersecting(Circle c1, Circle c2) {
+    public boolean isIntersecting(Collidable c1, Collidable c2) {
         return distance(c1, c2) <= Math.pow((c1.radius + c2.radius), 2);
     }
 }

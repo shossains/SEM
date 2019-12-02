@@ -2,15 +2,9 @@ package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
-public class Puck extends Circle implements java.io.Serializable {
+public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
-
-    //add extra attributes
-    //It needs speed in x and y direction
-
-    public transient float xspeed;
-    public transient float yspeed;
 
     private transient boolean initMove;
 
@@ -22,21 +16,9 @@ public class Puck extends Circle implements java.io.Serializable {
      * @param yspeed Speed in y direction.
      * @param radius The radius.
      */
-    public Puck(float x, float y, float xspeed, float yspeed, float radius) {
+    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass) {
 
-        super(x, y, radius);
-
-        this.xspeed = xspeed;
-        this.yspeed = yspeed;
-    }
-
-    /**
-     * Method to move the puck.
-     * @param deltaTime GDX deltaTime.
-     */
-    public void movePuck(float deltaTime) {
-        this.x += this.xspeed * deltaTime;
-        this.y += this.yspeed * deltaTime;
+        super(x, y, radius, xspeed, yspeed, mass);
     }
 
     /**
@@ -74,21 +56,6 @@ public class Puck extends Circle implements java.io.Serializable {
         }
     }
 
-    public float getXspeed() {
-        return xspeed;
-    }
-
-    public void setXspeed(float xspeed) {
-        this.xspeed = xspeed;
-    }
-
-    public float getYspeed() {
-        return yspeed;
-    }
-
-    public void setYspeed(float yspeed) {
-        this.yspeed = yspeed;
-    }
 
     public boolean isInitMove() {
         return initMove;

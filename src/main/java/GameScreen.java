@@ -48,10 +48,10 @@ public class GameScreen implements Screen {
         board = new Board(0, 0, 1280, 720);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
 
@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
 
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        puck.movePuck(deltaTime);
+        puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
 
@@ -117,8 +117,8 @@ public class GameScreen implements Screen {
         paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
         paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
 
-        paddle1.movePaddle(deltaTime);
-        paddle2.movePaddle(deltaTime);
+        paddle1.move(deltaTime);
+        paddle2.move(deltaTime);
 
         collisionsEngine.collide();
 
