@@ -13,6 +13,7 @@ public class PuckTest {
 
     private transient int deltaTime1 = 5;
     private transient int deltaTime2 = 10;
+    private transient float coeffRestitution = 0.85f;
 
     @BeforeEach
     void setupTestEnvironment() {
@@ -53,7 +54,7 @@ public class PuckTest {
 
         puck1.move(deltaTime1);
 
-        assertEquals(720 - puck1.radius - 500, puck1.y);
+        assertEquals(720 - puck1.radius - 500 * coeffRestitution, puck1.y);
     }
 
     @Test
@@ -66,8 +67,8 @@ public class PuckTest {
 
         puck2.move(deltaTime1);
 
-        assertEquals(1265 - 64 * 5, puck2.x);
-        assertEquals(705 - 36 * 5, puck2.y);
+        assertEquals(1265 - 64 * 5 * coeffRestitution, puck2.x);
+        assertEquals(705 - 36 * 5 * coeffRestitution, puck2.y);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class PuckTest {
 
         puck3.move(deltaTime1);
 
-        assertEquals(15 + 64 * 5, puck3.x);
-        assertEquals(15 + 36 * 5, puck3.y);
+        assertEquals(15 + 64 * 5 * coeffRestitution, puck3.x);
+        assertEquals(15 + 36 * 5 * coeffRestitution, puck3.y);
     }
 }

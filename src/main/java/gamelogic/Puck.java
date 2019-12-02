@@ -9,6 +9,11 @@ public class Puck extends Collidable implements java.io.Serializable {
     private transient boolean initMove;
 
     /**
+     * The co-efficient of restitution.
+     */
+    private static final transient float e = 0.85f;
+
+    /**
      * Constructor.
      * @param x X coordinate.
      * @param y Y coordinate.
@@ -23,34 +28,29 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     /**
      * Method to ensure the puck is within the correct boundaries.
+     * We check if the puck is outside of the board boundaries,
+     * and if it has hit an edge we calculate the speed after the resulting collision.
      */
     public void fixPosition() {
-        //we need to add the functionality to check that if the puck has hit the boundaries
-        //or has been hit by a paddle
 
-        //boundary detection
-        //the puck.x and y represent the center of the circle
-
-        //change later to reverse the speed and so on, but we need a co-efficient of friction
-        //and more physics stuff
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
-            this.setXspeed(- this.getXspeed());
+            this.setXspeed(- this.getXspeed() * e);
         }
         if (this.x > 1280 - this.radius) {
             this.x = 1280 - this.radius;
-            this.setXspeed(- this.getXspeed());
+            this.setXspeed(- this.getXspeed() * e);
         }
 
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
-            this.setYspeed(- this.getYspeed());
+            this.setYspeed(- this.getYspeed() * e);
             initMove = false;
         }
         if (this.y > 720 - this.radius) {
             this.y = 720 - this.radius;
-            this.setYspeed(- this.getYspeed());
+            this.setYspeed(- this.getYspeed() * e);
 
             initMove = false;
         }
