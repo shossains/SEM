@@ -28,6 +28,16 @@ public class GameScreen implements Screen {
 
     transient boolean initMove = true;
 
+    private transient boolean escPressed;
+    private transient State state = State.RUN;
+
+    public enum  State {
+        PAUSE,
+        RUN,
+        RESUME,
+        STOPPED
+    }
+
     /**
      * Constructor.
      * @param game The game object.
@@ -55,6 +65,10 @@ public class GameScreen implements Screen {
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
 
+        //background colour
+        Gdx.gl.glClearColor(0, 0.6f, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
     }
 
     @Override
@@ -64,35 +78,34 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //background colour
-        Gdx.gl.glClearColor(0, 0.6f, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
+
+        switch (state) {
+            case RUN:
+                if (escPressed) {
+                    pause();
+                }
+                update();
+                break;
+            case PAUSE:
+                if (escPressed) {
+                    resume();
+                }
+                break;
+            default:
+                break;
+        }
+        draw();
+    }
+
+    /**
+     * Method that is called while the game is running.
+     */
+    public void update() {
 
         //update the camera
         camera.update();
-
-        // tell the SpriteBatch to render in the
-        // coordinate system specified by the camera.
-        game.spriteBatch.setProjectionMatrix(camera.combined);
-
-        game.spriteBatch.begin();
-
-        // Draw the board
-        game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
-
-        //draw the puck as the texture and in the place that the puck exists
-        //Maybe there is some border, or the radius doesn't perfectly scale up the image
-        //the boundary is still not totally correct
-        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
-                puck.radius * 2, puck.radius * 2);
-
-        game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
-                paddle1.radius * 2, paddle1.radius * 2);
-
-        game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
-                paddle2.radius * 2, paddle2.radius * 2);
-
-        game.spriteBatch.end();
 
         //move the puck
 
@@ -126,6 +139,35 @@ public class GameScreen implements Screen {
         paddle2.fixPosition();
     }
 
+    /**
+     * Method that is ran in order to render what is happening.
+     */
+    public void draw() {
+
+        // tell the SpriteBatch to render in the
+        // coordinate system specified by the camera.
+        game.spriteBatch.setProjectionMatrix(camera.combined);
+
+        game.spriteBatch.begin();
+
+        // Draw the board
+        game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
+
+        //draw the puck as the texture and in the place that the puck exists
+        //Maybe there is some border, or the radius doesn't perfectly scale up the image
+        //the boundary is still not totally correct
+        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
+                puck.radius * 2, puck.radius * 2);
+
+        game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
+                paddle1.radius * 2, paddle1.radius * 2);
+
+        game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
+                paddle2.radius * 2, paddle2.radius * 2);
+
+        game.spriteBatch.end();
+    }
+
     @Override
     public void resize(int width, int height) {
 
@@ -133,12 +175,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-
+        this.state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-
+        this.state = State.RUN;
     }
 
     @Override
@@ -149,6 +191,5 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         puckImage.dispose();
-
     }
 }
