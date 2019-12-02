@@ -41,4 +41,55 @@ public class CollisionsEngine {
     public boolean isIntersecting(Collidable c1, Collidable c2) {
         return distance(c1, c2) <= Math.pow((c1.radius + c2.radius), 2);
     }
+
+    /**
+     * Get the angle between the two circles.
+     * @param c1 First circle.
+     * @param c2 The other circle.
+     * @return The angle between them (relative to the x-axis in radians).
+     */
+    public double angleBetween(Collidable c1, Collidable c2) {
+        float xdiff = c2.x - c1.x;
+        float ydiff = c2.y - c1.y;
+
+        double a = (double) ydiff / xdiff;
+
+        return Math.atan(a);
+    }
+
+    /**
+     * Get the angle that the circle is moving in.
+     * @param c The circle.
+     * @return The angle of movement (relative to the x-axis in radians).
+     */
+    public double angleOfMovement(Collidable c) {
+        return Math.atan((double) c.getYspeed() / c.getXspeed());
+    }
+
+    /**
+     * Method to get the speed in the i direction (x direction relative to the angle of collision).
+     * @param c The circle.
+     * @param theta The angle of collision.
+     * @return The speed in the i direction.
+     */
+    public float getispeed(Collidable c, double theta) {
+        double iangle = angleOfMovement(c) - theta;
+
+        double speed = c.getXspeed() * Math.cos(iangle);
+        return (float) speed;
+    }
+
+    /**
+     * Method to get the speed in the j direction (y direction relative to the angle of collision).
+     * @param c The circle.
+     * @param theta The angle of collision.
+     * @return The speed in the j direction.
+     */
+    public float getjspeed(Collidable c, double theta) {
+
+        double iangle = angleOfMovement(c) - theta;
+
+        double speed = c.getYspeed() * Math.sin(iangle);
+        return (float) speed;
+    }
 }

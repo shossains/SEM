@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Circle;
 
 public abstract class Collidable extends Circle implements java.io.Serializable {
 
+    //Using the template method.
+
     public static final transient long serialVersionUID = 4328744;
 
     private float xspeed;
