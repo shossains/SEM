@@ -1,5 +1,6 @@
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -24,6 +25,8 @@ public class Registration implements Screen {
     private transient String password;
     private transient String passwordAgain;
     private transient Image image;
+
+    private transient boolean mutePressed;
 
     /**
      * Constructor for registration screen.
@@ -128,6 +131,11 @@ public class Registration implements Screen {
 
     @Override
     public void render(float delta) {
+        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        if (mutePressed) {
+            game.muteUnmute();
+        }
+
         Gdx.gl.glClearColor((float)1, (float)150 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();

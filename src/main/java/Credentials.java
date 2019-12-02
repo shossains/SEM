@@ -1,5 +1,6 @@
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -28,7 +29,8 @@ public class Credentials implements Screen {
     private transient String username;
     private transient String password;
     private transient Image image;
-    private transient Music sound;
+
+    private transient boolean mutePressed;
 
     /**
      * Start the game with a skin.
@@ -53,9 +55,6 @@ public class Credentials implements Screen {
         passwordTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
-        sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
-        sound.setLooping(true);
-        sound.play();
         image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
         TextButton button = new TextButton("Done!", skin);
@@ -124,6 +123,11 @@ public class Credentials implements Screen {
 
     @Override
     public void render(float delta) {
+        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        if (mutePressed) {
+            game.muteUnmute();
+        }
+
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
