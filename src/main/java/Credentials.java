@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +29,12 @@ public class Credentials implements Screen {
     private transient String password;
     private transient Image image;
 
+    final transient String skinPath;
+
     private transient boolean mutePressed;
+    private transient AssetManager assetManager;
+    final transient TextField usernameTextField;
+    final transient TextField passwordTextField;
 
     /**
      * Start the game with a skin.
@@ -40,13 +44,13 @@ public class Credentials implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        AssetManager assetManager = new AssetManager();
+        assetManager = new AssetManager();
         assetManager.load("assets/uiskin.json", Skin.class);
         assetManager.finishLoading();
-        final String skinPath = "assets/uiskin.json";
+        skinPath = "assets/uiskin.json";
         Skin skin = new Skin(Gdx.files.internal(skinPath));
-        final TextField usernameTextField = new TextField("", skin);
-        final TextField passwordTextField = new TextField("", skin);
+        usernameTextField = new TextField("", skin);
+        passwordTextField = new TextField("", skin);
         usernameTextField.setPosition(250,200);
         usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(250, 100);
@@ -64,40 +68,7 @@ public class Credentials implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        username = usernameTextField.getText();
-                        password = passwordTextField.getText();
-
-                        if (username.equals("") || password.equals("")) {
-                            Dialog dialog = new Dialog("Empty fields",
-                                    assetManager.get(skinPath, Skin.class),
-                                    "dialog") {
-                            };
-                            dialog.setColor(Color.RED);
-                            dialog.setSize(400, 200);
-                            dialog.text("Please fill in all fields!");
-                            dialog.button("Ok", false);
-                            dialog.show(stage);
-                        } else {
-                            try {
-                                if (checkCred(username, password)) {
-                                    MainMenuScreen m = new MainMenuScreen(game);
-                                    m.username = username;
-                                    ((Game) Gdx.app.getApplicationListener()).setScreen(m);
-                                } else {
-                                    Dialog dialog = new Dialog("Incorrect credentials",
-                                            assetManager.get(skinPath, Skin.class),
-                                            "dialog") {
-                                    };
-                                    dialog.setColor(Color.RED);
-                                    dialog.setSize(400, 200);
-                                    dialog.text("Incorrect user and/or password");
-                                    dialog.button("Ok", false);
-                                    dialog.show(stage);
-                                }
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        submitCredentials();
                     }
                 });
         stage.addActor(button);
@@ -116,6 +87,43 @@ public class Credentials implements Screen {
         stage.addActor(exit);
     }
 
+    private void submitCredentials() {
+        username = usernameTextField.getText();
+        password = passwordTextField.getText();
+
+        if (username.equals("") || password.equals("")) {
+            Dialog dialog = new Dialog("Empty fields",
+                    assetManager.get(skinPath, Skin.class),
+                    "dialog") {
+            };
+            dialog.setColor(Color.RED);
+            dialog.setSize(400, 200);
+            dialog.text("Please fill in all fields!");
+            dialog.button("Ok", false);
+            dialog.show(stage);
+        } else {
+            try {
+                if (checkCredentials(username, password)) {
+                    MainMenuScreen m = new MainMenuScreen(game);
+                    m.username = username;
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(m);
+                } else {
+                    Dialog dialog = new Dialog("Incorrect credentials",
+                            assetManager.get(skinPath, Skin.class),
+                            "dialog") {
+                    };
+                    dialog.setColor(Color.RED);
+                    dialog.setSize(400, 200);
+                    dialog.text("Incorrect user and/or password");
+                    dialog.button("Ok", false);
+                    dialog.show(stage);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void show() {
 
@@ -126,6 +134,11 @@ public class Credentials implements Screen {
         mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
+        }
+
+        boolean enterPressed = Gdx.input.isKeyJustPressed(Input.Keys.ENTER);
+        if (enterPressed) {
+            submitCredentials();
         }
 
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
@@ -141,7 +154,7 @@ public class Credentials implements Screen {
         game.spriteBatch.end();
     }
 
-    private boolean checkCred(String user, String pass) throws SQLException {
+    private boolean checkCredentials(String user, String pass) throws SQLException {
         String[] queries = {"SELECT username,"
                 + " password FROM users WHERE username = '" + user + "';"};
         ResultSet rs = Query.runQueries(queries)[0];

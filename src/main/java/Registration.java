@@ -26,6 +26,13 @@ public class Registration implements Screen {
     private transient String passwordAgain;
     private transient Image image;
 
+    private transient AssetManager assetManager;
+    final transient String skinPath;
+    final transient TextField usernameTextField;
+    final transient TextField passwordTextField;
+    final transient TextField emailTextField;
+    final transient TextField passwordAgainTextField;
+
     private transient boolean mutePressed;
 
     /**
@@ -37,17 +44,17 @@ public class Registration implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        AssetManager assetManager = new AssetManager();
+        assetManager = new AssetManager();
         assetManager.load("assets/uiskin.json", Skin.class);
         assetManager.finishLoading();
-        final String skinPath = "assets/uiskin.json";
-        final TextField usernameTextField = new TextField("",
+        skinPath = "assets/uiskin.json";
+        usernameTextField = new TextField("",
                 assetManager.get(skinPath, Skin.class));
-        final TextField passwordTextField = new TextField("",
+        passwordTextField = new TextField("",
                 assetManager.get(skinPath, Skin.class));
-        final TextField emailTextField = new TextField("",
+        emailTextField = new TextField("",
                 assetManager.get(skinPath, Skin.class));
-        final TextField passwordAgainTextField = new TextField("",
+        passwordAgainTextField = new TextField("",
                 assetManager.get(skinPath, Skin.class));
         usernameTextField.setPosition(500,250);
         usernameTextField.setSize(300, 50);
@@ -73,39 +80,7 @@ public class Registration implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        username = usernameTextField.getText();
-                        password = passwordTextField.getText();
-                        email = emailTextField.getText();
-                        passwordAgain = passwordAgainTextField.getText();
-                        if (username.equals("") || password.equals("")
-                                || email.equals("") || passwordAgain.equals("")) {
-                            Dialog dialoga = new Dialog("Empty fields",
-                                    assetManager.get(skinPath, Skin.class),
-                                    "dialog") {
-                                public void result(Object obj) {
-                                    System.out.println("result " + obj);
-                                }
-                            };
-                            dialoga.setColor(Color.RED);
-                            dialoga.setSize(400, 200);
-                            dialoga.text("Please fill in all fields.");
-                            dialoga.button("Ok", false);
-                            dialoga.show(stage);
-                        } else if  (!passwordAgain.equals(password)) {
-                            Dialog dialog = new Dialog("Warning - wrong password",
-                                    assetManager.get(skinPath, Skin.class), "dialog") {
-                            };
-                            dialog.setColor(Color.ROYAL);
-                            dialog.setSize(400, 200);
-                            dialog.text("Please enter the password again."
-                                    + " Your passwords do not match.");
-                            dialog.button("Ok", false);
-                            dialog.show(stage);
-                        } else {
-                            dispose();
-                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                    MainMenuScreen(game));
-                        }
+                        submitCredentials();
                     }
                 });
         stage.addActor(button);
@@ -124,6 +99,42 @@ public class Registration implements Screen {
         stage.addActor(exit);
     }
 
+    private void submitCredentials() {
+        username = usernameTextField.getText();
+        password = passwordTextField.getText();
+        email = emailTextField.getText();
+        passwordAgain = passwordAgainTextField.getText();
+        if (username.equals("") || password.equals("")
+                || email.equals("") || passwordAgain.equals("")) {
+            Dialog dialoga = new Dialog("Empty fields",
+                    assetManager.get(skinPath, Skin.class),
+                    "dialog") {
+                public void result(Object obj) {
+                    System.out.println("result " + obj);
+                }
+            };
+            dialoga.setColor(Color.RED);
+            dialoga.setSize(400, 200);
+            dialoga.text("Please fill in all fields.");
+            dialoga.button("Ok", false);
+            dialoga.show(stage);
+        } else if  (!passwordAgain.equals(password)) {
+            Dialog dialog = new Dialog("Warning - wrong password",
+                    assetManager.get(skinPath, Skin.class), "dialog") {
+            };
+            dialog.setColor(Color.ROYAL);
+            dialog.setSize(400, 200);
+            dialog.text("Please enter the password again."
+                    + " Your passwords do not match.");
+            dialog.button("Ok", false);
+            dialog.show(stage);
+        } else {
+            dispose();
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    MainMenuScreen(game));
+        }
+    }
+
     @Override
     public void show() {
 
@@ -134,6 +145,11 @@ public class Registration implements Screen {
         mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
+        }
+
+        boolean enterPressed = Gdx.input.isKeyJustPressed(Input.Keys.ENTER);
+        if (enterPressed) {
+            submitCredentials();
         }
 
         Gdx.gl.glClearColor((float)1, (float)150 / 255, 1, 1);
