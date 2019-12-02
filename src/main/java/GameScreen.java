@@ -35,9 +35,7 @@ public class GameScreen implements Screen {
 
     public enum  State {
         PAUSE,
-        RUN,
-        RESUME,
-        STOPPED
+        RUN
     }
 
     /**
