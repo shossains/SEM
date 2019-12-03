@@ -24,6 +24,8 @@ public class LoginScreen implements Screen {
     public transient ImageButton button;
     public transient Image image;
 
+    private transient boolean mutePressed;
+
     /**
      * Constructor for the login page.
      * Every object from this page is created below.
@@ -123,6 +125,11 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        if (mutePressed) {
+            game.muteUnmute();
+        }
+
         Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.spriteBatch.begin();
