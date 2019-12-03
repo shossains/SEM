@@ -17,6 +17,7 @@ public class GameScreen implements Screen {
     transient Texture paddle2Image;
     transient Texture boardImage;
 
+    transient Hud hud;
     transient Board board;
     transient Puck puck;
     transient Paddle paddle1;
@@ -47,6 +48,9 @@ public class GameScreen implements Screen {
         // Create the board
         board = new Board(0, 0, 1280, 720);
 
+        // Create the HUD
+        hud = new Hud(game.spriteBatch);
+
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f);
 
@@ -73,7 +77,7 @@ public class GameScreen implements Screen {
 
         // tell the SpriteBatch to render in the
         // coordinate system specified by the camera.
-        game.spriteBatch.setProjectionMatrix(camera.combined);
+        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
 
         game.spriteBatch.begin();
 
@@ -92,13 +96,17 @@ public class GameScreen implements Screen {
         game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
                 paddle2.radius * 2, paddle2.radius * 2);
 
-        game.spriteBatch.end();
 
+        game.spriteBatch.end();
+        // Draw the hud on top of the board.
+        hud.stage.draw();
         //move the puck
 
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         puck.movePuck(deltaTime);
+        // Updated the game clock
+        hud.updateTime(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
 
