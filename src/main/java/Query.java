@@ -1,9 +1,9 @@
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @SuppressWarnings("PMD.CloseResource")
 public class Query extends Adapter {
@@ -36,6 +36,8 @@ public class Query extends Adapter {
                         PreparedStatement select = conn.prepareStatement(query[i]);
                         ResultSet resultSet = select.executeQuery();
                         resultSets.add(resultSet);
+                        //select.close();
+                        //resultSet.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                         System.out.println("Error executing SELECT query");
@@ -85,12 +87,20 @@ public class Query extends Adapter {
         Query db = new Query();
         db.connect();
         //auth
-        String sql = "SELECT username, password FROM users WHERE username = '" + username + "'";
+        // String sql = "SELECT username, password FROM users WHERE username = '" + username + "'";
 
         try {
-            PreparedStatement select = conn.prepareStatement(sql);
+            PreparedStatement select = conn.prepareStatement("SELECT username, password"
+                    + " FROM users WHERE username = ? AND password = ?");
+            //replace all non-alphanumeric characters with empty string
+            select.setString(1, username.replaceAll("[^A-Za-z0-9]", ""));
+            String hashed = BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]", ""),
+                    BCrypt.gensalt(10));
+            select.setString(2, hashed);
             ResultSet resultSet = select.executeQuery();
             resultSet.next();
+            //select.close();
+            //resultSet.close();
             //String passHash = resultSet.getString("password");
             return runQueries(query, db);
             //if (BCrypt.checkpw(password, passHash)) {
@@ -98,6 +108,7 @@ public class Query extends Adapter {
             // } else {
             //    System.out.println("Authentication error");
             // }
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error executing authentication SELECT query");
