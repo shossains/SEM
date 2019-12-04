@@ -1,6 +1,9 @@
 package gamelogictest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
@@ -172,6 +175,33 @@ public class CollisionsEngineTest {
         System.out.println(ecurr);
         float[] res = collisionsEngine.solveSimultaneous(2, 1, 3, -4, ecurr);
         assertArrayEquals(ans, res);
+    }
+
+    @Test
+    public void testCollideAndNewSpeeds() {
+        paddle1.setX(0);
+        paddle1.setY(0);
+
+        puck.setX(40);
+        puck.setY(0);
+
+        paddle2.setY(600);
+        paddle2.setX(600);
+
+        assertTrue(collisionsEngine.isIntersecting(paddle1, puck));
+
+        paddle1.setXspeed(0);
+        paddle1.setYspeed(0);
+        paddle1.setSpeeds(true, false, false, false);
+        puck.setXspeed(-30);
+        puck.setYspeed(50);
+
+        collisionsEngine.collide();
+
+        assertEquals(2, paddle1.getXspeed(), delta);
+        assertEquals(0, paddle1.getYspeed(), delta);
+        assertEquals(66, puck.getXspeed(), delta);
+        assertEquals(50, puck.getYspeed(), delta);
     }
 
 }
