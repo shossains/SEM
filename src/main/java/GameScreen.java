@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10);
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
 
     }
 
