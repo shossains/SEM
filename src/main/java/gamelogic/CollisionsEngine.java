@@ -90,6 +90,15 @@ public class CollisionsEngine {
         return (float) speed;
     }
 
+    /**
+     * Method to solve the COM and NEL equations and get the speeds after the collision.
+     * @param m1 Mass 1.
+     * @param m2 Mass 2.
+     * @param u1 Initial speed 1.
+     * @param u2 Initial speed 2.
+     * @param ecurr Co-efficient of restitution.
+     * @return The resulting speeds v1 and v2.
+     */
     public float[] solveSimultaneous(float m1, float m2, float u1, float u2, float ecurr) {
 
         float const1 = m1 * u1 + m2 * u2;
@@ -104,6 +113,11 @@ public class CollisionsEngine {
         return v1v2;
     }
 
+    /**
+     * Method to update the speeds of the objects.
+     * @param c1 The first object in the collision.
+     * @param c2 The second object in the collision.
+     */
     public void newSpeeds(Collidable c1, Collidable c2) {
 
         double theta  = angleBetween(c1, c2);
@@ -131,12 +145,11 @@ public class CollisionsEngine {
 
         float c1x = rotateToX(v1i, u1j, theta);
         float c1y = rotateToY(v1i, u1j, theta);
+        c1.setXspeed(c1x);
+        c1.setYspeed(c1y);
 
         float c2x = rotateToX(v2i, u2j, theta);
         float c2y = rotateToY(v2i, u2j, theta);
-
-        c1.setXspeed(c1x);
-        c1.setYspeed(c1y);
         c2.setXspeed(c2x);
         c2.setYspeed(c2y);
 

@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class Paddle extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
@@ -9,6 +7,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
     private transient PlayerType playerType;
     private transient float xupper = 1280;
     private transient float xlower = 0;
+
+    private transient float maxSpeed = 200;
+    private transient float acceleration = 6;
+    private transient float lowSpeed = 50;
 
     /**
      * Constructor.
@@ -18,7 +20,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass, PlayerType playerType) {
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass,
+                  PlayerType playerType) {
 
         super(x, y, radius, xspeed, yspeed, mass);
 
@@ -34,28 +37,56 @@ public class Paddle extends Collidable implements java.io.Serializable {
      */
     public void setSpeeds(boolean rightPressed, boolean leftPressed,
                            boolean upPressed, boolean downPressed) {
-        if (rightPressed) {
-            this.setXspeed(100);
+        if (rightPressed && !leftPressed) {
+            if (this.getXspeed() < maxSpeed) {
+                if (this.getXspeed() < lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(50);
+                } else {
+                    this.setXspeed(this.getXspeed() + acceleration);
+                }
+            }
         }
 
-        if (leftPressed) {
-            this.setXspeed(-100);
+        if (leftPressed && !rightPressed) {
+            if (this.getXspeed() > -maxSpeed) {
+                if (this.getXspeed() > - lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(-50);
+                } else {
+                    this.setXspeed(this.getXspeed() - acceleration);
+                }
+            }
         }
 
         if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
-            this.setXspeed(0);
+            this.setXspeed(this.getXspeed() * 0.2f);
         }
 
-        if (upPressed) {
-            this.setYspeed(100);
+        if (upPressed && !downPressed) {
+            if (this.getYspeed() < maxSpeed) {
+                if (this.getYspeed() < lowSpeed) {
+                    //set a baseline
+                    this.setYspeed(50);
+                } else {
+                    this.setYspeed(this.getYspeed() + acceleration);
+                }
+            }
         }
 
-        if (downPressed) {
-            this.setYspeed(-100);
+        if (downPressed && !upPressed) {
+            if (this.getYspeed() > -maxSpeed) {
+                if (this.getYspeed() > - lowSpeed) {
+                    //set a baseline
+                    this.setYspeed(-50);
+                } else {
+                    this.setYspeed(this.getYspeed() - acceleration);
+                }
+            }
         }
 
         if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
-            this.setYspeed(0);
+            this.setYspeed(this.getYspeed() * 0.2f);
         }
     }
 
@@ -67,8 +98,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if (this.playerType == PlayerType.PLAYER1) {
             xupper = 1280;
             xlower = 640;
-        }
-        else if (this.playerType == PlayerType.PLAYER2) {
+        } else if (this.playerType == PlayerType.PLAYER2) {
             xupper = 640;
             xlower = 0;
         }

@@ -16,7 +16,7 @@ public class PaddleTest {
     private transient Paddle paddle4;
 
     private transient int deltaTime1 = 5;
-    private transient int deltaTime2 = 3;
+    private transient int deltaTime2 = 10;
 
     @BeforeEach
     void setupTestEnvironment() {
@@ -39,7 +39,7 @@ public class PaddleTest {
 
         paddle1.setSpeeds(true, false, true, false);
 
-        paddle1.move(deltaTime1);
+        paddle1.move(deltaTime2);
         assertEquals(600, paddle1.x);
         assertEquals(600, paddle1.y);
     }
@@ -52,8 +52,8 @@ public class PaddleTest {
         paddle1.setSpeeds(false, true, false, true);
 
         paddle1.move(deltaTime1);
-        assertEquals(-400, paddle1.x);
-        assertEquals(-400, paddle1.y);
+        assertEquals(-150, paddle1.x);
+        assertEquals(-150, paddle1.y);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class PaddleTest {
 
         paddle3.setSpeeds(false, true, false, true);
 
-        paddle3.move(deltaTime1);
+        paddle3.move(deltaTime2);
         //500, -140
         paddle3.fixPosition();
 
@@ -102,7 +102,7 @@ public class PaddleTest {
 
         paddle3.setSpeeds(true, false, true, false);
 
-        paddle3.move(deltaTime1);
+        paddle3.move(deltaTime2);
 
         assertEquals(860, paddle3.y);
         //1500, 860
@@ -119,7 +119,7 @@ public class PaddleTest {
 
         paddle4.setSpeeds(true, false, true, false);
 
-        paddle4.move(deltaTime1);
+        paddle4.move(deltaTime2);
         paddle4.fixPosition();
 
         assertEquals(640 - paddle4.radius, paddle4.x);
@@ -133,7 +133,7 @@ public class PaddleTest {
 
         paddle4.setSpeeds(false, true, false, true);
 
-        paddle4.move(deltaTime1);
+        paddle4.move(deltaTime2);
         paddle4.fixPosition();
 
         assertEquals(paddle4.radius, paddle4.x);
