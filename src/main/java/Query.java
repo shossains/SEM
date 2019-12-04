@@ -77,42 +77,34 @@ public class Query extends Adapter {
 
     /**
      * runQueries identical to the other one, but with authentication.
-     * @param query    Same as in the other runQueries
      * @param username Username given by the client
      * @param password Raw password given by the client
      * @return The result of the queries same as in the other one,
      *      but null if authentication fails.
      */
-    public static ResultSet[] runQueries(String[] query, String username, String password) {
+    public static boolean verifyLogin(String username, String password) {
         Query db = new Query();
         db.connect();
-        //auth
-        // String sql = "SELECT username, password FROM users WHERE username = '" + username + "'";
-
         try {
             PreparedStatement select = conn.prepareStatement("SELECT username, password"
-                    + " FROM users WHERE username = ? AND password = ?");
-            //replace all non-alphanumeric characters with empty string
+                    + " FROM users WHERE username = ?");
+            //replace all non-alphanumeric characters with empty strings
             select.setString(1, username.replaceAll("[^A-Za-z0-9]", ""));
             String hashed = BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]", ""),
                     BCrypt.gensalt(10));
-            select.setString(2, hashed);
             ResultSet resultSet = select.executeQuery();
-            resultSet.next();
-            //select.close();
-            //resultSet.close();
-            //String passHash = resultSet.getString("password");
-            return runQueries(query, db);
-            //if (BCrypt.checkpw(password, passHash)) {
-            //   return runQueries(query, db);
-            // } else {
-            //    System.out.println("Authentication error");
-            // }
+            if(resultSet.next()) {
+                if(BCrypt.hashpw(resultSet.getString(2), BCrypt.gensalt(10)).equals(hashed)) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error executing authentication SELECT query");
         }
-        return new ResultSet[0];
+        return false;
     }
 }
