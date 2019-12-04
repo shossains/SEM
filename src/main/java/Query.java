@@ -90,11 +90,11 @@ public class Query extends Adapter {
                     + " FROM users WHERE username = ?");
             //replace all non-alphanumeric characters with empty strings
             select.setString(1, username.replaceAll("[^A-Za-z0-9]", ""));
-            String hashed = BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]", ""),
-                    BCrypt.gensalt(10));
             ResultSet resultSet = select.executeQuery();
-            if(resultSet.next()) {
-                if(BCrypt.hashpw(resultSet.getString(2), BCrypt.gensalt(10)).equals(hashed)) {
+            if (resultSet.next()) {
+                String hashed = BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]", ""),
+                        BCrypt.gensalt(10));
+                if (BCrypt.hashpw(resultSet.getString(2), BCrypt.gensalt(10)).equals(hashed)) {
                     return true;
                 }
             } else {
