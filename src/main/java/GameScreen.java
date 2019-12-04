@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
+import gamelogic.PlayerType;
 import gamelogic.Puck;
 
 
@@ -50,8 +51,8 @@ public class GameScreen implements Screen {
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
 

@@ -6,6 +6,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
+    private transient PlayerType playerType;
+    private transient float xupper = 1280;
+    private transient float xlower = 0;
+
     /**
      * Constructor.
      * @param x x coordinate.
@@ -14,9 +18,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass) {
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass, PlayerType playerType) {
 
         super(x, y, radius, xspeed, yspeed, mass);
+
+        this.playerType = playerType;
     }
 
     /**
@@ -58,11 +64,20 @@ public class Paddle extends Collidable implements java.io.Serializable {
      */
     public void fixPosition() {
 
-        if (this.x - this.radius < 0) {
-            this.x = 0 + this.radius;
+        if (this.playerType == PlayerType.PLAYER1) {
+            xupper = 1280;
+            xlower = 640;
         }
-        if (this.x > 1280 - this.radius) {
-            this.x = 1280 - this.radius;
+        else if (this.playerType == PlayerType.PLAYER2) {
+            xupper = 640;
+            xlower = 0;
+        }
+
+        if (this.x - this.radius < xlower) {
+            this.x = xlower + this.radius;
+        }
+        if (this.x > xupper - this.radius) {
+            this.x = xupper - this.radius;
         }
 
         if (this.y - this.radius < 0) {

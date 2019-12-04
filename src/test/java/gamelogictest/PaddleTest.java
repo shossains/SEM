@@ -1,7 +1,10 @@
+package gamelogictest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import gamelogic.Paddle;
+import gamelogic.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +12,19 @@ public class PaddleTest {
 
     private transient Paddle paddle1;
     private transient Paddle paddle2;
+    private transient Paddle paddle3;
+    private transient Paddle paddle4;
 
     private transient int deltaTime1 = 5;
     private transient int deltaTime2 = 3;
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(100, 100, 0, 0, 15, 10);
-        paddle2 = new Paddle(300, 200, 0, 0, 15, 10);
+        paddle1 = new Paddle(100, 100, 0, 0, 15, 10, PlayerType.PLAYER1);
+        paddle2 = new Paddle(300, 200, 0, 0, 15, 10, PlayerType.PLAYER2);
 
+        paddle3 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
+        paddle4 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
     }
 
     @Test
@@ -75,30 +82,62 @@ public class PaddleTest {
 
     @Test
     public void testBoundaries1() {
-        assertEquals(100, paddle1.x);
-        assertEquals(100, paddle1.y);
+        assertEquals(1000, paddle3.x);
+        assertEquals(360, paddle3.y);
 
-        paddle1.setSpeeds(false, true, false, true);
+        paddle3.setSpeeds(false, true, false, true);
 
-        paddle1.move(deltaTime2);
-        paddle1.fixPosition();
+        paddle3.move(deltaTime1);
+        //500, -140
+        paddle3.fixPosition();
 
-        assertEquals(paddle1.radius, paddle1.y);
-        assertEquals(paddle1.radius, paddle1.x);
+        assertEquals(paddle3.radius, paddle3.y);
+        assertEquals(paddle3.radius + 640, paddle3.x);
     }
 
     @Test
     public void testBoundaries2() {
-        assertEquals(300, paddle2.x);
-        assertEquals(200, paddle2.y);
+        assertEquals(1000, paddle3.x);
+        assertEquals(360, paddle3.y);
 
-        paddle2.setSpeeds(true, false, true, false);
+        paddle3.setSpeeds(true, false, true, false);
 
-        paddle2.move(deltaTime2);
-        paddle2.fixPosition();
+        paddle3.move(deltaTime1);
 
-        assertEquals(600, paddle2.x);
-        assertEquals(500, paddle2.y);
+        assertEquals(860, paddle3.y);
+        //1500, 860
+        paddle3.fixPosition();
+
+        assertEquals(720 - paddle3.radius, paddle3.y);
+        assertEquals(1280 - paddle3.radius, paddle3.x);
+    }
+
+    @Test
+    public void testBoundaries3() {
+        assertEquals(360, paddle4.x);
+        assertEquals(360, paddle4.y);
+
+        paddle4.setSpeeds(true, false, true, false);
+
+        paddle4.move(deltaTime1);
+        paddle4.fixPosition();
+
+        assertEquals(640 - paddle4.radius, paddle4.x);
+        assertEquals(720 - paddle4.radius, paddle4.y);
+    }
+
+    @Test
+    public void testBoundaries4() {
+        assertEquals(360, paddle4.x);
+        assertEquals(360, paddle4.y);
+
+        paddle4.setSpeeds(false, true, false, true);
+
+        paddle4.move(deltaTime1);
+        paddle4.fixPosition();
+
+        assertEquals(paddle4.radius, paddle4.x);
+        assertEquals(paddle4.radius, paddle4.y);
     }
 
 }

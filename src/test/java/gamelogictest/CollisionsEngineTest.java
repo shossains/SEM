@@ -1,7 +1,10 @@
+package gamelogictest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
+import gamelogic.PlayerType;
 import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +21,8 @@ public class CollisionsEngineTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(0, 0, 3, 4, 25, 2);
-        paddle2 = new Paddle(4, 3, 0, 0, 25, 2);
+        paddle1 = new Paddle(0, 0, 3, 4, 25, 2, PlayerType.PLAYER1);
+        paddle2 = new Paddle(4, 3, 0, 0, 25, 2, PlayerType.PLAYER2);
         puck = new Puck(30, 0, 0, 0, 15, 1);
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
 
