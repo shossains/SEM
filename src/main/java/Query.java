@@ -1,7 +1,6 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -89,7 +88,7 @@ public class Query extends Adapter {
             PreparedStatement select = conn.prepareStatement("SELECT username, password"
                     + " FROM users WHERE username = ?");
             //replace all non-alphanumeric characters with empty strings
-            select.setString(1, username.replaceAll("[^A-Za-z0-9]", ""));
+            select.setString(1, username.replaceAll("[^A-Za-z0-9_.?!]", ""));
             ResultSet resultSet = select.executeQuery();
             if (resultSet.next()) {
                 if (BCrypt.checkpw(password, resultSet.getString(2))) {
@@ -110,20 +109,21 @@ public class Query extends Adapter {
      * @param password of the user.
      * @return true if the user was added, false otherwise.
      */
-    public static boolean addNewUser(String username, String password) {
+    public static boolean addNewUser(String username, String password, String email) {
         Query db = new Query();
         db.connect();
         try {
             PreparedStatement insert = conn.prepareStatement("INSERT INTO users(id, username, "
-                    + "password) VALUES(?, ? , ?)");
+                    + "password, email) VALUES(?, ? , ?, ?)");
             PreparedStatement select = conn.prepareStatement("SELECT COUNT(*)"
                     + " FROM users");
             ResultSet resultSet = select.executeQuery();
             resultSet.next();
             insert.setInt(1, resultSet.getInt(1));
-            insert.setString(2, username.replaceAll("[^A-Za-z0-9]", ""));
-            insert.setString(3, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]",
+            insert.setString(2, username.replaceAll("[^A-Za-z0-9_.!?]", ""));
+            insert.setString(3, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9_.?!]",
                     ""), BCrypt.gensalt(10)));
+            insert.setString(4, email.replaceAll("[^A-Za-z0-9_.?!@]", ""));
             int rows = insert.executeUpdate();
             if (rows != 0) {
                 return true;

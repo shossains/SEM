@@ -130,9 +130,18 @@ public class Registration implements Screen {
             dialog.show(stage);
         } else {
             dispose();
-            if (Query.addNewUser(username, password)) {
+            if (Query.addNewUser(username, password, email)) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new
                         MainMenuScreen(game));
+            } else {
+                Dialog dialog = new Dialog("Email or username already in use.",
+                        assetManager.get(skinPath, Skin.class), "dialog") {
+                };
+                dialog.setColor(Color.ROYAL);
+                dialog.setSize(400, 200);
+                dialog.text("Please try again.");
+                dialog.button("Ok", false);
+                dialog.show(stage);
             }
         }
     }
