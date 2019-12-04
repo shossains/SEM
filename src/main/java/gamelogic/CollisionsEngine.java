@@ -27,22 +27,12 @@ public class CollisionsEngine {
      * Method that calculates the collisions between the puck and paddles.
      */
     public void collide() {
-        System.out.println(puck.x + " " + puck.y);
-        System.out.println(puck.getXspeed());
         if (isIntersecting(puck, paddle1)) {
-
             newSpeeds(puck, paddle1);
-            //this.puck.setXspeed(paddle1.getXspeed() + 50);
-            //this.puck.setYspeed(paddle1.getYspeed() + 50);
         }
-
         if (isIntersecting(puck, paddle2)) {
-
             newSpeeds(puck, paddle2);
-            //this.puck.setXspeed(paddle2.getXspeed() + 50);
-            //this.puck.setYspeed(paddle2.getYspeed() + 50);
         }
-
     }
 
     public double distance(Collidable c1, Collidable c2) {
@@ -103,15 +93,10 @@ public class CollisionsEngine {
     public float[] solveSimultaneous(float m1, float m2, float u1, float u2, float ecurr) {
 
         float const1 = m1 * u1 + m2 * u2;
-        System.out.println("const1 " + const1);
 
-        float u1negu2 = u1 - u2;
-        System.out.println(u1negu2);
         float const2 = - ecurr * (u1 - u2);
 
-        System.out.println("const2 " + const2);
-
-        float v1 = (const1/m2 + const2)/(1 + m1/m2);
+        float v1 = (const1 / m2 + const2) / (1 + m1 / m2);
 
         float v2 = v1 - const2;
 
@@ -152,9 +137,12 @@ public class CollisionsEngine {
 
         c1.setXspeed(c1x);
         c1.setYspeed(c1y);
-
         c2.setXspeed(c2x);
         c2.setYspeed(c2y);
+
+        //move the puck and paddle a little so they don't stick together
+        c1.move(0.01f);
+        c2.move(0.01f);
 
     }
 }

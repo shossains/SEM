@@ -1,11 +1,13 @@
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.lwjgl.Sys;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CollisionsEngineTest {
 
@@ -15,7 +17,7 @@ public class CollisionsEngineTest {
     private transient CollisionsEngine collisionsEngine;
 
     //this is the degree of tolerance (for checking angles between calculator and methods)
-    private transient final double delta = 0.000001;
+    private final transient double delta = 0.000001;
 
     @BeforeEach
     void setupTestEnvironment() {
@@ -116,14 +118,6 @@ public class CollisionsEngineTest {
     }
 
     @Test
-    public void testispeed4() {
-        paddle2.setYspeed(4);
-        paddle2.setXspeed(-4);
-
-        assertEquals(0, collisionsEngine.getispeed(paddle2, Math.PI/4), delta);
-    }
-
-    @Test
     public void testSpeeds() {
         paddle2.setYspeed(4);
         paddle2.setXspeed(-4);
@@ -152,20 +146,10 @@ public class CollisionsEngineTest {
     @Test
     public void testSimultaneous() {
         float[] ans = {-1, 4};
-        float ecurr = 5f/7f;
+        float ecurr = 5f / 7f;
         System.out.println(ecurr);
         float[] res = collisionsEngine.solveSimultaneous(2, 1, 3, -4, ecurr);
         assertArrayEquals(ans, res);
     }
 
-    /*
-    @Test
-    public void testSimultaneous2() {
-        //collision in the same axis
-        float[] ans = {4, 3};
-        float[] res = collisionsEngine.solveSimultaneous(2, 1, 4, 3, .99f);
-        assertArrayEquals(ans, res);
-    }
-
-     */
 }
