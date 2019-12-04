@@ -24,6 +24,7 @@ public class GameScreen implements Screen {
     transient Paddle paddle2;
 
     transient CollisionsEngine collisionsEngine;
+    transient ScoringSystem scoringSystem;
 
     transient OrthographicCamera camera;
 
@@ -58,6 +59,7 @@ public class GameScreen implements Screen {
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
+        scoringSystem = new ScoringSystem(puck, hud);
 
     }
 
@@ -130,6 +132,7 @@ public class GameScreen implements Screen {
         paddle2.movePaddle(deltaTime);
 
         collisionsEngine.collide();
+        scoringSystem.goal();
 
         paddle1.fixPosition();
         paddle2.fixPosition();

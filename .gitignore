@@ -11,3 +11,4 @@ desktop/build/**
 .idea/**
 
 core/build/
+out/
