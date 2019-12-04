@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
 
         // tell the SpriteBatch to render in the
         // coordinate system specified by the camera.
-        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
+        game.spriteBatch.setProjectionMatrix(camera.combined);
 
         game.spriteBatch.begin();
 
@@ -99,6 +99,7 @@ public class GameScreen implements Screen {
 
         game.spriteBatch.end();
         // Draw the hud on top of the board.
+        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         //move the puck
 

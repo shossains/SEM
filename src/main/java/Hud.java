@@ -33,17 +33,16 @@ public class Hud implements Disposable {
 
     /**
      * Hud constructor.
-     * @param sb SpriteBatch. Could be obtained from the game object
-     *          to avoid using two different ones.
+     *
      */
-    public Hud(SpriteBatch sb) {
+    public Hud(SpriteBatch spriteBatch) {
         gameTimer = 240;
         timeCount = 0;
         score1 = 0;
         score2 = 0;
 
         viewport = new FitViewport(MyGdxGame.S_WIDTH, MyGdxGame.S_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, sb);
+        stage = new Stage(viewport, spriteBatch);
         font = new BitmapFont();
         font.getData().setScale(2, 2);
 
