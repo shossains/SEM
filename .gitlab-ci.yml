@@ -56,12 +56,13 @@ PMD:
 
 test:
   stage: test
+  artifacts:
+    untracked: true
   script:
     gradle check
 
 coverage:
   stage: coverage
-  ## use the previous report
   dependencies:
     - test
   script:
