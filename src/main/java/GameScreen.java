@@ -99,8 +99,6 @@ public class GameScreen implements Screen {
 
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        System.out.println("delta" + deltaTime);
-
         puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();

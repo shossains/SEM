@@ -1,7 +1,5 @@
 package gamelogic;
 
-import org.lwjgl.Sys;
-
 public class CollisionsEngine {
 
     private transient Puck puck;
