@@ -4,7 +4,7 @@ stages:
   - build
   - validate
   - test
-#  - coverage
+  - coverage
 
 variables:
   # Disable the Gradle daemon to ensure isolated runs of the CI pipeline.
@@ -59,13 +59,13 @@ test:
   script:
     gradle check
 
-#coverage:
-#  stage: coverage
-#  ## use the previous report
-#  dependencies:
-#    - test
-#  script:
-#    - coverage=$(awk -F"," '{ branches += $6 + $7; covered += $7 } END { print "Total" ,int(100*covered/branches), "%% covered" }' target/site/jacoco/jacoco.csv)
-#    # - aggregate=$(awk -F"," '{ branches += $6 + $7; covered += $7 } END { print "\nAGGREGATE COVERAGE REPORT"; print covered, "/", branches, "branches covered"; print int(100*covered/branches), "%% covered\n---------------------------\n" }' target/site/jacoco-aggregate/jacoco.csv)
-#    - printf "$coverage"
-#  coverage: '/Total *?([0-9]{1,3}) %/'
+coverage:
+  stage: coverage
+  ## use the previous report
+  dependencies:
+    - test
+  script:
+    - coverage=$(awk -F"," '{ branches += $6 + $7; covered += $7 } END { print "Total" ,int(100*covered/branches), "%% covered" }' build/jacoco/test/jacocoTestReport.csv)
+    # - aggregate=$(awk -F"," '{ branches += $6 + $7; covered += $7 } END { print "\nAGGREGATE COVERAGE REPORT"; print covered, "/", branches, "branches covered"; print int(100*covered/branches), "%% covered\n---------------------------\n" }' target/site/jacoco-aggregate/jacoco.csv)
+    - printf "$coverage"
+  coverage: '/Total *?([0-9]{1,3}) %/'
