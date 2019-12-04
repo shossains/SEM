@@ -30,6 +30,16 @@ public class GameScreen implements Screen {
 
     transient boolean initMove = true;
 
+    private transient boolean mutePressed;
+
+    private transient boolean escPressed;
+    private transient State state = State.RUN;
+
+    public enum  State {
+        PAUSE,
+        RUN
+    }
+
     /**
      * Constructor.
      * @param game The game object.
@@ -61,6 +71,10 @@ public class GameScreen implements Screen {
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
         scoringSystem = new ScoringSystem(puck, hud);
 
+        //background colour
+        Gdx.gl.glClearColor(0, 0.6f, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
     }
 
     @Override
@@ -70,12 +84,87 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //background colour
-        Gdx.gl.glClearColor(0, 0.6f, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        if (mutePressed) {
+            game.muteUnmute();
+        }
+
+        escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
+
+        switch (state) {
+            case RUN:
+                if (escPressed) {
+                    pause();
+                }
+                update();
+                break;
+            case PAUSE:
+                if (escPressed) {
+                    resume();
+                }
+                break;
+            default:
+                break;
+        }
+        draw();
+    }
+
+    /**
+     * Method that is called while the game is running.
+     */
+    public void update() {
 
         //update the camera
         camera.update();
+
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        // Updated the game clock
+        hud.updateTime(deltaTime);
+        //move the puck
+        puck.movePuck(deltaTime);
+        // Check if the puck's in one of the goals
+        if (scoringSystem.goal()) {
+            Gdx.app.log("TODO", "Reset the game after the goal");
+        }
+        //ensure it is within boundaries
+        puck.fixPosition();
+
+        // Check if the game's timer haven't run out
+        if (hud.getGameTimer() <= 0) {
+            //TODO stop the game
+            Gdx.app.log("END", "The timer run out");
+            pause();
+            scoringSystem.getTheWinner();
+        }
+
+        //the movement variables for player 1
+        boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean leftPressed1 = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean upPressed1 = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean downPressed1 = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+
+        //the movement variables for player 2
+        boolean rightPressed2 = Gdx.input.isKeyPressed(Input.Keys.D);
+        boolean leftPressed2 = Gdx.input.isKeyPressed(Input.Keys.A);
+        boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
+        boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
+
+        paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
+        paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
+
+        paddle1.movePaddle(deltaTime);
+        paddle2.movePaddle(deltaTime);
+
+        collisionsEngine.collide();
+
+        paddle1.fixPosition();
+        paddle2.fixPosition();
+    }
+
+    /**
+     * Method that is ran in order to render what is happening.
+     */
+    public void draw() {
 
         // tell the SpriteBatch to render in the
         // coordinate system specified by the camera.
@@ -98,44 +187,10 @@ public class GameScreen implements Screen {
         game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
                 paddle2.radius * 2, paddle2.radius * 2);
 
-
         game.spriteBatch.end();
         // Draw the hud on top of the board.
         game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        //move the puck
-
-        float deltaTime = Gdx.graphics.getDeltaTime();
-
-        puck.movePuck(deltaTime);
-        // Updated the game clock
-        hud.updateTime(deltaTime);
-        //ensure it is within boundaries
-        puck.fixPosition();
-
-        //the movement variables for player 1
-        boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean leftPressed1 = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-        boolean upPressed1 = Gdx.input.isKeyPressed(Input.Keys.UP);
-        boolean downPressed1 = Gdx.input.isKeyPressed(Input.Keys.DOWN);
-
-        //the movement variables for player 2
-        boolean rightPressed2 = Gdx.input.isKeyPressed(Input.Keys.D);
-        boolean leftPressed2 = Gdx.input.isKeyPressed(Input.Keys.A);
-        boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
-        boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
-
-        paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
-        paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
-
-        paddle1.movePaddle(deltaTime);
-        paddle2.movePaddle(deltaTime);
-
-        collisionsEngine.collide();
-        scoringSystem.goal();
-
-        paddle1.fixPosition();
-        paddle2.fixPosition();
     }
 
     @Override
@@ -145,12 +200,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-
+        this.state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-
+        this.state = State.RUN;
     }
 
     @Override
@@ -161,6 +216,5 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         puckImage.dispose();
-
     }
 }

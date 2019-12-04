@@ -104,4 +104,28 @@ public class Hud implements Disposable {
     public void dispose() {
         stage.dispose();
     }
+
+    /**
+     * Getter for the gameTimer.
+     * @return amount of seconds left for the game.
+     */
+    public int getGameTimer() {
+        return this.gameTimer;
+    }
+
+    /**
+     * Getter for the score of the player 1.
+     * @return the score of the player 1.
+     */
+    public int getScore1() {
+        return this.score1;
+    }
+
+    /**
+     * Getter for the score of the player 2.
+     * @return the score of the player 2.
+     */
+    public int getScore2() {
+        return this.score2;
+    }
 }

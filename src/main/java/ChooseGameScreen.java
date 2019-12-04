@@ -1,6 +1,7 @@
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,6 +28,8 @@ public class ChooseGameScreen implements Screen {
     public transient TextureRegion myTextureRegion;
     public transient TextureRegionDrawable myTexRegionDrawable;
     public transient Label outputLabel;
+
+    private transient boolean mutePressed;
 
 
     /**
@@ -110,6 +113,11 @@ public class ChooseGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        if (mutePressed) {
+            game.muteUnmute();
+        }
+
         Gdx.gl.glClearColor((float)204 / 255, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
