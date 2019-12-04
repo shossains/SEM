@@ -103,4 +103,37 @@ public class Query extends Adapter {
         }
         return false;
     }
+
+    /**
+     * Method that adds a new user to the database.
+     * @param username of the new user.
+     * @param password of the user.
+     * @return true if the user was added, false otherwise.
+     */
+    public static boolean addNewUser(String username, String password) {
+        Query db = new Query();
+        db.connect();
+        try {
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO users(id, username, "
+                    + "password) VALUES(?, ? , ?)");
+            PreparedStatement select = conn.prepareStatement("SELECT COUNT(*)"
+                    + " FROM users");
+            ResultSet resultSet = select.executeQuery();
+            resultSet.next();
+            insert.setInt(1, resultSet.getInt(1));
+            insert.setString(2, username.replaceAll("[^A-Za-z0-9]", ""));
+            insert.setString(3, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]",
+                    ""), BCrypt.gensalt(10)));
+            int rows = insert.executeUpdate();
+            if (rows != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.print("User could not be added.");
+        }
+        return false;
+    }
 }

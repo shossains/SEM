@@ -130,8 +130,10 @@ public class Registration implements Screen {
             dialog.show(stage);
         } else {
             dispose();
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    MainMenuScreen(game));
+            if (Query.addNewUser(username, password)) {
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                        MainMenuScreen(game));
+            }
         }
     }
 
