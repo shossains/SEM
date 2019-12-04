@@ -1,13 +1,10 @@
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 public class CollisionsEngineTest {
 
@@ -21,11 +18,33 @@ public class CollisionsEngineTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(0, 0, 3, 4, 15, 2);
-        paddle2 = new Paddle(4, 3, 0, 0, 15, 2);
+        paddle1 = new Paddle(0, 0, 3, 4, 25, 2);
+        paddle2 = new Paddle(4, 3, 0, 0, 25, 2);
         puck = new Puck(30, 0, 0, 0, 15, 1);
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
 
+    }
+
+    @Test
+    public void testDistanceAndIntersection() {
+        paddle2.setX(40);
+        paddle2.setY(30);
+
+        double distance = collisionsEngine.distance(paddle1, paddle2);
+        assertEquals(50, distance);
+
+        assertTrue(collisionsEngine.isIntersecting(paddle1, paddle2));
+    }
+
+    @Test
+    public void testDistanceAndIntersectionFalse() {
+        paddle2.setX(80);
+        paddle2.setY(60);
+
+        double distance = collisionsEngine.distance(paddle1, paddle2);
+        assertEquals(100, distance);
+
+        assertFalse(collisionsEngine.isIntersecting(paddle1, paddle2));
     }
 
     @Test
