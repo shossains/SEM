@@ -15,10 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 
 @SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
 public class Credentials implements Screen {
@@ -102,24 +98,20 @@ public class Credentials implements Screen {
             dialog.button("Ok", false);
             dialog.show(stage);
         } else {
-            try {
-                if (checkCredentials(username, password)) {
-                    MainMenuScreen m = new MainMenuScreen(game);
-                    m.username = username;
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(m);
-                } else {
-                    Dialog dialog = new Dialog("Incorrect credentials",
-                            assetManager.get(skinPath, Skin.class),
-                            "dialog") {
-                    };
-                    dialog.setColor(Color.RED);
-                    dialog.setSize(400, 200);
-                    dialog.text("Incorrect user and/or password");
-                    dialog.button("Ok", false);
-                    dialog.show(stage);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (Query.verifyLogin(username, password)) {
+                MainMenuScreen m = new MainMenuScreen(game);
+                m.username = username;
+                ((Game) Gdx.app.getApplicationListener()).setScreen(m);
+            } else {
+                Dialog dialog = new Dialog("Incorrect credentials",
+                        assetManager.get(skinPath, Skin.class),
+                        "dialog") {
+                };
+                dialog.setColor(Color.RED);
+                dialog.setSize(400, 200);
+                dialog.text("Incorrect user and/or password");
+                dialog.button("Ok", false);
+                dialog.show(stage);
             }
         }
     }
@@ -153,29 +145,6 @@ public class Credentials implements Screen {
         image.setPosition(350, 300);
         game.spriteBatch.end();
     }
-
-    private boolean checkCredentials(String user, String pass) throws SQLException {
-        String[] queries = {"SELECT username,"
-                + " password FROM users WHERE username = '" + user + "';"};
-        ResultSet rs = Query.runQueries(queries)[0];
-        try {
-            while (rs.next()) {
-                String usern = rs.getString(1);
-                String passw = rs.getString(2);
-
-                if (usern.equals(user) && BCrypt.checkpw(pass, passw)) {
-                    rs.close();
-                    return true;
-                }
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        rs.close();
-        return false;
-    }
-
 
     @Override
     public void resize(int width, int height) {
