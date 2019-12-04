@@ -135,7 +135,18 @@ public class CollisionsEngineTest {
 
         System.out.println(theta);
 
-        assertEquals(5.656854249, collisionsEngine.getjspeed(paddle2, theta), delta);
+        float jspeed = collisionsEngine.getjspeed(paddle2, theta);
+        float ispeed = collisionsEngine.getispeed(paddle2, theta);
+
+        assertEquals(5.656854249, jspeed, delta);
+        assertEquals(0, ispeed, delta);
+
+        float xspeedagain = collisionsEngine.rotateToX(ispeed, jspeed, theta);
+        float yspeedagain = collisionsEngine.rotateToY(ispeed, jspeed, theta);
+
+        assertEquals(-4, xspeedagain);
+        assertEquals(4, yspeedagain);
+
     }
 
     @Test

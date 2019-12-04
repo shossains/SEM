@@ -7,7 +7,7 @@ public class CollisionsEngine {
     private transient Puck puck;
     private transient Paddle paddle1;
     private transient Paddle paddle2;
-    private transient float e;
+    private transient float coefficientr;
 
     /**
      * Constructor.
@@ -20,7 +20,7 @@ public class CollisionsEngine {
         this.puck = puck;
         this.paddle1 = paddle1;
         this.paddle2 = paddle2;
-        this.e = e;
+        this.coefficientr = e;
     }
 
     /**
@@ -90,8 +90,14 @@ public class CollisionsEngine {
         return (float) speed;
     }
 
-    public double totalSpeed(Collidable c) {
-        return Math.sqrt(Math.pow(c.getXspeed(), 2) + Math.pow(c.getYspeed(), 2));
+    public float rotateToX(float vi, float vj, double theta) {
+        double speed = Math.cos(theta) * vi - Math.sin(theta) * vj;
+        return (float) speed;
+    }
+
+    public float rotateToY(float vi, float vj, double theta) {
+        double speed = Math.cos(theta) * vj + Math.sin(theta) * vi;
+        return (float) speed;
     }
 
     public float[] solveSimultaneous(float m1, float m2, float u1, float u2, float ecurr) {
@@ -115,12 +121,10 @@ public class CollisionsEngine {
 
     public void newSpeeds(Collidable c1, Collidable c2) {
 
-        //add and edge case that deals with if there isnt actually a collision in a certain axis
-
         double theta  = angleBetween(c1, c2);
 
         float u1j = getjspeed(c1, theta);
-        float u2j = getjspeed(c1, theta);
+        float u2j = getjspeed(c2, theta);
 
         float m1 = c1.getMass();
         float u1i = getispeed(c1, theta);
@@ -131,30 +135,20 @@ public class CollisionsEngine {
         //PCM: m1u1 + m2u2 = m1v1 + m2v2
         //NEL: (v1 - v2) = -e(u1 - u2)
 
-        //const1 = m1u1 + m2u2
-        float const1 = m1 * u1i + m2 * u2i;
+        float[] v1v2 = solveSimultaneous(m1, m2, u1i, u2i, coefficientr);
 
-        //const2 = -e(u1 - u2)
-        float const2 = - e * (u1i - u2i);
-
-        //v1 = (const1/m2 + c2)/(1 + m1/m2)
-        float v1i = (const1/m2 + const2)/(1 + m1/m2);
-
-        //v2 = v1 - c2
-
-        float v2i = v1i - const2;
+        float v1i = v1v2[0];
+        float v2i = v1v2[1];
 
         //the speed in the j direction will stay the same, as the collision was in the i axis only
         //but now we need to translate back to x and y axis
         //but we have for c1: v1 i +
 
-        //new x = v1i cos(theta) + v1jcos(theta)
-        //new y = v1isin(theta) + v1jsin(theta)
-        float c1x = (float) (v1i * Math.cos(theta) + u1j * Math.cos(theta));
-        float c2x = (float) (v2i * Math.cos(theta) + u2j * Math.cos(theta));
+        float c1x = rotateToX(v1i, u1j, theta);
+        float c1y = rotateToY(v1i, u1j, theta);
 
-        float c1y = (float) (u1i * Math.sin(theta) + u1j * Math.sin(theta));
-        float c2y = (float) (u2i * Math.sin(theta) + u2j * Math.sin(theta));
+        float c2x = rotateToX(v2i, u2j, theta);
+        float c2y = rotateToY(v2i, u2j, theta);
 
         c1.setXspeed(c1x);
         c1.setYspeed(c1y);
