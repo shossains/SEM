@@ -10,6 +10,8 @@ import gamelogic.Puck;
 
 
 public class GameScreen implements Screen {
+    private final static int END_SCORE = 1;
+
     final transient MyGdxGame game;
 
     transient Texture puckImage;
@@ -24,7 +26,6 @@ public class GameScreen implements Screen {
     transient Paddle paddle2;
 
     transient CollisionsEngine collisionsEngine;
-    transient ScoringSystem scoringSystem;
 
     transient OrthographicCamera camera;
 
@@ -69,12 +70,10 @@ public class GameScreen implements Screen {
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
-        scoringSystem = new ScoringSystem(puck, hud);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     }
 
     @Override
@@ -113,7 +112,6 @@ public class GameScreen implements Screen {
      * Method that is called while the game is running.
      */
     public void update() {
-
         //update the camera
         camera.update();
 
@@ -122,10 +120,6 @@ public class GameScreen implements Screen {
         hud.updateTime(deltaTime);
         //move the puck
         puck.movePuck(deltaTime);
-        // Check if the puck's in one of the goals
-        if (scoringSystem.goal()) {
-            Gdx.app.log("TODO", "Reset the game after the goal");
-        }
         //ensure it is within boundaries
         puck.fixPosition();
 
@@ -133,8 +127,15 @@ public class GameScreen implements Screen {
         if (hud.getGameTimer() <= 0) {
             //TODO stop the game
             Gdx.app.log("END", "The timer run out");
-            pause();
-            scoringSystem.getTheWinner();
+        }
+
+        // Check if one of the players wont the game
+        if (hud.getScore1() == END_SCORE) {
+            //TODO Player1 wins
+            Gdx.app.log("END", "Plalyer 1 wins");
+        } else if (hud.getScore2() == END_SCORE) {
+            //TODO PLayer2 wins
+            Gdx.app.log("END", "Player 2 wins");
         }
 
         //the movement variables for player 1
