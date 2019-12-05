@@ -1,9 +1,17 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
@@ -22,6 +30,10 @@ public class GameScreen implements Screen {
     transient Puck puck;
     transient Paddle paddle1;
     transient Paddle paddle2;
+
+    transient Stage stage;
+    transient ImageButton resumeButton;
+    transient ImageButton exitButton;
 
     transient CollisionsEngine collisionsEngine;
 
@@ -45,6 +57,25 @@ public class GameScreen implements Screen {
      */
     public GameScreen(final MyGdxGame game) {
         this.game = game;
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        resumeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("assets/resume.png")))));
+        resumeButton.setHeight(100);
+        resumeButton.setWidth(200);
+        resumeButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        resume();
+                        resumeButton.setPosition(-1000, -1000);
+                        stage.act();
+                        stage.draw();
+                    }
+                });
+        resumeButton.setPosition(300, 300);
+
+        stage.addActor(resumeButton);
 
         boardImage = new Texture(Gdx.files.internal("assets/table.png"));
         puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
@@ -86,9 +117,12 @@ public class GameScreen implements Screen {
 
         escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
 
+
+        draw();
         switch (state) {
             case RUN:
                 if (escPressed) {
+
                     pause();
                 }
                 update();
@@ -96,12 +130,12 @@ public class GameScreen implements Screen {
             case PAUSE:
                 if (escPressed) {
                     resume();
+
                 }
                 break;
             default:
                 break;
         }
-        draw();
     }
 
     /**
@@ -153,10 +187,13 @@ public class GameScreen implements Screen {
         // coordinate system specified by the camera.
         game.spriteBatch.setProjectionMatrix(camera.combined);
 
+
+
         game.spriteBatch.begin();
 
         // Draw the board
         game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
+
 
         //draw the puck as the texture and in the place that the puck exists
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
@@ -171,6 +208,8 @@ public class GameScreen implements Screen {
                 paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
+        stage.act();
+        stage.draw();
     }
 
     @Override
@@ -180,11 +219,17 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        resumeButton.setPosition(220, 330);
+        stage.act();
+        stage.draw();
         this.state = State.PAUSE;
     }
 
     @Override
     public void resume() {
+        resumeButton.setPosition(-1000, -1000);
+        stage.act();
+        stage.draw();
         this.state = State.RUN;
     }
 
@@ -196,5 +241,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         puckImage.dispose();
+        stage.dispose();
     }
 }
