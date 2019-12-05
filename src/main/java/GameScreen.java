@@ -12,6 +12,7 @@ import gamelogic.Puck;
 
 
 public class GameScreen implements Screen {
+
     private static final int END_SCORE = 1;
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
@@ -139,7 +140,7 @@ public class GameScreen implements Screen {
         }
 
         // Check if the game's timer haven't run out
-        if (hud.getGameTimer() <= 0) {
+        if (scoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
             pause();
             scoringSystem.getTheWinner();
@@ -148,12 +149,12 @@ public class GameScreen implements Screen {
         }
 
         // Check if one of the players wont the game
-        if (hud.getScore1() == END_SCORE) {
+        if (scoringSystem.checkScorePlayer1()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     Scores(game, 100));
-        } else if (hud.getScore2() == END_SCORE) {
+        } else if (scoringSystem.checkScorePlayer2()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
