@@ -1,7 +1,10 @@
+package database;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @SuppressWarnings("PMD.CloseResource")
@@ -113,17 +116,12 @@ public class Query extends Adapter {
         Query db = new Query();
         db.connect();
         try {
-            PreparedStatement insert = conn.prepareStatement("INSERT INTO users(id, username, "
-                    + "password, email) VALUES(?, ? , ?, ?)");
-            PreparedStatement select = conn.prepareStatement("SELECT COUNT(*)"
-                    + " FROM users");
-            ResultSet resultSet = select.executeQuery();
-            resultSet.next();
-            insert.setInt(1, resultSet.getInt(1));
-            insert.setString(2, username.replaceAll("[^A-Za-z0-9_.!?]", ""));
-            insert.setString(3, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9_.?!]",
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO users(username, "
+                    + "password, email) VALUES(? , ?, ?)");
+            insert.setString(1, username.replaceAll("[^A-Za-z0-9_.!?]", ""));
+            insert.setString(2, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9_.?!]",
                     ""), BCrypt.gensalt(10)));
-            insert.setString(4, email.replaceAll("[^A-Za-z0-9_.?!@]", ""));
+            insert.setString(3, email.replaceAll("[^A-Za-z0-9_.?!@]", ""));
             int rows = insert.executeUpdate();
             if (rows != 0) {
                 return true;
