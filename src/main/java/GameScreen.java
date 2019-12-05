@@ -11,7 +11,9 @@ import gamelogic.Puck;
 
 
 public class GameScreen implements Screen {
-    private final static int END_SCORE = 1;
+    private static final int END_SCORE = 11;
+    private static final int PLAYER_ONE = 1;
+    private static final int PLAYER_TWO = 2;
 
     final transient MyGdxGame game;
 
@@ -27,6 +29,7 @@ public class GameScreen implements Screen {
     transient Paddle paddle2;
 
     transient CollisionsEngine collisionsEngine;
+    transient ScoringSystem scoringSystem;
 
     transient OrthographicCamera camera;
 
@@ -71,6 +74,7 @@ public class GameScreen implements Screen {
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
+        scoringSystem = new ScoringSystem(puck, hud);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
@@ -124,18 +128,29 @@ public class GameScreen implements Screen {
         //ensure it is within boundaries
         puck.fixPosition();
 
+        // Check if the puck's in one of the goals
+        int goal = scoringSystem.goal();
+        if (goal != 0) {
+            if (goal == PLAYER_ONE) {
+                resetRight();
+            } else if (goal == PLAYER_TWO) {
+                resetLeft();
+            }
+        }
+
         // Check if the game's timer haven't run out
-        if (hud.getGameTimer() <= 0) {
-            //TODO stop the game
+        if (scoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
+            pause();
+            scoringSystem.getTheWinner();
         }
 
         // Check if one of the players wont the game
-        if (hud.getScore1() == END_SCORE) {
-            //TODO Player1 wins
-            Gdx.app.log("END", "Plalyer 1 wins");
-        } else if (hud.getScore2() == END_SCORE) {
-            //TODO PLayer2 wins
+        if (scoringSystem.checkScorePlayer1()) {
+            pause();
+            Gdx.app.log("END", "Player 1 wins");
+        } else if (scoringSystem.checkScorePlayer2()) {
+            pause();
             Gdx.app.log("END", "Player 2 wins");
         }
 
@@ -194,6 +209,46 @@ public class GameScreen implements Screen {
         game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
+
+    /**
+     * Reset the board after player2 scored.
+     * The puck moves towards the player who lost a point, the player1.
+     */
+    public void resetLeft() {
+        pause();
+        puck.resetPosition();
+        puck.setXspeed(-50f);
+        resetPaddles();
+        resume();
+    }
+
+    /**
+     * Reset the board after player1 scored.
+     * The puck moves towards the player who lost a point, the player2.
+     */
+    public void resetRight() {
+        pause();
+        puck.resetPosition();
+        puck.setXspeed(50f);
+        resetPaddles();
+        resume();
+    }
+
+    /**
+     * Reset the paddles on the board to the initial position.
+     */
+    public void resetPaddles() {
+        this.paddle1.setX(1000f);
+        this.paddle1.setY(360f);
+        this.paddle1.setXspeed(0);
+        this.paddle1.setYspeed(0);
+
+        this.paddle2.setX(360f);
+        this.paddle2.setY(360f);
+        this.paddle2.setXspeed(0);
+        this.paddle2.setYspeed(0);
+    }
+
 
     @Override
     public void resize(int width, int height) {
