@@ -45,7 +45,7 @@ jacocoTestReport {
     reports {
         xml.enabled true
         csv.enabled true
-        html.destination file("build/JaCoCoHtml")
+        html.destination file("$buildDir/JaCoCo")
     }
 }
 
