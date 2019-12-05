@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -51,6 +52,19 @@ public class Scores implements Screen {
                     }
                 });
         stage.addActor(button);
+        TextButton exit = new TextButton("Back", skin);
+        exit.setPosition(900, 600);
+        exit.setSize(100, 50);
+        exit.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                MainMenuScreen(game));
+
+                    }
+                });
+        stage.addActor(exit);
     }
 
     /**
