@@ -74,6 +74,16 @@ public class Puck extends Circle implements java.io.Serializable {
         }
     }
 
+    /**
+     * Set the puck's position on the board to the initial one.
+     */
+    public void resetPosition() {
+        this.x = 640f;
+        this.y = 360f;
+        this.xspeed = 0;
+        this.yspeed = 0;
+    }
+
     public float getXspeed() {
         return xspeed;
     }
