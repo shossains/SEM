@@ -1,3 +1,4 @@
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +8,7 @@ import java.sql.Statement;
 
 public class Adapter {
     /* 01 Database variables ------------------------------- */
-    static Connection conn = null;
+    public static Connection conn = null;
     private transient Statement stmt = null;
     private transient ResultSet rs = null;
 

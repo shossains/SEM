@@ -15,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import database.Query;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-@SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
+@SuppressWarnings("PMD.CloseResource")
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;
