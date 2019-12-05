@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import database.Query;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Registration implements Screen {
@@ -130,8 +131,19 @@ public class Registration implements Screen {
             dialog.show(stage);
         } else {
             dispose();
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    MainMenuScreen(game));
+            if (Query.addNewUser(username, password, email)) {
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                        MainMenuScreen(game));
+            } else {
+                Dialog dialog = new Dialog("Email or username already in use.",
+                        assetManager.get(skinPath, Skin.class), "dialog") {
+                };
+                dialog.setColor(Color.ROYAL);
+                dialog.setSize(400, 200);
+                dialog.text("Please try again.");
+                dialog.button("Ok", false);
+                dialog.show(stage);
+            }
         }
     }
 

@@ -2,17 +2,16 @@ package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
-public class Puck extends Circle implements java.io.Serializable {
+public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
-    //add extra attributes
-    //It needs speed in x and y direction
-
-    public transient float xspeed;
-    public transient float yspeed;
-
     private transient boolean initMove;
+
+    /**
+     * The co-efficient of restitution.
+     */
+    private static final transient float e = 0.85f;
 
     /**
      * Constructor.
@@ -22,53 +21,36 @@ public class Puck extends Circle implements java.io.Serializable {
      * @param yspeed Speed in y direction.
      * @param radius The radius.
      */
-    public Puck(float x, float y, float xspeed, float yspeed, float radius) {
+    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass) {
 
-        super(x, y, radius);
-
-        this.xspeed = xspeed;
-        this.yspeed = yspeed;
-    }
-
-    /**
-     * Method to move the puck.
-     * @param deltaTime GDX deltaTime.
-     */
-    public void movePuck(float deltaTime) {
-        this.x += this.xspeed * deltaTime;
-        this.y += this.yspeed * deltaTime;
+        super(x, y, radius, xspeed, yspeed, mass);
     }
 
     /**
      * Method to ensure the puck is within the correct boundaries.
+     * We check if the puck is outside of the board boundaries,
+     * and if it has hit an edge we calculate the speed after the resulting collision.
      */
     public void fixPosition() {
-        //we need to add the functionality to check that if the puck has hit the boundaries
-        //or has been hit by a paddle
 
-        //boundary detection
-        //the puck.x and y represent the center of the circle
-
-        //change later to reverse the speed and so on, but we need a co-efficient of friction
-        //and more physics stuff
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
-            this.setXspeed(- this.getXspeed());
+            this.setXspeed(- this.getXspeed() * e);
         }
         if (this.x > 1280 - this.radius) {
             this.x = 1280 - this.radius;
-            this.setXspeed(- this.getXspeed());
+            this.setXspeed(- this.getXspeed() * e);
         }
 
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
-            this.setYspeed(- this.getYspeed());
+            this.setYspeed(- this.getYspeed() * e);
             initMove = false;
         }
         if (this.y > 720 - this.radius) {
             this.y = 720 - this.radius;
-            this.setYspeed(- this.getYspeed());
+            this.setYspeed(- this.getYspeed() * e);
 
             initMove = false;
         }
@@ -78,26 +60,10 @@ public class Puck extends Circle implements java.io.Serializable {
      * Set the puck's position on the board to the initial one.
      */
     public void resetPosition() {
-        this.x = 640f;
-        this.y = 360f;
-        this.xspeed = 0;
-        this.yspeed = 0;
-    }
-
-    public float getXspeed() {
-        return xspeed;
-    }
-
-    public void setXspeed(float xspeed) {
-        this.xspeed = xspeed;
-    }
-
-    public float getYspeed() {
-        return yspeed;
-    }
-
-    public void setYspeed(float yspeed) {
-        this.yspeed = yspeed;
+        this.setX(640f);
+        this.setY(360f);
+        this.setXspeed(0);
+        this.setYspeed(0);
     }
 
     public boolean isInitMove() {

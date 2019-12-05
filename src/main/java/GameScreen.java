@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
+import gamelogic.PlayerType;
 import gamelogic.Puck;
 
 
@@ -67,12 +68,12 @@ public class GameScreen implements Screen {
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
         scoringSystem = new ScoringSystem(puck, hud);
 
         //background colour
@@ -123,7 +124,7 @@ public class GameScreen implements Screen {
         // Updated the game clock
         hud.updateTime(deltaTime);
         //move the puck
-        puck.movePuck(deltaTime);
+        puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
 
@@ -168,8 +169,8 @@ public class GameScreen implements Screen {
         paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
         paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
 
-        paddle1.movePaddle(deltaTime);
-        paddle2.movePaddle(deltaTime);
+        paddle1.move(deltaTime);
+        paddle2.move(deltaTime);
 
         collisionsEngine.collide();
 
@@ -216,7 +217,7 @@ public class GameScreen implements Screen {
     public void resetLeft() {
         pause();
         puck.resetPosition();
-        puck.xspeed = -50f;
+        puck.setXspeed(-50f);
         resetPaddles();
         resume();
     }
@@ -228,7 +229,7 @@ public class GameScreen implements Screen {
     public void resetRight() {
         pause();
         puck.resetPosition();
-        puck.xspeed = 50f;
+        puck.setXspeed(50f);
         resetPaddles();
         resume();
     }
@@ -237,15 +238,15 @@ public class GameScreen implements Screen {
      * Reset the paddles on the board to the initial position.
      */
     public void resetPaddles() {
-        this.paddle1.x = 1000f;
-        this.paddle1.y = 360f;
-        this.paddle1.xspeed = 0;
-        this.paddle1.yspeed = 0;
+        this.paddle1.setX(1000f);
+        this.paddle1.setY(360f);
+        this.paddle1.setXspeed(0);
+        this.paddle1.setYspeed(0);
 
-        this.paddle2.x = 360f;
-        this.paddle2.y = 360f;
-        this.paddle2.xspeed = 0;
-        this.paddle2.yspeed = 0;
+        this.paddle2.setX(360f);
+        this.paddle2.setY(360f);
+        this.paddle2.setXspeed(0);
+        this.paddle2.setYspeed(0);
     }
 
 
