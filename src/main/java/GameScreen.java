@@ -11,6 +11,8 @@ import gamelogic.Puck;
 
 
 public class GameScreen implements Screen {
+    private final static int END_SCORE = 1;
+
     final transient MyGdxGame game;
 
     transient Texture puckImage;
@@ -18,6 +20,7 @@ public class GameScreen implements Screen {
     transient Texture paddle2Image;
     transient Texture boardImage;
 
+    transient Hud hud;
     transient Board board;
     transient Puck puck;
     transient Paddle paddle1;
@@ -58,6 +61,9 @@ public class GameScreen implements Screen {
         // Create the board
         board = new Board(0, 0, 1280, 720);
 
+        // Create the HUD
+        hud = new Hud(game.spriteBatch);
+
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
 
@@ -69,7 +75,6 @@ public class GameScreen implements Screen {
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     }
 
     @Override
@@ -108,17 +113,31 @@ public class GameScreen implements Screen {
      * Method that is called while the game is running.
      */
     public void update() {
-
         //update the camera
         camera.update();
 
-        //move the puck
-
         float deltaTime = Gdx.graphics.getDeltaTime();
-
+        // Updated the game clock
+        hud.updateTime(deltaTime);
+        //move the puck
         puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
+
+        // Check if the game's timer haven't run out
+        if (hud.getGameTimer() <= 0) {
+            //TODO stop the game
+            Gdx.app.log("END", "The timer run out");
+        }
+
+        // Check if one of the players wont the game
+        if (hud.getScore1() == END_SCORE) {
+            //TODO Player1 wins
+            Gdx.app.log("END", "Plalyer 1 wins");
+        } else if (hud.getScore2() == END_SCORE) {
+            //TODO PLayer2 wins
+            Gdx.app.log("END", "Player 2 wins");
+        }
 
         //the movement variables for player 1
         boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
@@ -171,6 +190,9 @@ public class GameScreen implements Screen {
                 paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
+        // Draw the hud on top of the board.
+        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
