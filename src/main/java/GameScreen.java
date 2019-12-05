@@ -120,7 +120,7 @@ public class GameScreen implements Screen {
         // Updated the game clock
         hud.updateTime(deltaTime);
         //move the puck
-        puck.movePuck(deltaTime);
+        puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
 
