@@ -2,6 +2,7 @@ import com.badlogic.gdx.Gdx;
 import gamelogic.Puck;
 
 public class ScoringSystem {
+    private final static int END_SCORE = 11;
 
     private transient Puck puck;
     private transient Hud hud;
@@ -27,6 +28,18 @@ public class ScoringSystem {
         } else {
             return 0;
         }
+    }
+
+    public boolean checkIfGameEnded() {
+        return (hud.getGameTimer() <= 0);
+    }
+
+    public boolean checkScorePlayer1() {
+        return (hud.getScore1() == END_SCORE);
+    }
+
+    public boolean checkScorePlayer2() {
+        return (hud.getScore2() == END_SCORE);
     }
 
     /**

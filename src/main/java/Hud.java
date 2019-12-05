@@ -36,7 +36,7 @@ public class Hud implements Disposable {
      *
      */
     public Hud(SpriteBatch spriteBatch) {
-        gameTimer = 240;
+        gameTimer = 300;
         timeCount = 0;
         score1 = 0;
         score2 = 0;
