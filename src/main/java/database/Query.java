@@ -134,4 +134,70 @@ public class Query extends Adapter {
         }
         return false;
     }
+
+    /**
+     * Method for updating or retrieving the score given a nickname.
+     * @param nickname of the user.
+     * @param score new score of the user.
+     * @return old score if it is larger, otherwise new score.
+     */
+    public static int getScore(String nickname, int score) {
+        Query db = new Query();
+        db.connect();
+        try {
+            PreparedStatement getScore = conn.prepareStatement("SELECT highscore FROM scores"
+                    + " WHERE nickname = ?");
+            getScore.setString(1, nickname);
+            ResultSet resultSet = getScore.executeQuery();
+            if (resultSet.next()) {
+                int oldScore = resultSet.getInt(1);
+                if (score > oldScore) {
+                    PreparedStatement updateScore = conn.prepareStatement("UPDATE scores SET"
+                            + " highscore = ? WHERE nickname = ?");
+                    updateScore.setInt(1, score);
+                    updateScore.setString(2, nickname);
+                    updateScore.executeUpdate();
+                    return score;
+                } else {
+                    return oldScore;
+                }
+            } else {
+                PreparedStatement addUser = conn.prepareStatement("INSERT INTO scores(highscore,"
+                        + " nickname) VALUES(?, ?)");
+                addUser.setInt(1, score);
+                addUser.setString(2, nickname);
+                addUser.executeUpdate();
+                return score;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.print("Score was not found.");
+        }
+        return score;
+    }
+
+    /**
+     * Method for returning best scores.
+     * @return top 5 best scores from the database.
+     */
+    public static String getTopScores() {
+        Query db = new Query();
+        db.connect();
+        try {
+            PreparedStatement select = conn.prepareStatement("SELECT *"
+                    + " FROM scores ORDER BY highscore DESC LIMIT 5");
+            //replace all non-alphanumeric characters with empty strings
+            //select.setString(1, username.replaceAll("[^A-Za-z0-9_.?!]", ""));
+            ResultSet resultSet = select.executeQuery();
+            String result = "";
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + " " + resultSet.getString(2) + "\n";
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error executing authentication SELECT query");
+        }
+        return "";
+    }
 }
