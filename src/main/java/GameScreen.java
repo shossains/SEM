@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -12,7 +13,7 @@ import gamelogic.Puck;
 
 
 public class GameScreen implements Screen {
-    private static final int END_SCORE = 11;
+
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
 
@@ -93,7 +94,6 @@ public class GameScreen implements Screen {
         if (mutePressed) {
             game.muteUnmute();
         }
-
         escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
 
         switch (state) {
@@ -144,15 +144,21 @@ public class GameScreen implements Screen {
             Gdx.app.log("END", "The timer run out");
             pause();
             scoringSystem.getTheWinner();
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
         }
 
         // Check if one of the players wont the game
         if (scoringSystem.checkScorePlayerOne()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
         } else if (scoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
         }
 
         //the movement variables for player 1
