@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -42,6 +43,7 @@ public class Hud implements Disposable {
         score2 = 0;
 
         viewport = new FitViewport(MyGdxGame.S_WIDTH, MyGdxGame.S_HEIGHT, new OrthographicCamera());
+        System.out.println(Gdx.graphics.getWidth());
         stage = new Stage(viewport, spriteBatch);
         font = new BitmapFont();
         font.getData().setScale(2, 2);
@@ -87,7 +89,7 @@ public class Hud implements Disposable {
     /**
      * Add 1 point to score1 (player1).
      */
-    public void addScore1() {
+    public void addScoreOne() {
         score1++;
         scoreLabel1.setText(String.format(scoreFormat, score1));
     }
@@ -95,7 +97,7 @@ public class Hud implements Disposable {
     /**
      * Add 1 point to score2 (player2).
      */
-    public void addScore2() {
+    public void addScoreTwo() {
         score2++;
         scoreLabel2.setText(String.format(scoreFormat, score2));
     }
@@ -117,7 +119,7 @@ public class Hud implements Disposable {
      * Getter for the score of the player 1.
      * @return the score of the player 1.
      */
-    public int getScore1() {
+    public int getScoreOne() {
         return this.score1;
     }
 
@@ -125,7 +127,8 @@ public class Hud implements Disposable {
      * Getter for the score of the player 2.
      * @return the score of the player 2.
      */
-    public int getScore2() {
+    public int getScoreTwo() {
         return this.score2;
     }
+
 }

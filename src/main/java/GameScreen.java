@@ -10,6 +10,7 @@ import gamelogic.PlayerType;
 import gamelogic.Puck;
 
 
+
 public class GameScreen implements Screen {
     private static final int END_SCORE = 11;
     private static final int PLAYER_ONE = 1;
@@ -146,10 +147,10 @@ public class GameScreen implements Screen {
         }
 
         // Check if one of the players wont the game
-        if (scoringSystem.checkScorePlayer1()) {
+        if (scoringSystem.checkScorePlayerOne()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");
-        } else if (scoringSystem.checkScorePlayer2()) {
+        } else if (scoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
         }
