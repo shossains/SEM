@@ -1,8 +1,7 @@
-import com.badlogic.gdx.Gdx;
 import gamelogic.Puck;
 
 public class ScoringSystem {
-    private final static int END_SCORE = 11;
+    private static final int END_SCORE = 11;
 
     private transient Puck puck;
     private transient Hud hud;
@@ -17,13 +16,13 @@ public class ScoringSystem {
      * @return an integer representing the player. 0 otherwise.
      */
     public int goal() {
-        if (goalPlayer1(puck)) {
-            hud.addScore1();
-            Gdx.app.log("GOAL", "Player 1 scored");
+        if (goalPlayerOne(puck)) {
+            hud.addScoreOne();
+            //Gdx.app.log("GOAL", "Player 1 scored");
             return 1;
-        } else if (goalPlayer2(puck)) {
-            hud.addScore2();
-            Gdx.app.log("GOAL", "Player 2 scored");
+        } else if (goalPlayerTwo(puck)) {
+            hud.addScoreTwo();
+            //Gdx.app.log("GOAL", "Player 2 scored");
             return 2;
         } else {
             return 0;
@@ -34,12 +33,12 @@ public class ScoringSystem {
         return (hud.getGameTimer() <= 0);
     }
 
-    public boolean checkScorePlayer1() {
-        return (hud.getScore1() == END_SCORE);
+    public boolean checkScorePlayerOne() {
+        return (hud.getScoreOne() == END_SCORE);
     }
 
-    public boolean checkScorePlayer2() {
-        return (hud.getScore2() == END_SCORE);
+    public boolean checkScorePlayerTwo() {
+        return (hud.getScoreTwo() == END_SCORE);
     }
 
     /**
@@ -47,25 +46,25 @@ public class ScoringSystem {
      * @return an int representing the player who won. 0 if it is a tie.
      */
     public int getTheWinner() {
-        if (hud.getScore1() > hud.getScore2()) {
-            Gdx.app.log("END", "Player 1 wins!");
+        if (hud.getScoreOne() > hud.getScoreTwo()) {
+            //Gdx.app.log("END", "Player3 1 wins!");
             return 1;
-        } else if (hud.getScore2() > hud.getScore1()) {
-            Gdx.app.log("END", "Player 2 wins!");
+        } else if (hud.getScoreTwo() > hud.getScoreOne()) {
+            //Gdx.app.log("END", "Player 2 wins!");
             return 2;
         } else {
-            Gdx.app.log("END", "The game ended with a tie!");
+            //Gdx.app.log("END", "The game ended with a tie!");
             return 0;
         }
     }
 
-    private boolean goalPlayer1(Puck puck) {
+    private boolean goalPlayerOne(Puck puck) {
         return (puck.x + (puck.radius / 2)  >= 1265
                 && puck.y + (puck.radius / 2) >= 270
                 && puck.y + (puck.radius / 2) <= 454);
     }
 
-    private boolean goalPlayer2(Puck puck) {
+    private boolean goalPlayerTwo(Puck puck) {
         return (puck.x - (puck.radius / 2) <= 15
                 && puck.y - (puck.radius / 2)  >= 270
                 && puck.y + (puck.radius / 2) <= 465);
