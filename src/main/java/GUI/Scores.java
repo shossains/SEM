@@ -1,3 +1,5 @@
+package GUI;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -24,9 +26,9 @@ public class Scores implements Screen {
     final transient int score;
 
     /**
-     * Constructor for Scores Screen.
+     * Constructor for GUI.Scores Screen.
      * @param game the current game.
-     * @param score the score recieved from the GameScreen class.
+     * @param score the score recieved from the GUI.GameScreen class.
      */
     public Scores(MyGdxGame game, int score) {
         this.game = game;
@@ -127,4 +129,5 @@ public class Scores implements Screen {
     public void dispose() {
 
     }
+
 }

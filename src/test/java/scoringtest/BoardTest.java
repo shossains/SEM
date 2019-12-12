@@ -1,8 +1,10 @@
+package scoringtest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeEach;
+import scoring.Board;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
@@ -11,6 +13,7 @@ public class BoardTest {
     void constructorTest() {
         Board toCompare = new Board(10f, 20f, 500f, 100f);
         assertEquals(new Board(10f, 20f, 500f, 100f), toCompare);
+
         assertEquals(new Board(10f, 20f, 500f, 100f).x, toCompare.x);
         assertEquals(new Board(10f, 20f, 500f, 100f).y, toCompare.y);
         assertEquals(new Board(10f, 20f, 500f, 100f).width, toCompare.width);

@@ -1,3 +1,5 @@
+package GUI;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Query;
 
-@SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;

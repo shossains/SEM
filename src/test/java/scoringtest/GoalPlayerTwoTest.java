@@ -1,6 +1,10 @@
+package scoringtest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
+import scoring.Hud;
+import scoring.ScoringSystem;
 import gamelogic.Puck;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,3 +1,5 @@
+package scoring;
+
 import com.badlogic.gdx.math.Rectangle;
 
 import java.io.Serializable;
