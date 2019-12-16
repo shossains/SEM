@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.buttonFactory = new ButtonFactory(this.game, this);
+        this.buttonFactory = new ButtonFactory(game, this);
         playButton = buttonFactory.createTransitionImageButton("assets/play.png", "ChooseGameScreen");
         settingsButton = buttonFactory.createTransitionImageButton("assets/settings.png", "SettingsScreen");
         logoutButton = buttonFactory.createTransitionImageButton("assets/logout.png", "LoginScreen");
