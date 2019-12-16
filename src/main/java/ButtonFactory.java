@@ -82,6 +82,7 @@ public class ButtonFactory {
         );
         return button;
     }
+
     /**
      * Creator for ImageButton that is used to transition between screens
      *  or exit the application.

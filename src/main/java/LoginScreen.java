@@ -31,8 +31,10 @@ public class LoginScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         ButtonFactory buttonFactory = new ButtonFactory(this.game, this);
-        ImageButton loginButton = buttonFactory.createTransImButton("assets/login.png", "Credentials");
-        ImageButton registerButton = buttonFactory.createTransImButton("assets/register.png", "Registration");
+        ImageButton loginButton = buttonFactory.createTransImButton("assets/login.png",
+                "Credentials");
+        ImageButton registerButton = buttonFactory.createTransImButton("assets/register.png",
+                "Registration");
         ImageButton exitButton = buttonFactory.createTransImButton("assets/exit2.png", "Exit");
         exitButton.setPosition(1130, 640);
         loginButton.setPosition(500, 200);

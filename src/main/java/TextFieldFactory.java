@@ -14,14 +14,23 @@ public class TextFieldFactory {
         this.game = game;
     }
 
+    /**
+     * Method for creating a basic skins.
+     * It is used by the text buttons and text fields.
+     * @return a basic skin.
+     */
     public Skin createSkin() {
         AssetManager assetManager = new AssetManager();
         assetManager.load("assets/uiskin.json", Skin.class);
         assetManager.finishLoading();
-        Skin skin = new Skin(Gdx.files.internal( "assets/uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
         return skin;
     }
 
+    /**
+     * Create a simpe text field.
+     * @return a new text field, using the skin created before.
+     */
     public TextField createTextField() {
         Skin skin = createSkin();
         TextField textField = new TextField("", skin);
