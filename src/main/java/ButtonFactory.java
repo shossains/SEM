@@ -1,9 +1,12 @@
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -35,6 +38,50 @@ public class ButtonFactory {
         return button;
     }
 
+    /**
+     * Method for creating a text button, using a basic skin.
+     * @param text for the button.
+     * @return the actual text button.
+     */
+    public TextButton createTextButton(String text) {
+        TextFieldFactory textFieldFactory = new TextFieldFactory(this.game, this.screen);
+        TextButton textButton = new TextButton(text, textFieldFactory.createSkin());
+        textButton.setSize(100, 50);
+        return textButton;
+    }
+
+    /**
+     * Method for creating a text button with a given functionality.
+     * @param text the name of the button.
+     * @param newScreen screen for redirection.
+     * @return a new functional text button.
+     */
+    public TextButton createTransTextButton(String text, String newScreen) {
+        TextButton button = createTextButton(text);
+        button.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        screen.dispose();
+                        switch (newScreen) {
+                            case "LoginScreen":
+                                game.setScreen(new LoginScreen(game));
+                                break;
+                            case "Exit":
+                                Gdx.app.exit();
+                                break;
+                            case "ChooseGameScreen":
+                                game.setScreen(new ChooseGameScreen(game));
+                                break;
+                            default:
+                                throw new IllegalArgumentException("Screen type does not exist");
+
+                        }
+                    }
+                }
+        );
+        return button;
+    }
     /**
      * Creator for ImageButton that is used to transition between screens
      *  or exit the application.
@@ -72,6 +119,12 @@ public class ButtonFactory {
                             case "Exit":
                                 Gdx.app.exit();
                                 break;
+                            case "Credentials":
+                                game.setScreen(new Credentials(game));
+                                break;
+                            case "Registration":
+                                game.setScreen(new Registration(game));
+                                break;
                             default:
                                 throw new IllegalArgumentException("Screen type does not exist");
 
@@ -81,5 +134,6 @@ public class ButtonFactory {
         );
         return button;
     }
+
 
 }
