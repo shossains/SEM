@@ -9,17 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ButtonFactory {
 
-    private transient int created;
     final transient MyGdxGame game;
     private transient Screen screen;
 
     public ButtonFactory(MyGdxGame game, Screen screen) {
-        created = 0;
         this.screen = screen;
         this.game = game;
     }
 
-    public ImageButton createTransitionImageButton (String path, String newScreen) {
+    public ImageButton createImageButton(String path) {
         Texture myTexture = new Texture(Gdx.files.internal(path));
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
@@ -27,6 +25,13 @@ public class ButtonFactory {
         ImageButton button = new ImageButton(myTexRegionDrawable);
         button.setWidth(200);
         button.setHeight(100);
+
+        return button;
+    }
+
+    public ImageButton createTransitionImageButton(String path, String newScreen) {
+
+        ImageButton button = createImageButton(path);
 
         button.addListener(
                 new ClickListener() {
@@ -58,7 +63,6 @@ public class ButtonFactory {
                     }
                 }
         );
-        created++;
         return button;
     }
 
