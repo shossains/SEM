@@ -4,6 +4,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
+/**
+ * The purpose of this class is to create a simple
+ * text field, based on a basic skin. It is used
+ * for the graphical user interface, when user's
+ * input is required.
+ */
 public class TextFieldFactory {
 
     final transient MyGdxGame game;

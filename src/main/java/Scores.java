@@ -1,25 +1,31 @@
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Query;
 
+/**
+ * The purpose of this class is to create an graphical user interface
+ * shown after the game has finished which disposes the top five results
+ * registered in the database. This class makes use of ButtonFactory and
+ * TextFieldFactory classes to create new objects.
+ * The current user is asked to enter a nickname.
+ * Then, the method checkScores is called which disposes
+ * the top 5 scores ever registered.
+ */
 public class Scores implements Screen {
 
     final transient MyGdxGame game;
     public transient Stage stage;
-    private transient AssetManager assetManager;
     final transient TextField usernameTextField;
-    final transient String skinPath;
+    final transient TextFieldFactory textFieldFactory;
     final transient int score;
 
     /**
@@ -32,12 +38,8 @@ public class Scores implements Screen {
         this.score = score;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        assetManager = new AssetManager();
-        assetManager.load("assets/uiskin.json", Skin.class);
-        assetManager.finishLoading();
-        skinPath = "assets/uiskin.json";
-        Skin skin = new Skin(Gdx.files.internal(skinPath));
-        usernameTextField = new TextField("", skin);
+        textFieldFactory = new TextFieldFactory(this.game, this);
+        usernameTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(250,200);
         stage.addActor(usernameTextField);
         ButtonFactory factory = new ButtonFactory(this.game, this);
@@ -59,6 +61,7 @@ public class Scores implements Screen {
 
     /**
      * Method that shows the best scores.
+     * This method makes use of the Query class.
      * @param score the score of the current player.
      */
     public void checkScore(int score) {
@@ -66,7 +69,7 @@ public class Scores implements Screen {
         Query.getScore(username, score);
         String scores = Query.getTopScores();
         Dialog dialog = new Dialog("Top 5 scores",
-                assetManager.get(skinPath, Skin.class),
+                textFieldFactory.createSkin(),
                 "dialog") {
         };
         dialog.setColor(Color.RED);

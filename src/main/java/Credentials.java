@@ -2,7 +2,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,14 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Query;
 
-@SuppressWarnings({"PMD.CloseResource", "CustomImportOrder"})
+/**
+ * The meaning of this class is to create an graphical user interface
+ * for loggin in. If the user already has an account, he/she can enter
+ * the username and password. If the data is correct, the user will be redirected
+ * to the MainMenuScreen.
+ */
 public class Credentials implements Screen {
 
     public transient MyGdxGame game;
@@ -33,7 +36,9 @@ public class Credentials implements Screen {
     final transient TextField passwordTextField;
 
     /**
-     * Start the game with a skin.
+     * Constructor for credentials screen.
+     * Here, using the TextFieldFactory and ButtonFactory classes,
+     * new objects are created.
      * @param game The game itself.
      */
     public Credentials(MyGdxGame game) {
@@ -67,6 +72,14 @@ public class Credentials implements Screen {
         stage.addActor(exit);
     }
 
+    /**
+     * Method that checks if a user already has an account.
+     * Given an username and a password, this method
+     * makes use of the Query class and checks whether the
+     * account exists in the User's database.
+     * If not, a pop-up is shown to the user with label "incorrect credentials".
+     * If the fields are empty and the user is done, another pop-up will state this.
+     */
     private void submitCredentials() {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
@@ -116,7 +129,6 @@ public class Credentials implements Screen {
         if (enterPressed) {
             submitCredentials();
         }
-
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();

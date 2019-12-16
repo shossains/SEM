@@ -15,6 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Query;
 
+/**
+ * The purpose of this class is to create a graphical user interface
+ * for the registration screen. This class makes use of the ButtonFactory
+ * and TextFieldFactory classes for creating new objects and giving them
+ * functionality.
+ * Here, a user can create an new account if some conditions are satisfied.
+ * These conditions are verified in the submitCredentials method.
+ */
 public class Registration implements Screen {
     private transient MyGdxGame game;
     public transient Stage stage;
@@ -77,6 +85,14 @@ public class Registration implements Screen {
         stage.addActor(exit);
     }
 
+    /**
+     * Method for verifying that an account can be created.
+     * If the username or email are already registered in the database,
+     * a pop-up will be shown and the user will be notified.
+     * Otherwise, a new account is created.
+     * This method makes use of the Query class for interactions with
+     * the database.
+     */
     private void submitCredentials() {
         username = usernameTextField.getText();
         password = passwordTextField.getText();

@@ -1,15 +1,20 @@
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * The purpose of this class is to create different kind
+ * of buttons and their functionality.
+ * This class makes use of the TextFieldFactory class which
+ * creates a basic skin, needed for the Image Buttons.
+ * This class is used by the graphical user interface.
+ */
 public class ButtonFactory {
 
     final transient MyGdxGame game;
