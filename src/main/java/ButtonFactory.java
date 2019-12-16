@@ -17,7 +17,13 @@ public class ButtonFactory {
         this.game = game;
     }
 
-    public ImageButton createImageButton(String path) {
+    /**
+     * Creator for basic ImageButton.
+     *
+     * @param path to the image resource
+     * @return the created ImageButton
+     */
+    public ImageButton createImButton(String path) {
         Texture myTexture = new Texture(Gdx.files.internal(path));
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
@@ -29,16 +35,25 @@ public class ButtonFactory {
         return button;
     }
 
-    public ImageButton createTransitionImageButton(String path, String newScreen) {
+    /**
+     * Creator for ImageButton that is used to transition between screens
+     *  or exit the application.
+     *
+     * @param path to the image resource
+     * @param newScreen type of Screen to transition to
+     * @return the created ImageButton
+     * @throws IllegalArgumentException if the specified screen type is not defined
+     */
+    public ImageButton createTransImButton(String path, String newScreen) {
 
-        ImageButton button = createImageButton(path);
+        ImageButton button = createImButton(path);
 
         button.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         screen.dispose();
-                        switch(newScreen) {
+                        switch (newScreen) {
                             case "MainMenuScreen":
                                 game.setScreen(new MainMenuScreen(game));
                                 break;
@@ -56,6 +71,7 @@ public class ButtonFactory {
                                 break;
                             case "Exit":
                                 Gdx.app.exit();
+                                break;
                             default:
                                 throw new IllegalArgumentException("Screen type does not exist");
 

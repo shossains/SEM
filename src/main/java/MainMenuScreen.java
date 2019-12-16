@@ -3,14 +3,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
@@ -38,10 +33,10 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         this.buttonFactory = new ButtonFactory(game, this);
-        playButton = buttonFactory.createTransitionImageButton("assets/play.png", "ChooseGameScreen");
-        settingsButton = buttonFactory.createTransitionImageButton("assets/settings.png", "SettingsScreen");
-        logoutButton = buttonFactory.createTransitionImageButton("assets/logout.png", "LoginScreen");
-        exitButton = buttonFactory.createTransitionImageButton("assets/exit.png", "Exit");
+        playButton = buttonFactory.createTransImButton("assets/play.png", "ChooseGameScreen");
+        settingsButton = buttonFactory.createTransImButton("assets/settings.png", "SettingsScreen");
+        logoutButton = buttonFactory.createTransImButton("assets/logout.png", "LoginScreen");
+        exitButton = buttonFactory.createTransImButton("assets/exit.png", "Exit");
 
         playButton.setPosition(230, 320);
         settingsButton.setPosition(230, 250);

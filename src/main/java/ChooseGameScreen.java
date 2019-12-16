@@ -1,18 +1,12 @@
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class ChooseGameScreen implements Screen {
@@ -40,10 +34,10 @@ public class ChooseGameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         this.buttonFactory = new ButtonFactory(game, this);
 
-        localGameButton = buttonFactory.createTransitionImageButton("assets/local.png", "GameScreen");
-        vsAiGameButton = buttonFactory.createImageButton("assets/vsAI.png");
-        onlineGameButton = buttonFactory.createImageButton("assets/online.png");
-        backButton = buttonFactory.createTransitionImageButton("assets/back.png", "MainMenuScreen");
+        localGameButton = buttonFactory.createTransImButton("assets/local.png", "GameScreen");
+        vsAiGameButton = buttonFactory.createImButton("assets/vsAI.png");
+        onlineGameButton = buttonFactory.createImButton("assets/online.png");
+        backButton = buttonFactory.createTransImButton("assets/back.png", "MainMenuScreen");
 
         localGameButton.setPosition(220, 300);
         vsAiGameButton.setPosition(220, 230);
