@@ -26,10 +26,9 @@ public class Credentials implements Screen {
     private transient String password;
     private transient Image image;
 
-    final transient String skinPath;
+    final transient TextFieldFactory textFieldFactory;
 
     private transient boolean mutePressed;
-    private transient AssetManager assetManager;
     final transient TextField usernameTextField;
     final transient TextField passwordTextField;
 
@@ -41,26 +40,22 @@ public class Credentials implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        assetManager = new AssetManager();
-        assetManager.load("assets/uiskin.json", Skin.class);
-        assetManager.finishLoading();
-        skinPath = "assets/uiskin.json";
-        Skin skin = new Skin(Gdx.files.internal(skinPath));
-        usernameTextField = new TextField("", skin);
-        passwordTextField = new TextField("", skin);
+        textFieldFactory = new TextFieldFactory(this.game, this);
+        usernameTextField = textFieldFactory.createTextField();
+        passwordTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(250,200);
-        usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(250, 100);
-        passwordTextField.setSize(300, 50);
         passwordTextField.setPasswordMode(true);
         passwordTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
         image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
-        TextButton button = new TextButton("Done!", skin);
+        ButtonFactory factory = new ButtonFactory(this.game, this);
+        TextButton exit = factory.createTransTextButton("Exit!", "LoginScreen");
+        exit.setPosition(900, 600);
+        TextButton button = factory.createTextButton("Done!");
         button.setPosition(100, 300);
-        button.setSize(100, 50);
         button.addListener(
                 new ClickListener() {
                     @Override
@@ -69,18 +64,6 @@ public class Credentials implements Screen {
                     }
                 });
         stage.addActor(button);
-        TextButton exit = new TextButton("Back", skin);
-        exit.setPosition(900, 600);
-        exit.setSize(100, 50);
-        exit.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                LoginScreen(game));
-
-                    }
-                });
         stage.addActor(exit);
     }
 
@@ -90,7 +73,7 @@ public class Credentials implements Screen {
 
         if (username.equals("") || password.equals("")) {
             Dialog dialog = new Dialog("Empty fields",
-                    assetManager.get(skinPath, Skin.class),
+                    textFieldFactory.createSkin(),
                     "dialog") {
             };
             dialog.setColor(Color.RED);
@@ -105,7 +88,7 @@ public class Credentials implements Screen {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(m);
             } else {
                 Dialog dialog = new Dialog("Incorrect credentials",
-                        assetManager.get(skinPath, Skin.class),
+                        textFieldFactory.createSkin(),
                         "dialog") {
                 };
                 dialog.setColor(Color.RED);

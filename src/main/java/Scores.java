@@ -1,4 +1,3 @@
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -41,9 +40,9 @@ public class Scores implements Screen {
         usernameTextField = new TextField("", skin);
         usernameTextField.setPosition(250,200);
         stage.addActor(usernameTextField);
-        TextButton button = new TextButton("Done!", skin);
+        ButtonFactory factory = new ButtonFactory(this.game, this);
+        TextButton button = factory.createTextButton("Done!");
         button.setPosition(100, 300);
-        button.setSize(100, 50);
         button.addListener(
                 new ClickListener() {
                     @Override
@@ -52,18 +51,9 @@ public class Scores implements Screen {
                     }
                 });
         stage.addActor(button);
-        TextButton exit = new TextButton("Back", skin);
-        exit.setPosition(900, 600);
-        exit.setSize(100, 50);
-        exit.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                ChooseGameScreen(game));
 
-                    }
-                });
+        TextButton exit = factory.createTransTextButton("Back", "ChooseGameScreen");
+        exit.setPosition(900, 600);
         stage.addActor(exit);
     }
 
