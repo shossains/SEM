@@ -1,5 +1,3 @@
-package database;
-
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.PreparedStatement;
@@ -94,13 +92,9 @@ public class Query extends Adapter {
             select.setString(1, username.replaceAll("[^A-Za-z0-9]", ""));
             ResultSet resultSet = select.executeQuery();
             if (resultSet.next()) {
-                String hashed = BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9]", ""),
-                        BCrypt.gensalt(10));
-                if (BCrypt.hashpw(resultSet.getString(2), BCrypt.gensalt(10)).equals(hashed)) {
+                if (BCrypt.checkpw(password, resultSet.getString(2))) {
                     return true;
                 }
-            } else {
-                return false;
             }
 
         } catch (SQLException e) {

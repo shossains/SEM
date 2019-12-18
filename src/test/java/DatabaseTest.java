@@ -1,8 +1,11 @@
-import database.Adapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 public class DatabaseTest {
 
@@ -16,14 +19,35 @@ public class DatabaseTest {
     public Adapter ad;
     @BeforeEach
     void intialize() {
-//        Adapter ad = mock(Adapter.class);
+        Adapter ad = mock(Adapter.class);
     }
 
     @Test
-    public void test2 () throws SQLException {
+    public void test2() throws SQLException {
+        Query q = new Query();
+        assertTrue(q.verifyLogin("test","pass"));
+        assertFalse(q.verifyLogin("test","notthecorrectpass"));
+        assertFalse(q.verifyLogin("nonexistent","bla"));
+
 //        verify(DriverManager.getConnection(jdbcUrl, username, password));
-//
+
 //        assertThrows(NullPointerException.class, () -> ad.connect());
+    }
+
+    @Test
+    public void testSelect() throws SQLException {
+        String[] queries = {"SELECT username"
+                + " FROM users WHERE username = 'e';"};
+        ResultSet rs = Query.runQueries(queries)[0];
+        assertFalse(rs.next());
+    }
+
+    @Test
+    public void testSelect2() throws SQLException {
+        String[] queries = {"SELECT username"
+                + " FROM users WHERE username = 'test';"};
+        ResultSet rs = Query.runQueries(queries)[0];
+        assertTrue(rs.next());
     }
 
 //    @Test

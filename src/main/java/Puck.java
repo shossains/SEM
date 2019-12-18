@@ -1,5 +1,3 @@
-package gamelogic;
-
 import com.badlogic.gdx.math.Circle;
 
 public class Puck extends Circle implements java.io.Serializable {
