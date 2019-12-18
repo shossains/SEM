@@ -298,8 +298,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        resumeButton.setPosition(540, 480);
-        exitButton.setPosition(540, 430);
+        resumeButton.setPosition(540, 430);
+        exitButton.setPosition(540, 300);
         stage.act();
         stage.draw();
         this.state = State.PAUSE;
