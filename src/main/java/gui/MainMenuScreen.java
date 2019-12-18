@@ -1,6 +1,5 @@
-package GUI;
+package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -16,15 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class ChooseGameScreen implements Screen {
+public class MainMenuScreen implements Screen {
 
     final transient MyGdxGame game;
 
+    public transient String username;
     public transient Stage stage;
-    public transient ImageButton backButton;
-    public transient ImageButton localGameButton;
-    public transient ImageButton vsAiGameButton;
-    public transient ImageButton onlineGameButton;
+    public transient ImageButton playButton;
+    public transient ImageButton settingsButton;
+    public transient ImageButton logoutButton;
+    public transient ImageButton exitButton;
     public transient Texture myTexture;
     public transient TextureRegion myTextureRegion;
     public transient TextureRegionDrawable myTexRegionDrawable;
@@ -37,16 +37,24 @@ public class ChooseGameScreen implements Screen {
      * Constructor for this Screen.
      * @param game the current game instance
      */
-    public ChooseGameScreen(MyGdxGame game) {
+    public MainMenuScreen(MyGdxGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        backButton = createBackButton("assets/back.png");
-        localGameButton = createLocalGameButton("assets/local.png");
-        vsAiGameButton = createVsAiButton("assets/vsAI.png");
-        onlineGameButton = createOnlineButton("assets/online.png");
+        playButton = createPlayButton("assets/play.png");
+
+        settingsButton = createSettingsButton("assets/settings.png");
+
+        logoutButton = createLogoutButton("assets/logout.png");
+
+        exitButton = createExitButton("assets/exit.png");
+
         game.font.setColor(Color.RED);
+
+
     }
+
+
 
     private ImageButton createButton(String path) {
         myTexture = new Texture(Gdx.files.internal(path));
@@ -58,53 +66,72 @@ public class ChooseGameScreen implements Screen {
         return button;
     }
 
-    private ImageButton createLocalGameButton(String path) {
-        ImageButton locButton = createButton(path);
-        locButton.setPosition(220, 300);
-        locButton.addListener(
+
+
+    private ImageButton createPlayButton(String path) {
+        ImageButton plButton = createButton(path);
+        plButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                GameScreen(game));
-
+                        game.setScreen(new ChooseGameScreen(game));
                     }
+
                 });
-        stage.addActor(locButton);
-        return locButton;
+        plButton.setPosition(230, 320);
+        stage.addActor(plButton);
+        return plButton;
     }
 
-    private ImageButton createVsAiButton(String path) {
-        ImageButton vsButton = createButton(path);
-
-        vsButton.setPosition(220, 230);
-        stage.addActor(vsButton);
-        return vsButton;
-    }
-
-    private ImageButton createOnlineButton(String path) {
-        ImageButton onButton = createButton(path);
-
-        onButton.setPosition(220, 160);
-        stage.addActor(onButton);
-        return onButton;
-    }
-
-    private ImageButton createBackButton(String path) {
-        ImageButton bacButton = createButton(path);
-        bacButton.addListener(
+    private ImageButton createSettingsButton(String path) {
+        ImageButton settButton = createButton(path);
+        settButton.addListener(
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         dispose();
-                        game.setScreen(new MainMenuScreen(game));
+                        game.setScreen(new SettingsScreen(game));
                     }
 
                 });
-        bacButton.setPosition(220, 90);
-        stage.addActor(bacButton);
-        return bacButton;
+        settButton.setPosition(230, 250);
+        stage.addActor(settButton);
+        return settButton;
+    }
+
+    private ImageButton createLogoutButton(String path) {
+        ImageButton loButton = createButton(path);
+        loButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        game.setScreen(new LoginScreen(game));
+                    }
+
+                });
+        loButton.setPosition(230, 180);
+        stage.addActor(loButton);
+
+        return loButton;
+    }
+
+    private ImageButton createExitButton(String path) {
+        ImageButton exButton = createButton(path);
+        exButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        dispose();
+                        Gdx.app.exit();
+                    }
+
+                });
+        exButton.setPosition(230, 110);
+        stage.addActor(exButton);
+
+        return exButton;
     }
 
     @Override
@@ -124,8 +151,8 @@ public class ChooseGameScreen implements Screen {
         stage.act();
         stage.draw();
         game.spriteBatch.begin();
-        game.font.getData().setScale(1.6f);
-        game.font.draw(game.spriteBatch, "Choose game mode", 235, 450);
+        game.font.getData().setScale(1.4f);
+        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 450);
         game.spriteBatch.end();
     }
 
@@ -151,6 +178,6 @@ public class ChooseGameScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        //stage.dispose();
     }
 }

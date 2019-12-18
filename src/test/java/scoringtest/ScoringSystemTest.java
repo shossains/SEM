@@ -16,7 +16,7 @@ import scoring.Hud;
 import scoring.ScoringSystem;
 
 
-public class ScornigSystemTest {
+public class ScoringSystemTest {
 
     private transient Puck puck;
     private transient Hud mockHud;

@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
