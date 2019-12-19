@@ -32,7 +32,11 @@ public class Puck extends Collidable implements java.io.Serializable {
      * and if it has hit an edge we calculate the speed after the resulting collision.
      */
     public void fixPosition() {
+        fixXPosition();
+        fixYPosition();
+    }
 
+    public void fixXPosition() {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
             this.setXspeed(- this.getXspeed() * e);
@@ -41,7 +45,9 @@ public class Puck extends Collidable implements java.io.Serializable {
             this.x = 1280 - this.radius;
             this.setXspeed(- this.getXspeed() * e);
         }
+    }
 
+    public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
