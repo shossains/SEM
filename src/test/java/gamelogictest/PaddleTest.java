@@ -177,7 +177,7 @@ public class PaddleTest {
         paddle1.setXspeed(200);
         paddle1.setYspeed(200);
 
-        paddle2.setLateralSpeeds(true, false);
+        paddle1.setLateralSpeeds(true, false);
         paddle1.setVerticalSpeeds(true, false);
 
         assertEquals(200, paddle1.getXspeed());
@@ -189,7 +189,7 @@ public class PaddleTest {
         paddle1.setXspeed(-200);
         paddle1.setYspeed(-200);
 
-        paddle2.setLateralSpeeds(false, true);
+        paddle1.setLateralSpeeds(false, true);
         paddle1.setVerticalSpeeds(false, true);
 
         assertEquals(-200, paddle1.getXspeed());
