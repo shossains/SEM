@@ -15,6 +15,8 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     /**
      * Constructor.
+     * The Puck is what is used to actually play the game. It interacts with the paddles
+     * (the paddles can move it), and it is what can go into the goals and increase the score.
      * @param x X coordinate.
      * @param y Y coordinate.
      * @param xspeed Speed in x direction.

@@ -9,6 +9,10 @@ public class CollisionsEngine {
 
     /**
      * Constructor.
+     * The Collisions engine is the physics engine behind the
+     * collisions between the puck and paddles.
+     * Please see the collision theory md file for more documentation behind the mathematical theory
+     * of the collisions.
      * @param puck The puck.
      * @param paddle1 Player 1 paddle.
      * @param paddle2 Player 2 paddle.
