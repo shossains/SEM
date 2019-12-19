@@ -36,6 +36,9 @@ public class Puck extends Collidable implements java.io.Serializable {
         fixYPosition();
     }
 
+    /**
+     * This method makes sure the paddle is in the correct X boundaries.
+     */
     public void fixXPosition() {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
@@ -47,6 +50,9 @@ public class Puck extends Collidable implements java.io.Serializable {
         }
     }
 
+    /**
+     * This method makes sure the paddle is in the correct Y boundaries.
+     */
     public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;

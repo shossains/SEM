@@ -13,8 +13,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
     private transient float lowSpeed = 50;
 
     /**
-     * Constructor. The paddle is what the player controls, and is what moves and interacts with
-     * the puck.
+     * Constructor.
+     * The paddle is what the player controls, and is what moves and interacts with the puck.
      * @param x x coordinate.
      * @param y y coordinate.
      * @param xspeed Speed in y direction.
@@ -27,6 +27,15 @@ public class Paddle extends Collidable implements java.io.Serializable {
         super(x, y, radius, xspeed, yspeed, mass);
 
         this.playerType = playerType;
+
+        //set the X boundaries based on whether it is the first or the second player puck
+        if (this.playerType == PlayerType.PLAYER1) {
+            xupper = 1280;
+            xlower = 640;
+        } else {
+            xupper = 640;
+            xlower = 0;
+        }
     }
 
     /**
@@ -156,19 +165,13 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * Method to ensure the puck is within the correct boundaries.
      */
     public void fixPosition() {
-
-        if (this.playerType == PlayerType.PLAYER1) {
-            xupper = 1280;
-            xlower = 640;
-        } else if (this.playerType == PlayerType.PLAYER2) {
-            xupper = 640;
-            xlower = 0;
-        }
-
         fixXPosition();
         fixYPosition();
     }
 
+    /**
+     * This method makes sure the paddle is in the correct X boundaries.
+     */
     public void fixXPosition() {
         if (this.x - this.radius < xlower) {
             this.x = xlower + this.radius;
@@ -178,6 +181,9 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
+    /**
+     * This method makes sure the paddle is in the correct Y boundaries.
+     */
     public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
