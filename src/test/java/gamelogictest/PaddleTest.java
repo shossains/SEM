@@ -140,4 +140,59 @@ public class PaddleTest {
         assertEquals(paddle4.radius, paddle4.y);
     }
 
+    @Test
+    public void testSetRightSpeed() {
+        paddle1.setXspeed(100);
+
+        paddle1.setRightSpeed(true, false);
+        assertEquals(106, paddle1.getXspeed());
+    }
+
+    @Test
+    public void testSetLeftSpeed() {
+        paddle1.setXspeed(-100);
+
+        paddle1.setLeftSpeed(false, true);
+        assertEquals(-106, paddle1.getXspeed());
+    }
+
+    @Test
+    public void testSetUpwardsSpeed() {
+        paddle1.setYspeed(100);
+
+        paddle1.setUpwardsSpeed(true, false);
+        assertEquals(106, paddle1.getYspeed());
+    }
+
+    @Test
+    public void testSetDownwardsSpeed() {
+        paddle1.setYspeed(-100);
+
+        paddle1.setDownwardsSpeed(false, true);
+        assertEquals(-106, paddle1.getYspeed());
+    }
+
+    @Test
+    public void testSpeedsMaxPositive() {
+        paddle1.setXspeed(200);
+        paddle1.setYspeed(200);
+
+        paddle2.setLateralSpeeds(true, false);
+        paddle1.setVerticalSpeeds(true, false);
+
+        assertEquals(200, paddle1.getXspeed());
+        assertEquals(200, paddle1.getYspeed());
+    }
+
+    @Test
+    public void testSpeedsMaxNegative() {
+        paddle1.setXspeed(-200);
+        paddle1.setYspeed(-200);
+
+        paddle2.setLateralSpeeds(false, true);
+        paddle1.setVerticalSpeeds(false, true);
+
+        assertEquals(-200, paddle1.getXspeed());
+        assertEquals(-200, paddle1.getYspeed());
+    }
 }
