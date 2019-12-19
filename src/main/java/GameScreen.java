@@ -130,6 +130,7 @@ public class GameScreen implements Screen {
                 update(delta);
                 draw();
                 if (escPressed) {
+
                     pause();
                 }
                 break;
@@ -138,6 +139,7 @@ public class GameScreen implements Screen {
                 stage.draw();
                 if (escPressed) {
                     resume();
+
                 }
                 break;
             default:
