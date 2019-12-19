@@ -23,7 +23,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void test2() throws SQLException {
+    public void testVerifyLogin() throws SQLException {
         Query q = new Query();
         assertTrue(q.verifyLogin("test","pass"));
         assertFalse(q.verifyLogin("test","notthecorrectpass"));
@@ -48,6 +48,27 @@ public class DatabaseTest {
                 + " FROM users WHERE username = 'test';"};
         ResultSet rs = Query.runQueries(queries)[0];
         assertTrue(rs.next());
+    }
+
+    @Test
+    public void testInsert() throws SQLException {
+        String[] queries = { "INSERT INTO users (username, password) " +
+                "VALUES ('temp', 'temp');"};
+        Query.runQueries(queries);
+
+        String[] queries2 = {"SELECT username"
+                + " FROM users WHERE username = 'test';"};
+        ResultSet rs = Query.runQueries(queries2)[0];
+        assertTrue(rs.next());
+
+        String[] queries3 = {"DELETE FROM users " +
+                "WHERE username = 'temp';"};
+        Query.runQueries(queries3);
+
+        String[] w = {"SELECT username"
+                + " FROM users WHERE username = 'test';"};
+        ResultSet rs3 = Query.runQueries(w)[0];
+        assertTrue(rs3.next());
     }
 
 //    @Test
