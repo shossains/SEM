@@ -1,3 +1,5 @@
+package scoring;
+
 import gamelogic.Puck;
 
 public class ScoringSystem {

@@ -1,3 +1,5 @@
+package gui;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,8 +19,8 @@ import database.Query;
 
 /**
  * The purpose of this class is to create a graphical user interface
- * for the registration screen. This class makes use of the ButtonFactory
- * and TextFieldFactory classes for creating new objects and giving them
+ * for the registration screen. This class makes use of the gui.ButtonFactory
+ * and gui.TextFieldFactory classes for creating new objects and giving them
  * functionality.
  * Here, a user can create an new account if some conditions are satisfied.
  * These conditions are verified in the submitCredentials method.

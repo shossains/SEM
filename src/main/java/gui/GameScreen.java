@@ -1,3 +1,5 @@
+package gui;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,7 +16,9 @@ import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
-
+import scoring.Board;
+import scoring.Hud;
+import scoring.ScoringSystem;
 
 
 public class GameScreen implements Screen {

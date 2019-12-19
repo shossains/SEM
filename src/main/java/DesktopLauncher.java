@@ -1,5 +1,6 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import gui.MyGdxGame;
 
 public class DesktopLauncher {
 

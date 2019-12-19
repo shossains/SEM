@@ -1,3 +1,5 @@
+package scoring;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import gui.MyGdxGame;
 
 public class Hud implements Disposable {
 
@@ -33,7 +36,7 @@ public class Hud implements Disposable {
     private transient String scoreFormat;
 
     /**
-     * Hud constructor.
+     * scoring.Hud constructor.
      *
      */
     public Hud(SpriteBatch spriteBatch) {

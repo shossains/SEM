@@ -1,3 +1,5 @@
+package gui;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -14,8 +16,8 @@ import database.Query;
 /**
  * The purpose of this class is to create an graphical user interface
  * shown after the game has finished which disposes the top five results
- * registered in the database. This class makes use of ButtonFactory and
- * TextFieldFactory classes to create new objects.
+ * registered in the database. This class makes use of gui.ButtonFactory and
+ * gui.TextFieldFactory classes to create new objects.
  * The current user is asked to enter a nickname.
  * Then, the method checkScores is called which disposes
  * the top 5 scores ever registered.
@@ -29,19 +31,21 @@ public class Scores implements Screen {
     final transient int score;
 
     /**
-     * Constructor for Scores Screen.
+     * Constructor for GUI.Scores Screen.
      * @param game the current game.
-     * @param score the score recieved from the GameScreen class.
+     * @param score the score recieved from the GUI.GameScreen class.
      */
     public Scores(MyGdxGame game, int score) {
         this.game = game;
         this.score = score;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
         textFieldFactory = new TextFieldFactory(this.game, this);
         usernameTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(250,200);
         stage.addActor(usernameTextField);
+
         ButtonFactory factory = new ButtonFactory(this.game, this);
         TextButton button = factory.createTextButton("Done!");
         button.setPosition(100, 300);
@@ -52,6 +56,7 @@ public class Scores implements Screen {
                         checkScore(score);
                     }
                 });
+
         stage.addActor(button);
 
         TextButton exit = factory.createTransTextButton("Back", "ChooseGameScreen");
@@ -120,4 +125,5 @@ public class Scores implements Screen {
     public void dispose() {
 
     }
+
 }
