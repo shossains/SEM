@@ -13,7 +13,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
     private transient float lowSpeed = 50;
 
     /**
-     * Constructor.
+     * Constructor. The paddle is what the player controls, and is what moves and interacts with
+     * the puck.
      * @param x x coordinate.
      * @param y y coordinate.
      * @param xspeed Speed in y direction.
@@ -30,6 +31,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     /**
      * Method to move the paddle, this can be expanded later to be a more complex and realistic.
+     * I plan to add an interface in future for the movement of the puck
      * @param rightPressed If right is pressed.
      * @param leftPressed If left is pressed.
      * @param upPressed If up is pressed.
@@ -37,31 +39,36 @@ public class Paddle extends Collidable implements java.io.Serializable {
      */
     public void setSpeeds(boolean rightPressed, boolean leftPressed,
                            boolean upPressed, boolean downPressed) {
-        if (rightPressed && !leftPressed) {
-            if (this.getXspeed() < maxSpeed) {
-                if (this.getXspeed() < lowSpeed) {
-                    //set a baseline
-                    this.setXspeed(50);
-                } else {
-                    this.setXspeed(this.getXspeed() + acceleration);
-                }
-            }
-        }
 
-        if (leftPressed && !rightPressed) {
-            if (this.getXspeed() > -maxSpeed) {
-                if (this.getXspeed() > - lowSpeed) {
-                    //set a baseline
-                    this.setXspeed(-50);
-                } else {
-                    this.setXspeed(this.getXspeed() - acceleration);
-                }
-            }
-        }
+        setLateralSpeeds(rightPressed, leftPressed);
+
+        setVerticalSpeeds(upPressed, downPressed);
+    }
+
+    public void setLateralSpeeds(boolean rightPressed, boolean leftPressed) {
+
+        setLeftSpeed(rightPressed, leftPressed);
+        setRightSpeed(rightPressed, leftPressed);
 
         if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
             this.setXspeed(this.getXspeed() * 0.2f);
         }
+
+    }
+
+    public void setVerticalSpeeds(boolean upPressed, boolean downPressed) {
+
+        setUpwardsSpeed(upPressed, downPressed);
+
+        setDownwardsSpeed(upPressed, downPressed);
+
+        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
+            this.setYspeed(this.getYspeed() * 0.2f);
+        }
+
+    }
+
+    public void setUpwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (upPressed && !downPressed) {
             if (this.getYspeed() < maxSpeed) {
@@ -73,6 +80,9 @@ public class Paddle extends Collidable implements java.io.Serializable {
                 }
             }
         }
+    }
+
+    public void setDownwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (downPressed && !upPressed) {
             if (this.getYspeed() > -maxSpeed) {
@@ -84,9 +94,33 @@ public class Paddle extends Collidable implements java.io.Serializable {
                 }
             }
         }
+    }
 
-        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
-            this.setYspeed(this.getYspeed() * 0.2f);
+    public void setLeftSpeed(boolean leftPressed, boolean rightPressed) {
+
+        if (leftPressed && !rightPressed) {
+            if (this.getXspeed() > -maxSpeed) {
+                if (this.getXspeed() > - lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(-50);
+                } else {
+                    this.setXspeed(this.getXspeed() - acceleration);
+                }
+            }
+        }
+    }
+
+    public void setRightSpeed(boolean leftPressed, boolean rightPressed) {
+
+        if (rightPressed && !leftPressed) {
+            if (this.getXspeed() < maxSpeed) {
+                if (this.getXspeed() < lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(50);
+                } else {
+                    this.setXspeed(this.getXspeed() + acceleration);
+                }
+            }
         }
     }
 
