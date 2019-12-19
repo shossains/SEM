@@ -1,6 +1,6 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import gui.MyGdxGame;
+import gui.AirHockeyGame;
 
 public class DesktopLauncher {
 
@@ -13,6 +13,6 @@ public class DesktopLauncher {
         config.title = "Air hockey";
         config.width = 1280;
         config.height = 720;
-        new LwjglApplication(new MyGdxGame(), config);
+        new LwjglApplication(new AirHockeyGame(), config);
     }
 }

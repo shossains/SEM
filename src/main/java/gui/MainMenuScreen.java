@@ -7,12 +7,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * MainMenuScreen is a graphical user interface which
+ * helps the player choose either playing,
+ * going to settings, exiting the game or logging out.
+ */
 public class MainMenuScreen implements Screen {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
 
     public transient String username;
     public transient Stage stage;
@@ -21,16 +25,19 @@ public class MainMenuScreen implements Screen {
     public transient ImageButton logoutButton;
     public transient ImageButton exitButton;
     public transient ButtonFactory buttonFactory;
-    public transient Label outputLabel;
 
     private transient boolean mutePressed;
 
 
     /**
      * Constructor for this Screen.
+     * Here, the 4 main buttons are created,
+     * which help the user choose where to go next:
+     * either playing, going to settings screen, logging out
+     * or exiting this page.
      * @param game the current game instance
      */
-    public MainMenuScreen(MyGdxGame game) {
+    public MainMenuScreen(AirHockeyGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);

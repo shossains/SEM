@@ -14,10 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
  */
 public class TextFieldFactory {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
     private transient Screen screen;
 
-    public TextFieldFactory(MyGdxGame game, Screen screen) {
+    public TextFieldFactory(AirHockeyGame game, Screen screen) {
         this.screen = screen;
         this.game = game;
     }

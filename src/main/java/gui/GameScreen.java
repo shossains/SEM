@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
 
     transient Texture puckImage;
     transient Texture paddle1Image;
@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
      * Constructor.
      * @param game The game object.
      */
-    public GameScreen(final MyGdxGame game) {
+    public GameScreen(final AirHockeyGame game) {
         this.game = game;
 
         boardImage = new Texture(Gdx.files.internal("assets/table.png"));
@@ -149,7 +149,7 @@ public class GameScreen implements Screen {
             pause();
             scoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         }
 
         // Check if one of the players wont the game
@@ -157,12 +157,12 @@ public class GameScreen implements Screen {
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         } else if (scoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         }
 
         //the movement variables for player 1

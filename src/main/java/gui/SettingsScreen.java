@@ -7,17 +7,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * This is a graphical user interface for the Settings
+ * Screen. In a later development, the user will be able
+ * to change his username.
+ */
 public class SettingsScreen implements Screen {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
 
     public transient Stage stage;
     public transient ImageButton backButton;
     public transient ButtonFactory buttonFactory;
-    public transient Label outputLabel;
 
     private transient boolean mutePressed;
 
@@ -26,7 +29,7 @@ public class SettingsScreen implements Screen {
      * Constructor for this Screen.
      * @param game the current game instance
      */
-    public SettingsScreen(MyGdxGame game) {
+    public SettingsScreen(AirHockeyGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
