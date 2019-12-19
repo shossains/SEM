@@ -58,7 +58,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
             this.setXspeed(this.getXspeed() * 0.2f);
         }
-
     }
 
     /**
@@ -75,7 +74,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
             this.setYspeed(this.getYspeed() * 0.2f);
         }
-
     }
 
     /**
@@ -167,13 +165,20 @@ public class Paddle extends Collidable implements java.io.Serializable {
             xlower = 0;
         }
 
+        fixXPosition();
+        fixYPosition();
+    }
+
+    public void fixXPosition() {
         if (this.x - this.radius < xlower) {
             this.x = xlower + this.radius;
         }
         if (this.x > xupper - this.radius) {
             this.x = xupper - this.radius;
         }
+    }
 
+    public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
         }
