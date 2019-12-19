@@ -2,7 +2,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,25 +9,31 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Query;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
+/**
+ * The purpose of this class is to create a graphical user interface
+ * for the registration screen. This class makes use of the ButtonFactory
+ * and TextFieldFactory classes for creating new objects and giving them
+ * functionality.
+ * Here, a user can create an new account if some conditions are satisfied.
+ * These conditions are verified in the submitCredentials method.
+ */
 public class Registration implements Screen {
     private transient MyGdxGame game;
     public transient Stage stage;
+
     private transient String email;
     private transient String username;
     private transient String password;
     private transient String passwordAgain;
     private transient Image image;
+    private transient TextFieldFactory textFieldFactory;
 
-    private transient AssetManager assetManager;
-    final transient String skinPath;
     final transient TextField usernameTextField;
     final transient TextField passwordTextField;
     final transient TextField emailTextField;
@@ -45,38 +50,28 @@ public class Registration implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        assetManager = new AssetManager();
-        assetManager.load("assets/uiskin.json", Skin.class);
-        assetManager.finishLoading();
-        skinPath = "assets/uiskin.json";
-        usernameTextField = new TextField("",
-                assetManager.get(skinPath, Skin.class));
-        passwordTextField = new TextField("",
-                assetManager.get(skinPath, Skin.class));
-        emailTextField = new TextField("",
-                assetManager.get(skinPath, Skin.class));
-        passwordAgainTextField = new TextField("",
-                assetManager.get(skinPath, Skin.class));
+        textFieldFactory = new TextFieldFactory(this.game, this);
+        usernameTextField = textFieldFactory.createTextField();
+        passwordTextField = textFieldFactory.createTextField();
+        emailTextField = textFieldFactory.createTextField();
+        passwordAgainTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(500,250);
-        usernameTextField.setSize(300, 50);
         passwordTextField.setPosition(500, 150);
-        passwordTextField.setSize(300, 50);
         emailTextField.setPosition(500, 350);
-        emailTextField.setSize(300, 50);
         passwordAgainTextField.setPosition(500, 50);
-        passwordAgainTextField.setSize(300, 50);
         passwordAgainTextField.setPasswordMode(true);
         passwordAgainTextField.setPasswordCharacter('*');
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('*');
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
         stage.addActor(emailTextField);
         stage.addActor(passwordAgainTextField);
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
-        TextButton button = new TextButton("Done", assetManager.get(skinPath, Skin.class));
-        button.setColor(Color.ROYAL);
+        ButtonFactory factory = new ButtonFactory(this.game, this);
+        TextButton button = factory.createTextButton("Done");
         button.setPosition(50, 500);
-        button.setSize(100, 50);
         button.addListener(
                 new ClickListener() {
                     @Override
@@ -85,21 +80,19 @@ public class Registration implements Screen {
                     }
                 });
         stage.addActor(button);
-        TextButton exit = new TextButton("Back", assetManager.get(skinPath, Skin.class));
+        TextButton exit = factory.createTransTextButton("Back", "LoginScreen");
         exit.setPosition(900, 600);
-        exit.setSize(100, 50);
-        exit.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                LoginScreen(game));
-
-                    }
-                });
         stage.addActor(exit);
     }
 
+    /**
+     * Method for verifying that an account can be created.
+     * If the username or email are already registered in the database,
+     * a pop-up will be shown and the user will be notified.
+     * Otherwise, a new account is created.
+     * This method makes use of the Query class for interactions with
+     * the database.
+     */
     private void submitCredentials() {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
@@ -108,7 +101,7 @@ public class Registration implements Screen {
         if (username.equals("") || password.equals("")
                 || email.equals("") || passwordAgain.equals("")) {
             Dialog dialoga = new Dialog("Empty fields",
-                    assetManager.get(skinPath, Skin.class),
+                    textFieldFactory.createSkin(),
                     "dialog") {
                 public void result(Object obj) {
                     System.out.println("result " + obj);
@@ -121,7 +114,7 @@ public class Registration implements Screen {
             dialoga.show(stage);
         } else if  (!passwordAgain.equals(password)) {
             Dialog dialog = new Dialog("Warning - wrong password",
-                    assetManager.get(skinPath, Skin.class), "dialog") {
+                    textFieldFactory.createSkin(), "dialog") {
             };
             dialog.setColor(Color.ROYAL);
             dialog.setSize(400, 200);
@@ -136,7 +129,7 @@ public class Registration implements Screen {
                         MainMenuScreen(game));
             } else {
                 Dialog dialog = new Dialog("Email or username already in use.",
-                        assetManager.get(skinPath, Skin.class), "dialog") {
+                        textFieldFactory.createSkin(), "dialog") {
                 };
                 dialog.setColor(Color.ROYAL);
                 dialog.setSize(400, 200);
@@ -177,16 +170,6 @@ public class Registration implements Screen {
         game.font.draw(game.spriteBatch, "Password:", 400, 182);
         game.font.draw(game.spriteBatch, "Password:", 400, 82);
         game.spriteBatch.end();
-    }
-
-    /**
-     * Takes in raw password and salt, returns a SHA512 hash from that.
-     *
-     * @param password The raw password to be hashed.
-     * @return A String that is the SHA512 hash of the password and salt.
-     */
-    public static String getHashedPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt(10));
     }
 
     @Override
