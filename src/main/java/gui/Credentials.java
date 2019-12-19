@@ -1,3 +1,5 @@
+package gui;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -37,7 +39,7 @@ public class Credentials implements Screen {
 
     /**
      * Constructor for credentials screen.
-     * Here, using the TextFieldFactory and ButtonFactory classes,
+     * Here, using the gui.TextFieldFactory and gui.ButtonFactory classes,
      * new objects are created.
      * @param game The game itself.
      */
@@ -45,6 +47,7 @@ public class Credentials implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
         textFieldFactory = new TextFieldFactory(this.game, this);
         usernameTextField = textFieldFactory.createTextField();
         passwordTextField = textFieldFactory.createTextField();
@@ -52,10 +55,13 @@ public class Credentials implements Screen {
         passwordTextField.setPosition(250, 100);
         passwordTextField.setPasswordMode(true);
         passwordTextField.setPasswordCharacter('*');
+
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
+
         image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
+
         ButtonFactory factory = new ButtonFactory(this.game, this);
         TextButton exit = factory.createTransTextButton("Exit!", "LoginScreen");
         exit.setPosition(900, 600);
@@ -68,6 +74,7 @@ public class Credentials implements Screen {
                         submitCredentials();
                     }
                 });
+
         stage.addActor(button);
         stage.addActor(exit);
     }

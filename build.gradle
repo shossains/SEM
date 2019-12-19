@@ -48,6 +48,11 @@ jacocoTestReport {
         csv.enabled true
         html.destination file("$buildDir/JaCoCo")
     }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: '**/gui/**')
+        }))
+    }
 }
 
 dependencies {
@@ -74,11 +79,8 @@ jacocoTestCoverageVerification {
             enabled = true
             element = 'CLASS'
             includes = ['nl.tudelft.cse.sem.*']
-
             limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.3
+                minimum = 0.5
             }
         }
     }
