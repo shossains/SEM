@@ -1,12 +1,26 @@
+package gui;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import gamelogic.CollisionsEngine;
+import gamelogic.Paddle;
+import gamelogic.PlayerType;
+import gamelogic.Puck;
+import scoring.Board;
+import scoring.Hud;
+import scoring.ScoringSystem;
 
 
 public class GameScreen implements Screen {
+
+    private static final int PLAYER_ONE = 1;
+    private static final int PLAYER_TWO = 2;
+
     final transient MyGdxGame game;
 
     transient Texture puckImage;
@@ -14,12 +28,14 @@ public class GameScreen implements Screen {
     transient Texture paddle2Image;
     transient Texture boardImage;
 
+    transient Hud hud;
     transient Board board;
     transient Puck puck;
     transient Paddle paddle1;
     transient Paddle paddle2;
 
     transient CollisionsEngine collisionsEngine;
+    transient ScoringSystem scoringSystem;
 
     transient OrthographicCamera camera;
 
@@ -54,18 +70,21 @@ public class GameScreen implements Screen {
         // Create the board
         board = new Board(0, 0, 1280, 720);
 
+        // Create the HUD
+        hud = new Hud(game.spriteBatch);
+
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
+        scoringSystem = new ScoringSystem(puck, hud);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     }
 
     @Override
@@ -79,7 +98,6 @@ public class GameScreen implements Screen {
         if (mutePressed) {
             game.muteUnmute();
         }
-
         escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
 
         switch (state) {
@@ -104,17 +122,48 @@ public class GameScreen implements Screen {
      * Method that is called while the game is running.
      */
     public void update() {
-
         //update the camera
         camera.update();
 
-        //move the puck
-
         float deltaTime = Gdx.graphics.getDeltaTime();
-
-        puck.movePuck(deltaTime);
+        // Updated the game clock
+        hud.updateTime(deltaTime);
+        //move the puck
+        puck.move(deltaTime);
         //ensure it is within boundaries
         puck.fixPosition();
+
+        // Check if the puck's in one of the goals
+        int goal = scoringSystem.goal();
+        if (goal != 0) {
+            if (goal == PLAYER_ONE) {
+                resetRight();
+            } else if (goal == PLAYER_TWO) {
+                resetLeft();
+            }
+        }
+
+        // Check if the game's timer haven't run out
+        if (scoringSystem.checkIfGameEnded()) {
+            Gdx.app.log("END", "The timer run out");
+            pause();
+            scoringSystem.getTheWinner();
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
+        }
+
+        // Check if one of the players wont the game
+        if (scoringSystem.checkScorePlayerOne()) {
+            pause();
+            Gdx.app.log("END", "Player 1 wins");
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
+        } else if (scoringSystem.checkScorePlayerTwo()) {
+            pause();
+            Gdx.app.log("END", "Player 2 wins");
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                    Scores(game, 100));
+        }
 
         //the movement variables for player 1
         boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
@@ -131,8 +180,8 @@ public class GameScreen implements Screen {
         paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
         paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
 
-        paddle1.movePaddle(deltaTime);
-        paddle2.movePaddle(deltaTime);
+        paddle1.move(deltaTime);
+        paddle2.move(deltaTime);
 
         collisionsEngine.collide();
 
@@ -167,7 +216,50 @@ public class GameScreen implements Screen {
                 paddle2.radius * 2, paddle2.radius * 2);
 
         game.spriteBatch.end();
+        // Draw the hud on top of the board.
+        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
+
+    /**
+     * Reset the board after player2 scored.
+     * The puck moves towards the player who lost a point, the player1.
+     */
+    public void resetLeft() {
+        pause();
+        puck.resetPosition();
+        puck.setXspeed(-50f);
+        resetPaddles();
+        resume();
+    }
+
+    /**
+     * Reset the board after player1 scored.
+     * The puck moves towards the player who lost a point, the player2.
+     */
+    public void resetRight() {
+        pause();
+        puck.resetPosition();
+        puck.setXspeed(50f);
+        resetPaddles();
+        resume();
+    }
+
+    /**
+     * Reset the paddles on the board to the initial position.
+     */
+    public void resetPaddles() {
+        this.paddle1.setX(1000f);
+        this.paddle1.setY(360f);
+        this.paddle1.setXspeed(0);
+        this.paddle1.setYspeed(0);
+
+        this.paddle2.setX(360f);
+        this.paddle2.setY(360f);
+        this.paddle2.setXspeed(0);
+        this.paddle2.setYspeed(0);
+    }
+
 
     @Override
     public void resize(int width, int height) {

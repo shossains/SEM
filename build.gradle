@@ -28,6 +28,7 @@ sourceCompatibility = 13
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 test {
@@ -47,10 +48,9 @@ jacocoTestReport {
         csv.enabled true
         html.destination file("$buildDir/JaCoCo")
     }
-
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['home', 'database'])
+            fileTree(dir: it, exclude: '**/gui/**')
         }))
     }
 }
@@ -59,6 +59,7 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
     implementation 'org.postgresql:postgresql:42.2.8.jre7'
+    testCompile "org.mockito:mockito-core:2.+"
 
     compile group: 'com.badlogicgames.gdx', name: 'gdx', version: '1.9.10'
     compile group: 'com.badlogicgames.gdx', name: 'gdx-box2d', version: '1.9.10'
@@ -81,9 +82,8 @@ jacocoTestCoverageVerification {
             enabled = true
             element = 'CLASS'
             includes = ['nl.tudelft.cse.sem.*']
-
             limit {
-                maximum = 0.5
+                minimum = 0.5
             }
         }
     }

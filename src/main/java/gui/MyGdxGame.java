@@ -1,3 +1,5 @@
+package gui;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -13,7 +15,6 @@ public class MyGdxGame extends Game {
     protected transient BitmapFont font;
 
     transient Music sound;
-    transient boolean mutePressed;
 
     @Override
     public void create() {
