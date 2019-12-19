@@ -15,7 +15,6 @@ public class MyGdxGame extends Game {
     protected transient BitmapFont font;
 
     transient Music sound;
-    transient boolean mutePressed;
 
     @Override
     public void create() {

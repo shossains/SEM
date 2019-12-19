@@ -1,19 +1,13 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class ChooseGameScreen implements Screen {
@@ -25,9 +19,7 @@ public class ChooseGameScreen implements Screen {
     public transient ImageButton localGameButton;
     public transient ImageButton vsAiGameButton;
     public transient ImageButton onlineGameButton;
-    public transient Texture myTexture;
-    public transient TextureRegion myTextureRegion;
-    public transient TextureRegionDrawable myTexRegionDrawable;
+    public transient ButtonFactory buttonFactory;
     public transient Label outputLabel;
 
     private transient boolean mutePressed;
@@ -41,70 +33,24 @@ public class ChooseGameScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        backButton = createBackButton("assets/back.png");
-        localGameButton = createLocalGameButton("assets/local.png");
-        vsAiGameButton = createVsAiButton("assets/vsAI.png");
-        onlineGameButton = createOnlineButton("assets/online.png");
+        this.buttonFactory = new ButtonFactory(game, this);
+
+        localGameButton = buttonFactory.createTransImButton("assets/local.png", "GameScreen");
+        vsAiGameButton = buttonFactory.createImButton("assets/vsAI.png");
+        onlineGameButton = buttonFactory.createImButton("assets/online.png");
+        backButton = buttonFactory.createTransImButton("assets/back.png", "MainMenuScreen");
+
+        localGameButton.setPosition(220, 300);
+        vsAiGameButton.setPosition(220, 230);
+        onlineGameButton.setPosition(220, 160);
+        backButton.setPosition(220, 90);
+
+        stage.addActor(localGameButton);
+        stage.addActor(vsAiGameButton);
+        stage.addActor(onlineGameButton);
+        stage.addActor(backButton);
+
         game.font.setColor(Color.RED);
-    }
-
-    private ImageButton createButton(String path) {
-        myTexture = new Texture(Gdx.files.internal(path));
-        myTextureRegion = new TextureRegion(myTexture);
-        myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        ImageButton button = new ImageButton(myTexRegionDrawable); //Set the button up
-        button.setHeight(100);
-        button.setWidth(200);
-        return button;
-    }
-
-    private ImageButton createLocalGameButton(String path) {
-        ImageButton locButton = createButton(path);
-        locButton.setPosition(220, 300);
-        locButton.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        dispose();
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                GameScreen(game));
-
-                    }
-                });
-        stage.addActor(locButton);
-        return locButton;
-    }
-
-    private ImageButton createVsAiButton(String path) {
-        ImageButton vsButton = createButton(path);
-
-        vsButton.setPosition(220, 230);
-        stage.addActor(vsButton);
-        return vsButton;
-    }
-
-    private ImageButton createOnlineButton(String path) {
-        ImageButton onButton = createButton(path);
-
-        onButton.setPosition(220, 160);
-        stage.addActor(onButton);
-        return onButton;
-    }
-
-    private ImageButton createBackButton(String path) {
-        ImageButton bacButton = createButton(path);
-        bacButton.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        dispose();
-                        game.setScreen(new MainMenuScreen(game));
-                    }
-
-                });
-        bacButton.setPosition(220, 90);
-        stage.addActor(bacButton);
-        return bacButton;
     }
 
     @Override

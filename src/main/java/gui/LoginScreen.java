@@ -1,31 +1,27 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * The purpose of this class is to create an graphical user interface
+ * which gives the possibility of logging in or registering to a user.
+ * It makes use of the gui.ButtonFactory class for creating new objects and giving
+ * them functionality.
+ */
 public class LoginScreen implements Screen {
 
     final transient MyGdxGame game;
     public transient Stage stage;
-    public transient Texture myTexture;
-    public transient TextureRegion myTextureRegion;
-    public transient TextureRegionDrawable myTexRegionDrawable;
-    public transient ImageButton button;
     public transient Image image;
-
     private transient boolean mutePressed;
 
     /**
@@ -37,92 +33,25 @@ public class LoginScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        ImageButton loginButton = createLoginButton("assets/login.png");
-        ImageButton registerButton = createRegisterButton("assets/register.png");
-        ImageButton exitButton = createImageButton("assets/exit2.png");
+
+        ButtonFactory buttonFactory = new ButtonFactory(this.game, this);
+        ImageButton loginButton = buttonFactory.createTransImButton("assets/login.png",
+                "Credentials");
+        ImageButton registerButton = buttonFactory.createTransImButton("assets/register.png",
+                "Registration");
+        ImageButton exitButton = buttonFactory.createTransImButton("assets/exit2.png", "Exit");
+
         exitButton.setPosition(1130, 640);
         loginButton.setPosition(500, 200);
         registerButton.setPosition(500, 100);
         game.font.setColor(Color.RED);
+
         stage.addActor(loginButton);
         stage.addActor(exitButton);
         stage.addActor(registerButton);
+
         image = new Image(new Texture("assets/air.png"));
         stage.addActor(image);
-    }
-
-    /**
-     * Method for creating a new exit button.
-     * @param path of the image used.
-     * @return a new exit button.
-     */
-    private ImageButton createImageButton(String path) {
-        ImageButton exitButton = createButton(path);
-        exitButton.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        dispose();
-                        Gdx.app.exit();
-                    }
-                }
-        );
-        return exitButton;
-    }
-
-    /**
-     * Helper method for creating a button.
-     * @param path of the image used for texture.
-     * @return a new button.
-     */
-    public ImageButton createButton(String path) {
-        myTexture = new Texture(Gdx.files.internal(path));
-        myTextureRegion = new TextureRegion(myTexture);
-        myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        button = new ImageButton(myTexRegionDrawable); //Set the button up
-        button.setHeight(100);
-        button.setWidth(200);
-        return button;
-    }
-
-    /**
-     * Method that creates a login button.
-     * @param path of image used for the texture.
-     * @return new created button.
-     */
-    public ImageButton createLoginButton(String path) {
-        ImageButton loginButton = createButton(path);
-        loginButton.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        dispose();
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                Credentials(game));
-                    }
-                }
-        );
-        return loginButton;
-    }
-
-    /**
-     * Method for creating a register button.
-     * @param path of the image for the texture.
-     * @return a new register button.
-     */
-    public ImageButton createRegisterButton(String path) {
-        ImageButton registerButton = createButton(path);
-        registerButton.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        dispose();
-                        ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                Registration(game));
-                    }
-                }
-        );
-        return registerButton;
     }
 
     @Override
