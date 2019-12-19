@@ -96,7 +96,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
-    public void setLeftSpeed(boolean leftPressed, boolean rightPressed) {
+    public void setLeftSpeed(boolean rightPressed, boolean leftPressed) {
 
         if (leftPressed && !rightPressed) {
             if (this.getXspeed() > -maxSpeed) {
@@ -110,7 +110,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
-    public void setRightSpeed(boolean leftPressed, boolean rightPressed) {
+    public void setRightSpeed(boolean rightPressed, boolean leftPressed) {
 
         if (rightPressed && !leftPressed) {
             if (this.getXspeed() < maxSpeed) {
