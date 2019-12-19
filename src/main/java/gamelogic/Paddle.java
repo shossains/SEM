@@ -30,7 +30,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
     }
 
     /**
-     * Method to move the paddle, this can be expanded later to be a more complex and realistic.
+     * Method so the player move the paddle based on the keys they have pressed.
      * I plan to add an interface in future for the movement of the puck
      * @param rightPressed If right is pressed.
      * @param leftPressed If left is pressed.
@@ -45,6 +45,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
         setVerticalSpeeds(upPressed, downPressed);
     }
 
+    /**
+     * Sets the speeds in lateral directions.
+     * @param rightPressed If the right button is pressed.
+     * @param leftPressed If left is pressed.
+     */
     public void setLateralSpeeds(boolean rightPressed, boolean leftPressed) {
 
         setLeftSpeed(rightPressed, leftPressed);
@@ -56,6 +61,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     }
 
+    /**
+     * Sets the speeds in the vertical directions.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
     public void setVerticalSpeeds(boolean upPressed, boolean downPressed) {
 
         setUpwardsSpeed(upPressed, downPressed);
@@ -68,6 +78,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     }
 
+    /**
+     * Sets the speed in the positive Y direction.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
     public void setUpwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (upPressed && !downPressed) {
@@ -82,6 +97,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
+    /**
+     * Sets the speed in the negative Y direction.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
     public void setDownwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (downPressed && !upPressed) {
@@ -96,6 +116,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
+    /**
+     * Sets the speed in the negative X direction.
+     * @param rightPressed If right is pressed.
+     * @param leftPressed If left is pressed.
+     */
     public void setLeftSpeed(boolean rightPressed, boolean leftPressed) {
 
         if (leftPressed && !rightPressed) {
@@ -110,6 +135,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
+    /**
+     * Set the speed in the positive X direction.
+     * @param rightPressed If right is pressed.
+     * @param leftPressed If left is pressed.
+     */
     public void setRightSpeed(boolean rightPressed, boolean leftPressed) {
 
         if (rightPressed && !leftPressed) {
