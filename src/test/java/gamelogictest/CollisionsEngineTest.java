@@ -12,7 +12,7 @@ import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CollisionsEngineTest {
+public class    CollisionsEngineTest {
 
     private transient Paddle paddle1;
     private transient Paddle paddle2;
