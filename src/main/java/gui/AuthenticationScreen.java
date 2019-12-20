@@ -71,12 +71,6 @@ public class AuthenticationScreen implements Screen {
         game.spriteBatch.end();
         image.setPosition(5, 300);
         image.setSize(300, 300);
-        //start here if the play button is pushed, we start a new game
-        //add for play button later, initially start game on space bar press
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
     }
 
     @Override
