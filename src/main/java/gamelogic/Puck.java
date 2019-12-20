@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;

@@ -1,7 +1,6 @@
 package gamelogic;
 
 public class Paddle extends Collidable implements java.io.Serializable {
-import com.badlogic.gdx.math.Circle;
 
     public static final transient long serialVersionUID = 4328743;
 
