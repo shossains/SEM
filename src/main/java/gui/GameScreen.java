@@ -127,8 +127,6 @@ public class GameScreen implements Screen {
         }
         escPressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
 
-
-
         switch (state) {
             case RUN:
                 update(delta);
@@ -228,8 +226,6 @@ public class GameScreen implements Screen {
         // tell the SpriteBatch to render in the
         // coordinate system specified by the camera.
         game.spriteBatch.setProjectionMatrix(camera.combined);
-
-
 
         game.spriteBatch.begin();
 
