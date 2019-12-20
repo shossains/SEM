@@ -1,10 +1,13 @@
 package databasetest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import database.Query;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class QueryTest {
     private transient String jdbcUrl = "jdbc:postgresql://ec2-176-34-183-20.eu-west-1."
@@ -16,25 +19,26 @@ public class QueryTest {
 
     private transient String userTestName = "nonexistent";
     //    public Adapter ad;
+
     @BeforeEach
     void intialize() {
-//        Adapter ad = mock(Adapter.class);
+    //    Adapter ad = mock(Adapter.class);
     }
 
     @Test
-    public void VerifyLoginTest(){
+    public void verifyLoginTest() {
         Query q = new Query();
         assertTrue(q.verifyLogin("test","pass"));
         assertFalse(q.verifyLogin("test","notthecorrectpass"));
         assertFalse(q.verifyLogin("test","wrong"));
 
-//        verify(DriverManager.getConnection(jdbcUrl, username, password));
+        //verify(DriverManager.getConnection(jdbcUrl, username, password));
 
-//        assertThrows(NullPointerException.class, () -> ad.connect());
+        //assertThrows(NullPointerException.class, () -> ad.connect());
     }
 
     @Test
-    public void AddNewUserTest() {
+    public void addNewUserTest() {
         Query q = new Query();
         assertFalse(q.verifyLogin(userTestName,"incorrect"));
 
@@ -43,13 +47,13 @@ public class QueryTest {
 
         q.deleteUser(userTestName);
         assertFalse(q.verifyLogin(userTestName,"incorrect"));
-//        verify(DriverManager.getConnection(jdbcUrl, username, password));
+        //verify(DriverManager.getConnection(jdbcUrl, username, password));
 
-//        assertThrows(NullPointerException.class, () -> ad.connect());
+        //assertThrows(NullPointerException.class, () -> ad.connect());
     }
 
     @Test
-    public void GetScoresTest(){
+    public void getScoresTest() {
         Query q = new Query();
         q.addNewUser(userTestName, "bla", "empty@delft.nl");
         int firstScore = q.getScore(userTestName, 9999);

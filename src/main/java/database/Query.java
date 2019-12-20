@@ -1,10 +1,9 @@
 package database;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @SuppressWarnings("PMD.CloseResource")
 public class Query extends Adapter {
@@ -47,8 +46,8 @@ public class Query extends Adapter {
     //                } else {
     //                    //Not a SELECT query, so it can be safely added to the batch.
     //                    try {
-//                            conn.createStatement().addBatch(query[i]);
-//                            conn.createStatement().executeUpdate(query[i]);
+    //                    conn.createStatement().addBatch(query[i]);
+    //                          conn.createStatement().executeUpdate(query[i]);
     //
     //                    } catch (SQLException e) {
     //                        e.printStackTrace();
@@ -200,23 +199,23 @@ public class Query extends Adapter {
         return "";
     }
 
-    public static boolean deleteUser(String username) {
+    /**
+     * Helper function to test the database querying.
+     * @param username the username that needs to be deleted.
+     * @return
+     **/
+    public static void deleteUser(String username) {
         Query db = new Query();
         db.connect();
 
         try {
-//            PreparedStatement delete = conn.prepareStatement("DELETE FROM users WHERE username"
-//                    + " = '" + username + "';");
             String delete = "DELETE FROM users WHERE username"
-                    + " = '" + username + "';" ;
+                    + " = '" + username + "';";
             conn.createStatement().addBatch(delete);
             conn.createStatement().executeUpdate(delete);
-//            delete.executeQuery();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.print("User could not be deleted.");
         }
-        return false;
     }
 }
