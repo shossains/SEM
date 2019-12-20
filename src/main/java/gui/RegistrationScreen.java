@@ -25,8 +25,8 @@ import database.Query;
  * Here, a user can create an new account if some conditions are satisfied.
  * These conditions are verified in the submitCredentials method.
  */
-public class Registration implements Screen {
-    private transient MyGdxGame game;
+public class RegistrationScreen implements Screen {
+    private transient AirHockeyGame game;
     public transient Stage stage;
 
     private transient String email;
@@ -48,7 +48,7 @@ public class Registration implements Screen {
      * Initialize every object used in this scene.
      * @param game the current game.
      */
-    public Registration(final MyGdxGame game) {
+    public RegistrationScreen(final AirHockeyGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);

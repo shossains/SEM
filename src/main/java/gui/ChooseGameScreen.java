@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * ChooseGameScreen is an graphical user interface where the user
+ * can choose the game mode (local game, vs computer or online).
+ */
 public class ChooseGameScreen implements Screen {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
 
     public transient Stage stage;
     public transient ImageButton backButton;
@@ -20,16 +23,17 @@ public class ChooseGameScreen implements Screen {
     public transient ImageButton vsAiGameButton;
     public transient ImageButton onlineGameButton;
     public transient ButtonFactory buttonFactory;
-    public transient Label outputLabel;
 
     private transient boolean mutePressed;
 
-
     /**
      * Constructor for this Screen.
+     * Here, the most important objects that are created are
+     * the options for the game mode: 3 buttons, each one corresponding
+     * to a game mode (local, online, vs computer).
      * @param game the current game instance
      */
-    public ChooseGameScreen(MyGdxGame game) {
+    public ChooseGameScreen(AirHockeyGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
