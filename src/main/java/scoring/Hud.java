@@ -36,8 +36,9 @@ public class Hud implements Disposable, HudInterface {
     private transient String scoreFormat;
 
     /**
-     * scoring.Hud constructor.
-     *
+     * Constructor for the basic HUD, with
+     * clock and scores of both players.
+     * @param spriteBatch spriteBatch used by the game.
      */
     public Hud(SpriteBatch spriteBatch) {
         gameTimer = 300;
