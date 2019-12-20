@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import gui.MyGdxGame;
+import gui.AirHockeyGame;
 
 public class Hud implements Disposable {
 
@@ -45,7 +45,8 @@ public class Hud implements Disposable {
         score1 = 0;
         score2 = 0;
 
-        viewport = new FitViewport(MyGdxGame.S_WIDTH, MyGdxGame.S_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(AirHockeyGame.S_WIDTH,
+                AirHockeyGame.S_HEIGHT, new OrthographicCamera());
         System.out.println(Gdx.graphics.getWidth());
         stage = new Stage(viewport, spriteBatch);
         font = new BitmapFont();

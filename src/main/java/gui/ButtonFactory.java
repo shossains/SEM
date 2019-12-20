@@ -19,10 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class ButtonFactory {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
     private transient Screen screen;
 
-    public ButtonFactory(MyGdxGame game, Screen screen) {
+    public ButtonFactory(AirHockeyGame game, Screen screen) {
         this.screen = screen;
         this.game = game;
     }
@@ -72,7 +72,7 @@ public class ButtonFactory {
                         screen.dispose();
                         switch (newScreen) {
                             case "LoginScreen":
-                                game.setScreen(new LoginScreen(game));
+                                game.setScreen(new AuthenticationScreen(game));
                                 break;
                             case "Exit":
                                 Gdx.app.exit();
@@ -122,16 +122,16 @@ public class ButtonFactory {
                                 game.setScreen(new GameScreen(game));
                                 break;
                             case "LoginScreen":
-                                game.setScreen(new LoginScreen(game));
+                                game.setScreen(new AuthenticationScreen(game));
                                 break;
                             case "Exit":
                                 Gdx.app.exit();
                                 break;
                             case "Credentials":
-                                game.setScreen(new Credentials(game));
+                                game.setScreen(new LoginScreen(game));
                                 break;
                             case "Registration":
-                                game.setScreen(new Registration(game));
+                                game.setScreen(new RegistrationScreen(game));
                                 break;
                             default:
                                 throw new IllegalArgumentException("Screen type does not exist");

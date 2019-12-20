@@ -22,20 +22,25 @@ import database.Query;
  * Then, the method checkScores is called which disposes
  * the top 5 scores ever registered.
  */
-public class Scores implements Screen {
+public class ScoresScreen implements Screen {
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
     public transient Stage stage;
     final transient TextField usernameTextField;
     final transient TextFieldFactory textFieldFactory;
     final transient int score;
 
     /**
-     * Constructor for GUI.Scores Screen.
+     * Constructor for GUI.Scores Screen
+     * Here, a test field for nickname is created.
+     * After the user enters his/her nickname, a pop-up
+     * window shows top 5 scores.
+     * After that, the user can press the exit button to go back
+     * to the chooseGameScreen page.
      * @param game the current game.
      * @param score the score recieved from the GUI.GameScreen class.
      */
-    public Scores(MyGdxGame game, int score) {
+    public ScoresScreen(AirHockeyGame game, int score) {
         this.game = game;
         this.score = score;
         stage = new Stage(new ScreenViewport());
