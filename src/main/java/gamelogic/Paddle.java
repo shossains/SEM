@@ -40,6 +40,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     /**
      * Method so the player move the paddle based on the keys they have pressed.
+     * This is a very important method as it is how the player actively controls
+     * their paddle.
      * I plan to add an interface in future for the movement of the puck
      * @param rightPressed If right is pressed.
      * @param leftPressed If left is pressed.

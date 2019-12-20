@@ -35,6 +35,7 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
 
     /**
      * Method to move the object.
+     * This will be called every time the game updates (per frame).
      * @param deltaTime The game time that has passed since the last call.
      */
     public void move(float deltaTime) {
