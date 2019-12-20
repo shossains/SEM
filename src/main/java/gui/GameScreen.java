@@ -7,6 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
@@ -21,7 +26,7 @@ public class GameScreen implements Screen {
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
 
-    final transient MyGdxGame game;
+    final transient AirHockeyGame game;
 
     transient Texture puckImage;
     transient Texture paddle1Image;
@@ -33,6 +38,11 @@ public class GameScreen implements Screen {
     transient Puck puck;
     transient Paddle paddle1;
     transient Paddle paddle2;
+
+    transient Stage stage;
+    transient ButtonFactory buttonFactory;
+    transient ImageButton resumeButton;
+    transient ImageButton exitButton;
 
     transient CollisionsEngine collisionsEngine;
     transient ScoringSystem scoringSystem;
@@ -55,8 +65,25 @@ public class GameScreen implements Screen {
      * Constructor.
      * @param game The game object.
      */
-    public GameScreen(final MyGdxGame game) {
+    public GameScreen(final AirHockeyGame game) {
         this.game = game;
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        buttonFactory = new ButtonFactory(game, this);
+        resumeButton = buttonFactory.createImButton("assets/resume.png");
+        resumeButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        resume();
+                    }
+                });
+
+        exitButton = buttonFactory.createTransImButton("assets/exit.png", "MainMenuScreen");
+
+        stage.addActor(resumeButton);
+        stage.addActor(exitButton);
 
         boardImage = new Texture(Gdx.files.internal("assets/table.png"));
         puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
@@ -102,34 +129,36 @@ public class GameScreen implements Screen {
 
         switch (state) {
             case RUN:
+                update(delta);
+                draw();
                 if (escPressed) {
+
                     pause();
                 }
-                update();
                 break;
             case PAUSE:
+                update(0);
+                stage.draw();
                 if (escPressed) {
                     resume();
+
                 }
                 break;
             default:
                 break;
         }
-        draw();
     }
 
     /**
      * Method that is called while the game is running.
      */
-    public void update() {
+    public void update(float delta) {
         //update the camera
         camera.update();
-
-        float deltaTime = Gdx.graphics.getDeltaTime();
         // Updated the game clock
-        hud.updateTime(deltaTime);
+        hud.updateTime(delta);
         //move the puck
-        puck.move(deltaTime);
+        puck.move(delta);
         //ensure it is within boundaries
         puck.fixPosition();
 
@@ -149,7 +178,7 @@ public class GameScreen implements Screen {
             pause();
             scoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         }
 
         // Check if one of the players wont the game
@@ -157,12 +186,12 @@ public class GameScreen implements Screen {
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         } else if (scoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    Scores(game, 100));
+                    ScoresScreen(game, 100));
         }
 
         //the movement variables for player 1
@@ -180,8 +209,8 @@ public class GameScreen implements Screen {
         paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
         paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
 
-        paddle1.move(deltaTime);
-        paddle2.move(deltaTime);
+        paddle1.move(delta);
+        paddle2.move(delta);
 
         collisionsEngine.collide();
 
@@ -202,6 +231,7 @@ public class GameScreen implements Screen {
 
         // Draw the board
         game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
+
 
         //draw the puck as the texture and in the place that the puck exists
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
@@ -268,11 +298,19 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        resumeButton.setPosition(540, 430);
+        exitButton.setPosition(540, 300);
+        stage.act();
+        stage.draw();
         this.state = State.PAUSE;
     }
 
     @Override
     public void resume() {
+        resumeButton.setPosition(-1000, -1000);
+        exitButton.setPosition(-1000, -1000);
+        stage.act();
+        stage.draw();
         this.state = State.RUN;
     }
 
@@ -284,5 +322,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         puckImage.dispose();
+        stage.dispose();
     }
 }

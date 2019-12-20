@@ -6,7 +6,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MyGdxGame extends Game {
+/**
+ * This class is called first when the project
+ * is running. It redirects the user to the Authentication
+ * screen and it has control over the sound effects.
+ */
+public class AirHockeyGame extends Game {
 
     public static final int S_WIDTH = 1280;
     public static final int S_HEIGHT = 720;
@@ -20,7 +25,7 @@ public class MyGdxGame extends Game {
     public void create() {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
-        this.setScreen(new LoginScreen(this));
+        this.setScreen(new AuthenticationScreen(this));
 
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
         sound.setLooping(true);
@@ -39,7 +44,7 @@ public class MyGdxGame extends Game {
     }
 
     /**
-     * Controller for muting and unmuting the game.
+     * Controller for pausing or resuming the sound effects.
      */
     public void muteUnmute() {
         if (sound.isPlaying()) {
