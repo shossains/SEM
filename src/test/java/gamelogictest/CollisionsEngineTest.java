@@ -204,4 +204,58 @@ public class CollisionsEngineTest {
         assertEquals(50, puck.getYspeed(), delta);
     }
 
+    @Test
+    public void testNotColliding() {
+        paddle1.setX(0);
+        paddle1.setY(0);
+
+        puck.setX(100);
+        puck.setY(0);
+
+        paddle2.setY(600);
+        paddle2.setX(600);
+
+        assertFalse(collisionsEngine.isIntersecting(paddle1, puck));
+
+        paddle1.setXspeed(0);
+        paddle1.setYspeed(0);
+        paddle1.setSpeeds(true, false, false, false);
+        puck.setXspeed(-30);
+        puck.setYspeed(50);
+
+        collisionsEngine.collide();
+
+        assertEquals(50, paddle1.getXspeed(), delta);
+        assertEquals(0, paddle1.getYspeed(), delta);
+        assertEquals(-30, puck.getXspeed(), delta);
+        assertEquals(50, puck.getYspeed(), delta);
+    }
+
+    @Test
+    public void testCollide2() {
+
+        paddle2.setX(0);
+        paddle2.setY(0);
+
+        puck.setX(0);
+        puck.setY(0);
+
+        paddle1.setY(600);
+        paddle1.setX(600);
+
+        assertTrue(collisionsEngine.isIntersecting(paddle2, puck));
+
+        paddle2.setXspeed(160);
+        paddle2.setYspeed(120);
+        puck.setXspeed(-40);
+        puck.setYspeed(-30);
+
+        collisionsEngine.collide();
+
+        assertEquals(40, paddle2.getXspeed(), delta);
+        assertEquals(120, paddle2.getYspeed(), delta);
+        assertEquals(200, puck.getXspeed(), delta);
+        assertEquals(-30, puck.getYspeed(), delta);
+    }
+
 }

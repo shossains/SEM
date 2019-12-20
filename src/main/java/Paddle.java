@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Circle;
 
     /**
      * Constructor.
+     * The paddle is what the player controls, and is what moves and interacts with the puck.
      * @param x x coordinate.
      * @param y y coordinate.
      * @param xspeed Speed in y direction.
@@ -27,10 +28,22 @@ import com.badlogic.gdx.math.Circle;
         super(x, y, radius, xspeed, yspeed, mass);
 
         this.playerType = playerType;
+
+        //set the X boundaries based on whether it is the first or the second player puck
+        if (this.playerType == PlayerType.PLAYER1) {
+            xupper = 1280;
+            xlower = 640;
+        } else {
+            xupper = 640;
+            xlower = 0;
+        }
     }
 
     /**
-     * Method to move the paddle, this can be expanded later to be a more complex and realistic.
+     * Method so the player move the paddle based on the keys they have pressed.
+     * This is a very important method as it is how the player actively controls
+     * their paddle.
+     * I plan to add an interface in future for the movement of the puck
      * @param rightPressed If right is pressed.
      * @param leftPressed If left is pressed.
      * @param upPressed If up is pressed.
@@ -38,31 +51,49 @@ import com.badlogic.gdx.math.Circle;
      */
     public void setSpeeds(boolean rightPressed, boolean leftPressed,
                            boolean upPressed, boolean downPressed) {
-        if (rightPressed && !leftPressed) {
-            if (this.getXspeed() < maxSpeed) {
-                if (this.getXspeed() < lowSpeed) {
-                    //set a baseline
-                    this.setXspeed(50);
-                } else {
-                    this.setXspeed(this.getXspeed() + acceleration);
-                }
-            }
-        }
 
-        if (leftPressed && !rightPressed) {
-            if (this.getXspeed() > -maxSpeed) {
-                if (this.getXspeed() > - lowSpeed) {
-                    //set a baseline
-                    this.setXspeed(-50);
-                } else {
-                    this.setXspeed(this.getXspeed() - acceleration);
-                }
-            }
-        }
+        setLateralSpeeds(rightPressed, leftPressed);
+
+        setVerticalSpeeds(upPressed, downPressed);
+    }
+
+    /**
+     * Sets the speeds in lateral directions.
+     * @param rightPressed If the right button is pressed.
+     * @param leftPressed If left is pressed.
+     */
+    public void setLateralSpeeds(boolean rightPressed, boolean leftPressed) {
+
+        setLeftSpeed(rightPressed, leftPressed);
+        setRightSpeed(rightPressed, leftPressed);
 
         if ((!leftPressed & !rightPressed) || (leftPressed & rightPressed)) {
             this.setXspeed(this.getXspeed() * 0.2f);
         }
+    }
+
+    /**
+     * Sets the speeds in the vertical directions.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
+    public void setVerticalSpeeds(boolean upPressed, boolean downPressed) {
+
+        setUpwardsSpeed(upPressed, downPressed);
+
+        setDownwardsSpeed(upPressed, downPressed);
+
+        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
+            this.setYspeed(this.getYspeed() * 0.2f);
+        }
+    }
+
+    /**
+     * Sets the speed in the positive Y direction.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
+    public void setUpwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (upPressed && !downPressed) {
             if (this.getYspeed() < maxSpeed) {
@@ -74,6 +105,14 @@ import com.badlogic.gdx.math.Circle;
                 }
             }
         }
+    }
+
+    /**
+     * Sets the speed in the negative Y direction.
+     * @param upPressed If up is pressed.
+     * @param downPressed If down is pressed.
+     */
+    public void setDownwardsSpeed(boolean upPressed, boolean downPressed) {
 
         if (downPressed && !upPressed) {
             if (this.getYspeed() > -maxSpeed) {
@@ -85,9 +124,43 @@ import com.badlogic.gdx.math.Circle;
                 }
             }
         }
+    }
 
-        if ((!upPressed & !downPressed) || (upPressed & downPressed)) {
-            this.setYspeed(this.getYspeed() * 0.2f);
+    /**
+     * Sets the speed in the negative X direction.
+     * @param rightPressed If right is pressed.
+     * @param leftPressed If left is pressed.
+     */
+    public void setLeftSpeed(boolean rightPressed, boolean leftPressed) {
+
+        if (leftPressed && !rightPressed) {
+            if (this.getXspeed() > -maxSpeed) {
+                if (this.getXspeed() > - lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(-50);
+                } else {
+                    this.setXspeed(this.getXspeed() - acceleration);
+                }
+            }
+        }
+    }
+
+    /**
+     * Set the speed in the positive X direction.
+     * @param rightPressed If right is pressed.
+     * @param leftPressed If left is pressed.
+     */
+    public void setRightSpeed(boolean rightPressed, boolean leftPressed) {
+
+        if (rightPressed && !leftPressed) {
+            if (this.getXspeed() < maxSpeed) {
+                if (this.getXspeed() < lowSpeed) {
+                    //set a baseline
+                    this.setXspeed(50);
+                } else {
+                    this.setXspeed(this.getXspeed() + acceleration);
+                }
+            }
         }
     }
 
@@ -95,22 +168,26 @@ import com.badlogic.gdx.math.Circle;
      * Method to ensure the puck is within the correct boundaries.
      */
     public void fixPosition() {
+        fixXPosition();
+        fixYPosition();
+    }
 
-        if (this.playerType == PlayerType.PLAYER1) {
-            xupper = 1280;
-            xlower = 640;
-        } else if (this.playerType == PlayerType.PLAYER2) {
-            xupper = 640;
-            xlower = 0;
-        }
-
+    /**
+     * This method makes sure the paddle is in the correct X boundaries.
+     */
+    public void fixXPosition() {
         if (this.x - this.radius < xlower) {
             this.x = xlower + this.radius;
         }
         if (this.x > xupper - this.radius) {
             this.x = xupper - this.radius;
         }
+    }
 
+    /**
+     * This method makes sure the paddle is in the correct Y boundaries.
+     */
+    public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
         }

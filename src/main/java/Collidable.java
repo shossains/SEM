@@ -14,12 +14,17 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
 
     /**
      * Constructor.
+     * This is the super class for the puck and the paddle.
+     * These classes utilise the template method.
+     * The puck and paddle are the main elements of the actual air hockey game.
+     * The pucks can move the paddle, which can in turn score.
      * @param x X coordinate.
      * @param y Y coordinate.
      * @param radius The radius.
      * @param xspeed Speed in x direction.
      * @param yspeed Speed in y direction.
-     * @param mass The mass of the object.
+     * @param mass The mass of the object (somewhat arbitrary, but the important part is the
+     *             ratio between the masses of the objects in collision).
      */
     public Collidable(float x, float y, float radius, float xspeed, float yspeed, float mass) {
         super(x, y, radius);
@@ -30,6 +35,7 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
 
     /**
      * Method to move the object.
+     * This will be called every time the game updates (per frame).
      * @param deltaTime The game time that has passed since the last call.
      */
     public void move(float deltaTime) {
