@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
@@ -15,6 +13,8 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     /**
      * Constructor.
+     * The Puck is what is used to actually play the game. It interacts with the paddles
+     * (the paddles can move it), and it is what can go into the goals and increase the score.
      * @param x X coordinate.
      * @param y Y coordinate.
      * @param xspeed Speed in x direction.
@@ -32,7 +32,14 @@ public class Puck extends Collidable implements java.io.Serializable {
      * and if it has hit an edge we calculate the speed after the resulting collision.
      */
     public void fixPosition() {
+        fixXPosition();
+        fixYPosition();
+    }
 
+    /**
+     * This method makes sure the paddle is in the correct X boundaries.
+     */
+    public void fixXPosition() {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
             this.setXspeed(- this.getXspeed() * e);
@@ -41,7 +48,12 @@ public class Puck extends Collidable implements java.io.Serializable {
             this.x = 1280 - this.radius;
             this.setXspeed(- this.getXspeed() * e);
         }
+    }
 
+    /**
+     * This method makes sure the paddle is in the correct Y boundaries.
+     */
+    public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             //also set the initMove to false;
@@ -66,11 +78,4 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.setYspeed(0);
     }
 
-    public boolean isInitMove() {
-        return initMove;
-    }
-
-    public void setInitMove(boolean initMove) {
-        this.initMove = initMove;
-    }
 }

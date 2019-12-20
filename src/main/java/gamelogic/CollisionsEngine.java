@@ -9,6 +9,10 @@ public class CollisionsEngine {
 
     /**
      * Constructor.
+     * The Collisions engine is the physics engine behind the
+     * collisions between the puck and paddles.
+     * Please see the collision theory md file for more documentation behind the mathematical theory
+     * of the collisions.
      * @param puck The puck.
      * @param paddle1 Player 1 paddle.
      * @param paddle2 Player 2 paddle.
@@ -33,16 +37,31 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method that calculates the distance between the circles.
+     * Used to check if the circles are intersecting.
+     * @param c1 First circle.
+     * @param c2 Second circle.
+     * @return The distance between the centres of the circles.
+     */
     public double distance(Collidable c1, Collidable c2) {
         return Math.sqrt(Math.pow((c1.x - c2.x), 2) + Math.pow((c1.y - c2.y), 2));
     }
 
+    /**
+     * Method that checks if two circles are intersecting.
+     * This method tells us whether the circles are actually colliding.
+     * @param c1 First circle.
+     * @param c2 Second circle.
+     * @return Whether or not the circles are intersecting.
+     */
     public boolean isIntersecting(Collidable c1, Collidable c2) {
         return distance(c1, c2) <= (c1.radius + c2.radius);
     }
 
     /**
      * Get the angle between the two circles.
+     * This is needed to so we can translate the speeds and calculate an oblique collision.
      * @param c1 First circle.
      * @param c2 The other circle.
      * @return The angle between them (relative to the x-axis in radians).
@@ -78,11 +97,29 @@ public class CollisionsEngine {
         return (float) speed;
     }
 
+    /**
+     * Method to calculate the speed in the x direction of the circle.
+     * This is needed as we must translate the speeds back to the axes we use for the normal
+     * operations.
+     * @param vi Speed in the i direction.
+     * @param vj Speed in the j direction.
+     * @param theta The angle of the collision.
+     * @return The speed in the x axis.
+     */
     public float rotateToX(float vi, float vj, double theta) {
         double speed = Math.cos(theta) * vi - Math.sin(theta) * vj;
         return (float) speed;
     }
 
+    /**
+     * Method to calculate the speed in the y direction of the circle.
+     * This is needed as we must translate the speeds back to the axes we use for the normal
+     * operations.
+     * @param vi Speed in the i direction.
+     * @param vj Speed in the j direction.
+     * @param theta The angle of the collision.
+     * @return The speed in the y axis.
+     */
     public float rotateToY(float vi, float vj, double theta) {
         double speed = Math.cos(theta) * vj + Math.sin(theta) * vi;
         return (float) speed;
@@ -90,6 +127,7 @@ public class CollisionsEngine {
 
     /**
      * Method to solve the COM and NEL equations and get the speeds after the collision.
+     * Please check the collision theory documentation for a more natural explanation.
      * @param m1 Mass 1.
      * @param m2 Mass 2.
      * @param u1 Initial speed 1.
@@ -113,6 +151,8 @@ public class CollisionsEngine {
 
     /**
      * Method to update the speeds of the objects.
+     * This is the method that integrates all of the separate methods and uses them to
+     * calculate the resulting speeds.
      * @param c1 The first object in the collision.
      * @param c2 The second object in the collision.
      */
@@ -139,7 +179,6 @@ public class CollisionsEngine {
 
         //the speed in the j direction will stay the same, as the collision was in the i axis only
         //but now we need to translate back to x and y axis
-        //but we have for c1: v1 i +
 
         float c1x = rotateToX(v1i, u1j, theta);
         float c1y = rotateToY(v1i, u1j, theta);
