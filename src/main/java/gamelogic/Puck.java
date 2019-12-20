@@ -80,11 +80,4 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.setYspeed(0);
     }
 
-    public boolean isInitMove() {
-        return initMove;
-    }
-
-    public void setInitMove(boolean initMove) {
-        this.initMove = initMove;
-    }
 }
