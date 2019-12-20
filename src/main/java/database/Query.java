@@ -3,7 +3,6 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @SuppressWarnings("PMD.CloseResource")
@@ -47,8 +46,8 @@ public class Query extends Adapter {
     //                } else {
     //                    //Not a SELECT query, so it can be safely added to the batch.
     //                    try {
-    //                        conn.createStatement().addBatch(query[i]);
-    //                        conn.createStatement().executeUpdate(query[i]);
+    //                    conn.createStatement().addBatch(query[i]);
+    //                          conn.createStatement().executeUpdate(query[i]);
     //
     //                    } catch (SQLException e) {
     //                        e.printStackTrace();
@@ -120,7 +119,7 @@ public class Query extends Adapter {
             insert.setString(1, username.replaceAll("[^A-Za-z0-9_.!?]", ""));
             insert.setString(2, BCrypt.hashpw(password.replaceAll("[^A-Za-z0-9_.?!]",
                     ""), BCrypt.gensalt(10)));
-            insert.setString(3, email.replaceAll("[^A-Za-z0-9_.?!@]", ""));
+            insert.setString(3, email/*email.replaceAll("[^A-Za-z0-9_.?!@]", "")*/);
             int rows = insert.executeUpdate();
             if (rows != 0) {
                 return true;
@@ -198,5 +197,25 @@ public class Query extends Adapter {
             System.out.println("Error executing authentication SELECT query");
         }
         return "";
+    }
+
+    /**
+     * Helper function to test the database querying.
+     * @param username the username that needs to be deleted.
+     * @return
+     **/
+    public static void deleteUser(String username) {
+        Query db = new Query();
+        db.connect();
+
+        try {
+            String delete = "DELETE FROM users WHERE username"
+                    + " = '" + username + "';";
+            conn.createStatement().addBatch(delete);
+            conn.createStatement().executeUpdate(delete);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.print("User could not be deleted.");
+        }
     }
 }
