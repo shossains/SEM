@@ -12,21 +12,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import scoring.BasicScoringSystem;
 import scoring.Hud;
-import scoring.ScoringSystem;
 
 
-public class ScoringSystemTest {
+
+public class BasicScoringSystemTest {
 
     private transient Puck puck;
     private transient Hud mockHud;
-    private transient ScoringSystem scoringSystem;
+    private transient BasicScoringSystem basicScoringSystem;
 
     @BeforeEach
     void setUp() {
         this.puck = new Puck(360, 360, 0, 0, 15, 1);
         this.mockHud = mock(Hud.class);
-        this.scoringSystem = new ScoringSystem(puck, mockHud);
+        this.basicScoringSystem = new BasicScoringSystem(puck, mockHud);
     }
 
     @AfterEach
@@ -36,64 +37,64 @@ public class ScoringSystemTest {
 
     @Test
     void constructorTest() {
-        assertNotNull(scoringSystem);
+        assertNotNull(basicScoringSystem);
     }
 
     @Test
     void checkIfFinishedGameEnded() {
         when(mockHud.getGameTimer()).thenReturn(0);
-        assertTrue(scoringSystem.checkIfGameEnded());
+        assertTrue(basicScoringSystem.checkIfGameEnded());
     }
 
     @Test
     void checkIfGameInProgressEnded() {
         when(mockHud.getGameTimer()).thenReturn(100);
-        assertFalse(scoringSystem.checkIfGameEnded());
+        assertFalse(basicScoringSystem.checkIfGameEnded());
     }
 
     @Test
     void checkIfPlayerOneWonTheGameTrue() {
         when(mockHud.getScoreOne()).thenReturn(11);
-        assertTrue(scoringSystem.checkScorePlayerOne());
+        assertTrue(basicScoringSystem.checkScorePlayerOne());
     }
 
     @Test
     void checkIfPlayerOneWonTheGameFalse() {
         when(mockHud.getScoreOne()).thenReturn(5);
-        assertFalse(scoringSystem.checkScorePlayerOne());
+        assertFalse(basicScoringSystem.checkScorePlayerOne());
     }
 
     @Test
     void checkIfPlayerTwoWonTheGameTrue() {
         when(mockHud.getScoreTwo()).thenReturn(11);
-        assertTrue(scoringSystem.checkScorePlayerTwo());
+        assertTrue(basicScoringSystem.checkScorePlayerTwo());
     }
 
     @Test
     void checkIfPlayerTwoWonTheGameFalse() {
         when(mockHud.getScoreTwo()).thenReturn(2);
-        assertFalse(scoringSystem.checkScorePlayerTwo());
+        assertFalse(basicScoringSystem.checkScorePlayerTwo());
     }
 
     @Test
     void getTheWinnerOne() {
         when(mockHud.getScoreOne()).thenReturn(10);
         when(mockHud.getScoreTwo()).thenReturn(5);
-        assertEquals(1, scoringSystem.getTheWinner());
+        assertEquals(1, basicScoringSystem.getTheWinner());
     }
 
     @Test
     void getTheWinnerTwo() {
         when(mockHud.getScoreOne()).thenReturn(5);
         when(mockHud.getScoreTwo()).thenReturn(10);
-        assertEquals(2, scoringSystem.getTheWinner());
+        assertEquals(2, basicScoringSystem.getTheWinner());
     }
 
     @Test
     void getTheWinnerTie() {
         when(mockHud.getScoreOne()).thenReturn(5);
         when(mockHud.getScoreTwo()).thenReturn(5);
-        assertEquals(0, scoringSystem.getTheWinner());
+        assertEquals(0, basicScoringSystem.getTheWinner());
     }
 
 

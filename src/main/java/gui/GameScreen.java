@@ -16,9 +16,10 @@ import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
+import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
-import scoring.ScoringSystem;
+
 
 
 public class GameScreen implements Screen {
@@ -45,7 +46,7 @@ public class GameScreen implements Screen {
     transient ImageButton exitButton;
 
     transient CollisionsEngine collisionsEngine;
-    transient ScoringSystem scoringSystem;
+    transient BasicScoringSystem basicScoringSystem;
 
     transient OrthographicCamera camera;
 
@@ -107,7 +108,7 @@ public class GameScreen implements Screen {
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
-        scoringSystem = new ScoringSystem(puck, hud);
+        basicScoringSystem = new BasicScoringSystem(puck, hud);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
@@ -163,7 +164,7 @@ public class GameScreen implements Screen {
         puck.fixPosition();
 
         // Check if the puck's in one of the goals
-        int goal = scoringSystem.goal();
+        int goal = basicScoringSystem.goal();
         if (goal != 0) {
             if (goal == PLAYER_ONE) {
                 resetRight();
@@ -173,21 +174,21 @@ public class GameScreen implements Screen {
         }
 
         // Check if the game's timer haven't run out
-        if (scoringSystem.checkIfGameEnded()) {
+        if (basicScoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
             pause();
-            scoringSystem.getTheWinner();
+            basicScoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
         }
 
         // Check if one of the players wont the game
-        if (scoringSystem.checkScorePlayerOne()) {
+        if (basicScoringSystem.checkScorePlayerOne()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
-        } else if (scoringSystem.checkScorePlayerTwo()) {
+        } else if (basicScoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new

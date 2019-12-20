@@ -2,11 +2,14 @@ package scoring;
 
 import gamelogic.Puck;
 
-public class ScoringSystem {
-    private static final int END_SCORE = 11;
+/**
+ * Interface for different scoring systems implemented in the game.
+ * Provides the basic constructor, and methods for the basic game logic.
+ */
+public abstract class ScoringSystem {
 
-    private transient Puck puck;
-    private transient Hud hud;
+    protected transient Puck puck;
+    protected transient Hud hud;
 
     public ScoringSystem(Puck puck, Hud hud) {
         this.puck = puck;
@@ -14,34 +17,30 @@ public class ScoringSystem {
     }
 
     /**
-     * Checks if one of the players have scored a goal.
-     * @return an integer representing the player. 0 otherwise.
+     * Checks if one of the players scored a point.
+     * @return an integer representing player who scored the point.
      */
-    public int goal() {
-        if (goalPlayerOne(puck)) {
-            hud.addScoreOne();
-            //Gdx.app.log("GOAL", "Player 1 scored");
-            return 1;
-        } else if (goalPlayerTwo(puck)) {
-            hud.addScoreTwo();
-            //Gdx.app.log("GOAL", "Player 2 scored");
-            return 2;
-        } else {
-            return 0;
-        }
-    }
+    public abstract int goal();
 
+    /**
+     * Check if the games clock's ran out.
+     * @return true if the game's ended.
+     */
     public boolean checkIfGameEnded() {
-        return (hud.getGameTimer() <= 0);
+        return (this.hud.getGameTimer() <= 0);
     }
 
-    public boolean checkScorePlayerOne() {
-        return (hud.getScoreOne() == END_SCORE);
-    }
+    /**
+     * Check if PlayerOne gathered enough points to win the game.
+     * @return true if PlayerOne gathered enough points.
+     */
+    public abstract boolean checkScorePlayerOne();
 
-    public boolean checkScorePlayerTwo() {
-        return (hud.getScoreTwo() == END_SCORE);
-    }
+    /**
+     * Check if PlayerTwo gathered enough points to win the game.
+     * @return true if PlayerTwo gathered enough points.
+     */
+    public abstract boolean checkScorePlayerTwo();
 
     /**
      * Compare the scores of the players and establish the winner.
@@ -49,27 +48,12 @@ public class ScoringSystem {
      */
     public int getTheWinner() {
         if (hud.getScoreOne() > hud.getScoreTwo()) {
-            //Gdx.app.log("END", "Player3 1 wins!");
             return 1;
         } else if (hud.getScoreTwo() > hud.getScoreOne()) {
-            //Gdx.app.log("END", "Player 2 wins!");
             return 2;
         } else {
-            //Gdx.app.log("END", "The game ended with a tie!");
             return 0;
         }
-    }
-
-    private boolean goalPlayerOne(Puck puck) {
-        return (puck.x + (puck.radius / 2)  >= 1265
-                && puck.y + (puck.radius / 2) >= 270
-                && puck.y + (puck.radius / 2) <= 454);
-    }
-
-    private boolean goalPlayerTwo(Puck puck) {
-        return (puck.x - (puck.radius / 2) <= 15
-                && puck.y - (puck.radius / 2)  >= 270
-                && puck.y + (puck.radius / 2) <= 465);
     }
 
 
