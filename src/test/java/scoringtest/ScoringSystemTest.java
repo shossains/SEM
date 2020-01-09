@@ -67,7 +67,7 @@ public class ScoringSystemTest {
     //void checkIfPlayerTwoWonTheGameTrue() {
     //    when(mockHud.getScoreTwo()).thenReturn(11);
     //    assertTrue(scoringSystem.checkScorePlayerTwo());
-    //}
+    //  }
 
     @Test
     void checkIfPlayerTwoWonTheGameFalse() {
