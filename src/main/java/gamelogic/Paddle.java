@@ -21,8 +21,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass, float width, float height,
-                  PlayerType playerType) {
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass,
+                  float width, float height, PlayerType playerType) {
 
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
@@ -30,10 +30,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
         //set the X boundaries based on whether it is the first or the second player puck
         if (this.playerType == PlayerType.PLAYER1) {
-            xupper = 1280;
-            xlower = 640;
+            xupper = getWidth();
+            xlower = getWidth() / 2;
         } else {
-            xupper = 640;
+            xupper = getWidth() / 2;
             xlower = 0;
         }
     }
@@ -182,8 +182,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
         }
-        if (this.y > 720 - this.radius) {
-            this.y = 720 - this.radius;
+        if (this.y > getHeight() - this.radius) {
+            this.y = getHeight() - this.radius;
         }
     }
 }

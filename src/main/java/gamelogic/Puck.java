@@ -19,8 +19,8 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in y direction.
      * @param radius The radius.
      */
-    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width, float height) {
-
+    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
+                float height) {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
     }
 
@@ -34,8 +34,8 @@ public class Puck extends Collidable implements java.io.Serializable {
             this.x = 0 + this.radius;
             this.setXspeed(- this.getXspeed() * e);
         }
-        if (this.x > 1280 - this.radius) {
-            this.x = 1280 - this.radius;
+        if (this.x > getWidth() - this.radius) {
+            this.x = getWidth() - this.radius;
             this.setXspeed(- this.getXspeed() * e);
         }
     }
@@ -50,8 +50,8 @@ public class Puck extends Collidable implements java.io.Serializable {
             this.y = 0 + this.radius;
             this.setYspeed(- this.getYspeed() * e);
         }
-        if (this.y > 720 - this.radius) {
-            this.y = 720 - this.radius;
+        if (this.y > getHeight() - this.radius) {
+            this.y = getHeight() - this.radius;
             this.setYspeed(- this.getYspeed() * e);
         }
     }

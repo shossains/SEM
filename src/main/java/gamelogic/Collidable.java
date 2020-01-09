@@ -28,7 +28,8 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
      * @param mass The mass of the object (somewhat arbitrary, but the important part is the
      *             ratio between the masses of the objects in collision).
      */
-    public Collidable(float x, float y, float radius, float xspeed, float yspeed, float mass, float width, float height) {
+    public Collidable(float x, float y, float radius, float xspeed, float yspeed, float mass,
+                      float width, float height) {
         super(x, y, radius);
         this.xspeed = xspeed;
         this.yspeed = yspeed;
@@ -83,11 +84,19 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
         this.mass = mass;
     }
 
-    public float getWidth() { return width; }
+    public float getWidth() {
+        return width;
+    }
 
-    public void setWidth(float width) { this.width = width; }
+    public void setWidth(float width) {
+        this.width = width;
+    }
 
-    public float getHeight() { return height; }
+    public float getHeight() {
+        return height;
+    }
 
-    public void setHeight(float height) { this.height = height; }
+    public void setHeight(float height) {
+        this.height = height;
+    }
 }

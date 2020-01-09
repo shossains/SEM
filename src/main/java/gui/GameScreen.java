@@ -20,8 +20,6 @@ import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
 
-
-
 public class GameScreen implements Screen {
 
     private static final int PLAYER_ONE = 1;
@@ -52,8 +50,6 @@ public class GameScreen implements Screen {
     transient BasicScoringSystem basicScoringSystem;
 
     transient OrthographicCamera camera;
-
-    transient boolean initMove = true;
 
     private transient boolean mutePressed;
 
