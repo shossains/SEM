@@ -18,9 +18,9 @@ public class PuckTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        puck1 = new Puck(10, 100, 0, 100, 15, 10);
-        puck2 = new Puck(640, 360, 64, 36, 15, 10);
-        puck3 = new Puck(640, 360, -64, -36, 15, 10);
+        puck1 = new Puck(10, 100, 0, 100, 15, 10, 1280, 720);
+        puck2 = new Puck(640, 360, 64, 36, 15, 10, 1280, 720);
+        puck3 = new Puck(640, 360, -64, -36, 15, 10, 1280, 720);
 
     }
 

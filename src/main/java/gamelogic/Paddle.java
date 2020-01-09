@@ -21,10 +21,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in x direction.
      * @param radius Radius.
      */
-    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass,
+    public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass, float width, float height,
                   PlayerType playerType) {
 
-        super(x, y, radius, xspeed, yspeed, mass);
+        super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.playerType = playerType;
 

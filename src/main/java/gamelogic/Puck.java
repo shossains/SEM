@@ -4,8 +4,6 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
-    private transient boolean initMove;
-
     /**
      * The co-efficient of restitution.
      */
@@ -21,9 +19,9 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param yspeed Speed in y direction.
      * @param radius The radius.
      */
-    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass) {
+    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width, float height) {
 
-        super(x, y, radius, xspeed, yspeed, mass);
+        super(x, y, radius, xspeed, yspeed, mass, width, height);
     }
 
     /**
@@ -50,15 +48,11 @@ public class Puck extends Collidable implements java.io.Serializable {
     public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
-            //also set the initMove to false;
             this.setYspeed(- this.getYspeed() * e);
-            initMove = false;
         }
         if (this.y > 720 - this.radius) {
             this.y = 720 - this.radius;
             this.setYspeed(- this.getYspeed() * e);
-
-            initMove = false;
         }
     }
 

@@ -25,7 +25,7 @@ public class BasicScoringSystemTest {
 
     @BeforeEach
     void setUp() {
-        this.puck = new Puck(360, 360, 0, 0, 15, 1);
+        this.puck = new Puck(360, 360, 0, 0, 15, 1, 1280, 720);
         this.mockHud = mock(Hud.class);
         this.basicScoringSystem = new BasicScoringSystem(puck, mockHud);
     }

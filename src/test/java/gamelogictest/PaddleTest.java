@@ -20,11 +20,11 @@ public class PaddleTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(100, 100, 0, 0, 15, 10, PlayerType.PLAYER1);
-        paddle2 = new Paddle(300, 200, 0, 0, 15, 10, PlayerType.PLAYER2);
+        paddle1 = new Paddle(100, 100, 0, 0, 15, 10, 1280, 720, PlayerType.PLAYER1);
+        paddle2 = new Paddle(300, 200, 0, 0, 15, 10, 1280, 720, PlayerType.PLAYER2);
 
-        paddle3 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
-        paddle4 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
+        paddle3 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, 1280, 720, PlayerType.PLAYER1);
+        paddle4 = new Paddle(360, 360f, 0f, 0f, 40f, 10, 1280, 720, PlayerType.PLAYER2);
     }
 
     @Test
