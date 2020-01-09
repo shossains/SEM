@@ -1,19 +1,21 @@
 package gamelogictest;
 
+import static org.junit.Assert.assertEquals;
+
 import com.badlogic.gdx.Screen;
 import gamelogic.CredentialsChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Random;
-
-import static org.junit.Assert.assertEquals;
-
 public class CredentialsCheckerTest {
 
-    Screen screen;
-    CredentialsChecker checker;
+    transient Screen screen;
+    transient CredentialsChecker checker;
+    final transient String PASS = "pass";
+    final transient String USERNAME = "test";
+    final transient String EMAIL = "test@test.com";
+    final transient String response = "empty";
 
     @BeforeEach
     public void setUp() {
@@ -23,16 +25,17 @@ public class CredentialsCheckerTest {
 
     @Test
     public void checkCredentialsLoginEmpty1() {
-        assertEquals(checker.checkLoginCredentials("", "pass"), "empty");
+        assertEquals(checker.checkLoginCredentials("", PASS), response);
     }
+
     @Test
     public void checkCredentialsLoginEmpty2() {
-        assertEquals(checker.checkLoginCredentials("test", ""), "empty");
+        assertEquals(checker.checkLoginCredentials(USERNAME, ""), response);
     }
 
     @Test
     public void checkCredentialsLoginValid() {
-        assertEquals(checker.checkLoginCredentials("test", "pass"), "correct");
+        assertEquals(checker.checkLoginCredentials(USERNAME, PASS), "correct");
     }
 
     @Test
@@ -42,44 +45,44 @@ public class CredentialsCheckerTest {
 
     @Test
     public void checkCredentialsRegistration() {
-        assertEquals(checker.checkRegisterCredentials("test", "pass",
-                "", "pass"), "empty");
+        assertEquals(checker.checkRegisterCredentials(USERNAME, PASS,
+                "", PASS), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty() {
-        assertEquals(checker.checkRegisterCredentials("", "pass",
-                "test@test.com", "pass"), "empty");
+        assertEquals(checker.checkRegisterCredentials("", PASS,
+                EMAIL, PASS), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty2() {
-        assertEquals(checker.checkRegisterCredentials("test", "",
-                "test@test.com", "pass"), "empty");
+        assertEquals(checker.checkRegisterCredentials(USERNAME, "",
+                EMAIL, PASS), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty3() {
-        assertEquals(checker.checkRegisterCredentials("test", "pass",
-                "test@test.com", ""), "empty");
+        assertEquals(checker.checkRegisterCredentials(USERNAME, PASS,
+                EMAIL, ""), response);
     }
 
     @Test
     public void checkCredentialsRegistrationPasswords() {
-        assertEquals(checker.checkRegisterCredentials("test", "pass",
-                "test@test.com", "pass2"), "passwordsNotMatching");
+        assertEquals(checker.checkRegisterCredentials(USERNAME, PASS,
+                EMAIL, "pass2"), "passwordsNotMatching");
     }
 
     @Test
     public void checkCredentialsRegistrationIncorect() {
-        assertEquals(checker.checkRegisterCredentials("test", "pass",
-                "test@test.com", "pass"), "incorrect");
+        assertEquals(checker.checkRegisterCredentials(USERNAME, PASS,
+                EMAIL, PASS), "incorrect");
     }
 
     @Test
     public void checkCredentialsRegistrationCorrect() {
         double randomNumber = Math.random();
-        assertEquals(checker.checkRegisterCredentials(randomNumber + "", "pass",
-                randomNumber + "", "pass"), "correct");
+        assertEquals(checker.checkRegisterCredentials(randomNumber + "", PASS,
+                randomNumber + "", PASS), "correct");
     }
 }
