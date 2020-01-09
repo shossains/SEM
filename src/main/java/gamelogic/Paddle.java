@@ -164,14 +164,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
     }
 
     /**
-     * Method to ensure the puck is within the correct boundaries.
-     */
-    public void fixPosition() {
-        fixXPosition();
-        fixYPosition();
-    }
-
-    /**
      * This method makes sure the paddle is in the correct X boundaries.
      */
     public void fixXPosition() {

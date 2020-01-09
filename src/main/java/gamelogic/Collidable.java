@@ -46,7 +46,14 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
     /**
      * The method to ensure the object stays within bounds.
      */
-    public abstract void fixPosition();
+    public void fixPosition() {
+        fixXPosition();
+        fixYPosition();
+    }
+
+    public abstract void fixXPosition();
+
+    public abstract void fixYPosition();
 
     public float getXspeed() {
         return xspeed;

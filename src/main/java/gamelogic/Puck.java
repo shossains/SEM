@@ -27,17 +27,9 @@ public class Puck extends Collidable implements java.io.Serializable {
     }
 
     /**
-     * Method to ensure the puck is within the correct boundaries.
+     * This method makes sure the paddle is in the correct X boundaries.
      * We check if the puck is outside of the board boundaries,
      * and if it has hit an edge we calculate the speed after the resulting collision.
-     */
-    public void fixPosition() {
-        fixXPosition();
-        fixYPosition();
-    }
-
-    /**
-     * This method makes sure the paddle is in the correct X boundaries.
      */
     public void fixXPosition() {
         if (this.x - this.radius < 0) {
@@ -52,6 +44,8 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     /**
      * This method makes sure the paddle is in the correct Y boundaries.
+     * We check if the puck is outside of the board boundaries,
+     * and if it has hit an edge we calculate the speed after the resulting collision.
      */
     public void fixYPosition() {
         if (this.y - this.radius < 0) {
