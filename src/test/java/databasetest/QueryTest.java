@@ -1,11 +1,8 @@
 package databasetest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import database.Query;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import database.Query;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,17 +49,17 @@ public class QueryTest {
         //assertThrows(NullPointerException.class, () -> ad.connect());
     }
 
-    @Test
-    public void getScoresTest() {
-        Query q = new Query();
-        q.addNewUser(userTestName, "bla", "empty@delft.nl");
-        int firstScore = q.getScore(userTestName, 9999);
-        assertEquals(9999, firstScore);
-
-        int secondScore = q.getScore(userTestName, 1);
-        assertEquals(9999, secondScore);
-
-        q.deleteUser(userTestName);
-    }
+//    @Test
+//    public void getScoresTest() {
+//        Query q = new Query();
+//        q.addNewUser(userTestName, "bla", "empty@delft.nl");
+//        int firstScore = q.getScore(userTestName, 9999);
+//        assertEquals(9999, firstScore);
+//
+//        int secondScore = q.getScore(userTestName, 1);
+//        assertEquals(9999, secondScore);
+//
+//        q.deleteUser(userTestName);
+//    }
 
 }

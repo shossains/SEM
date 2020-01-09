@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Adapter {
     /* 01 Database variables ------------------------------- */
     public static Connection conn = null;
@@ -17,7 +18,7 @@ public class Adapter {
     private transient ResultSet rs = null;
 
     /* 02 Variables ---------------------------------------- */
-    Properties prop = readPropertiesFile("database.properties");
+    transient Properties prop = readPropertiesFile("database.properties");
 
     private transient String jdbcUrl = prop.getProperty("jdbcUrl");
     private transient String username = prop.getProperty("username");
