@@ -5,12 +5,12 @@ public class Paddle extends Collidable implements java.io.Serializable {
     public static final transient long serialVersionUID = 4328743;
 
     private transient PlayerType playerType;
-    private transient float xupper = 1280;
-    private transient float xlower = 0;
+    private transient float xupper;
+    private transient float xlower;
 
-    private transient float maxSpeed = 200;
-    private transient float acceleration = 6;
-    private transient float lowSpeed = 50;
+    private transient float maxSpeed;
+    private transient float acceleration;
+    private transient float lowSpeed;
 
     /**
      * Constructor.
@@ -22,11 +22,16 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param radius Radius.
      */
     public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass,
-                  float width, float height, PlayerType playerType) {
+                  float width, float height, PlayerType playerType, float maxSpeed,
+                  float acceleration, float lowSpeed) {
 
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.playerType = playerType;
+
+        this.maxSpeed = maxSpeed;
+        this.acceleration = acceleration;
+        this.lowSpeed = lowSpeed;
 
         //set the X boundaries based on whether it is the first or the second player puck
         if (this.playerType == PlayerType.PLAYER1) {

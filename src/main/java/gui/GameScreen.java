@@ -103,8 +103,10 @@ public class GameScreen implements Screen {
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height, PlayerType.PLAYER1);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height, PlayerType.PLAYER2);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER1, 200, 6, 50);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER2, 200, 6, 50);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
         basicScoringSystem = new BasicScoringSystem(puck, hud);
