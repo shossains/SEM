@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -71,8 +71,8 @@ public class RegistrationScreen implements Screen {
         stage.addActor(passwordAgainTextField);
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
-        ButtonFactory factory = new ButtonFactory(this.game, this);
-        TextButton button = factory.createTextButton("Done");
+        AbstractButtonFactory factory = new TextButtonFactory(this.game, this);
+        Button button = factory.createButton("Done");
         button.setPosition(50, 500);
         button.addListener(
                 new ClickListener() {
@@ -82,7 +82,7 @@ public class RegistrationScreen implements Screen {
                     }
                 });
         stage.addActor(button);
-        TextButton exit = factory.createTransTextButton("Back", "LoginScreen");
+        Button exit = factory.createTransButton("Back", "LoginScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }
