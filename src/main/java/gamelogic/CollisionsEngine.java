@@ -194,6 +194,10 @@ public class CollisionsEngine {
         c1.move(0.01f);
         c2.move(0.01f);
 
+        //now make sure the puck and paddle don't get stuck together
+
+        fixCollision(c1, c2);
+
     }
 
 
