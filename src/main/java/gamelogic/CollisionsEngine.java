@@ -200,9 +200,14 @@ public class CollisionsEngine {
 
     }
 
-
+    /**
+     * This method ensures that when the puck and paddle collide,
+     * they don't get stuck inside of each other.
+     * @param c1 The first object in the collision.
+     * @param c2 The second object in the collision.
+     */
     public void fixCollision(Collidable c1, Collidable c2) {
-        while(isIntersecting(c1, c2)) {
+        while (isIntersecting(c1, c2)) {
             //they should not be still colliding
             //move them away from each other so they are not colliding
 
