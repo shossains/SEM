@@ -204,6 +204,8 @@ public class CollisionsEngineTest {
         assertEquals(0, paddle1.getYspeed(), delta);
         assertEquals(66, puck.getXspeed(), delta);
         assertEquals(50, puck.getYspeed(), delta);
+
+        assertFalse(collisionsEngine.isIntersecting(paddle1, puck));
     }
 
     @Test
@@ -258,6 +260,8 @@ public class CollisionsEngineTest {
         assertEquals(120, paddle2.getYspeed(), delta);
         assertEquals(200, puck.getXspeed(), delta);
         assertEquals(-30, puck.getYspeed(), delta);
+
+        assertFalse(collisionsEngine.isIntersecting(paddle2, puck));
     }
 
 }
