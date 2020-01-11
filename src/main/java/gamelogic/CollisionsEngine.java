@@ -195,4 +195,16 @@ public class CollisionsEngine {
         c2.move(0.01f);
 
     }
+
+
+    public void fixCollision(Collidable c1, Collidable c2) {
+        while(isIntersecting(c1, c2)) {
+            //they should not be still colliding
+            //move them away from each other so they are not colliding
+
+            c1.move(0.01f);
+            c2.move(0.01f);
+
+        }
+    }
 }
