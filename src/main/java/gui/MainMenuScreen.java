@@ -48,12 +48,12 @@ public class MainMenuScreen implements Screen {
         exitButton = buttonFactory.createTransImButton("assets/exit.png", "Exit");
 
         playButton.setPosition(230, 320);
-        settingsButton.setPosition(230, 250);
-        logoutButton.setPosition(230, 180);
-        exitButton.setPosition(230, 110);
+        //settingsButton.setPosition(230, 250);
+        logoutButton.setPosition(230, 250);
+        exitButton.setPosition(230, 180);
 
         stage.addActor(playButton);
-        stage.addActor(settingsButton);
+        //stage.addActor(settingsButton);
         stage.addActor(logoutButton);
         stage.addActor(exitButton);
 
