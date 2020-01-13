@@ -86,8 +86,8 @@ public class GameScreen implements Screen {
         stage.addActor(resumeButton);
         stage.addActor(exitButton);
 
-        boardImage = new Texture(Gdx.files.internal("assets/table.png"));
-        puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
+        boardImage = new Texture(Gdx.files.internal("assets/board.png"));
+        puckImage = new Texture(Gdx.files.internal("assets/puck.png"));
         paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 

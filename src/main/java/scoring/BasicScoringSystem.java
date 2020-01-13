@@ -13,6 +13,10 @@ import gamelogic.Puck;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
+    private static final int BASIC_WIDTH = 1280;
+    private static final int BASIC_TOP = 240;
+    private static final int BASIC_BOTTOM = 480;
+    private static final int BASIC_DEPTH = 15;
 
     public BasicScoringSystem(Puck puck, Hud hud) {
         super(puck, hud);
@@ -53,9 +57,9 @@ public class BasicScoringSystem extends ScoringSystem {
      * @return true if the puck is in PlayerTwos goal.
      */
     private boolean goalPlayerOne(Puck puck) {
-        return (puck.x + (puck.radius / 2)  >= 1265
-                && puck.y + (puck.radius / 2) >= 270
-                && puck.y + (puck.radius / 2) <= 454);
+        return (puck.x + (puck.radius / 2)  >= BASIC_WIDTH - BASIC_DEPTH
+                && puck.y + (puck.radius / 2) >= BASIC_TOP
+                && puck.y + (puck.radius / 2) <= BASIC_BOTTOM);
     }
 
     /**
@@ -64,9 +68,9 @@ public class BasicScoringSystem extends ScoringSystem {
      * @return true if the puck is in PlayerOnes goal.
      */
     private boolean goalPlayerTwo(Puck puck) {
-        return (puck.x - (puck.radius / 2) <= 15
-                && puck.y - (puck.radius / 2)  >= 270
-                && puck.y + (puck.radius / 2) <= 465);
+        return (puck.x - (puck.radius / 2) <= BASIC_DEPTH
+                && puck.y - (puck.radius / 2)  >= BASIC_TOP
+                && puck.y + (puck.radius / 2) <= BASIC_BOTTOM);
     }
 
 
