@@ -19,12 +19,13 @@ public class MainMenuScreen implements Screen {
     final transient AirHockeyGame game;
 
     public transient String username;
-    public transient Stage stage;
-    public transient Button playButton;
-    public transient Button settingsButton;
-    public transient Button logoutButton;
-    public transient Button exitButton;
-    public transient AbstractButtonFactory abstractButtonFactory;
+    private transient Stage stage;
+    private transient Button playButton;
+    private transient Button settingsButton;
+    private transient Button logoutButton;
+    private transient Button exitButton;
+    private transient Button scoresButton;
+    private transient AbstractButtonFactory abstractButtonFactory;
 
     private transient boolean mutePressed;
 
@@ -47,17 +48,19 @@ public class MainMenuScreen implements Screen {
                 "SettingsScreen");
         logoutButton = abstractButtonFactory.createTransButton("assets/logout.png", "LoginScreen");
         exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "Exit");
+        scoresButton = abstractButtonFactory.createTransButton("assets/scores.png", "Scores");
 
-        playButton.setPosition(230, 320);
-        settingsButton.setPosition(230, 250);
-        logoutButton.setPosition(230, 180);
-        exitButton.setPosition(230, 110);
+        playButton.setPosition(230, 420);
+        settingsButton.setPosition(230, 350);
+        logoutButton.setPosition(230, 280);
+        exitButton.setPosition(230, 210);
+        scoresButton.setPosition(530, 540);
 
         stage.addActor(playButton);
         stage.addActor(settingsButton);
         stage.addActor(logoutButton);
         stage.addActor(exitButton);
-
+        stage.addActor(scoresButton);
 
         game.font.setColor(Color.RED);
 
@@ -82,7 +85,7 @@ public class MainMenuScreen implements Screen {
         stage.draw();
         game.spriteBatch.begin();
         game.font.getData().setScale(1.4f);
-        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 450);
+        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 600);
         game.spriteBatch.end();
     }
 

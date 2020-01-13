@@ -102,7 +102,7 @@ public class GameScreen implements Screen {
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
+        puck = new Puck(640f, 360f, 50f, 0f, 30f, 5);
 
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
