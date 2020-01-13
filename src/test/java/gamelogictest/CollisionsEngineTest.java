@@ -28,7 +28,7 @@ public class CollisionsEngineTest {
                 PlayerType.PLAYER1, 200, 6, 50);
         paddle2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
                 PlayerType.PLAYER2, 200, 6, 50);
-        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720);
+        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f);
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
 
     }

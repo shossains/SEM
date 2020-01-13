@@ -7,7 +7,7 @@ public class Puck extends Collidable implements java.io.Serializable {
     /**
      * The co-efficient of restitution.
      */
-    private static final transient float e = 0.85f;
+    private transient float puckWalle;
 
     /**
      * Constructor.
@@ -20,8 +20,10 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param radius The radius.
      */
     public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
-                float height) {
+                float height, float e) {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
+
+        this.puckWalle = e;
     }
 
     /**
@@ -32,11 +34,11 @@ public class Puck extends Collidable implements java.io.Serializable {
     public void fixXPosition() {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
-            this.setXspeed(- this.getXspeed() * e);
+            this.setXspeed(- this.getXspeed() * puckWalle);
         }
         if (this.x > getWidth() - this.radius) {
             this.x = getWidth() - this.radius;
-            this.setXspeed(- this.getXspeed() * e);
+            this.setXspeed(- this.getXspeed() * puckWalle);
         }
     }
 
@@ -48,11 +50,11 @@ public class Puck extends Collidable implements java.io.Serializable {
     public void fixYPosition() {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
-            this.setYspeed(- this.getYspeed() * e);
+            this.setYspeed(- this.getYspeed() * puckWalle);
         }
         if (this.y > getHeight() - this.radius) {
             this.y = getHeight() - this.radius;
-            this.setYspeed(- this.getYspeed() * e);
+            this.setYspeed(- this.getYspeed() * puckWalle);
         }
     }
 
