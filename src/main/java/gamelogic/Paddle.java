@@ -103,7 +103,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getYspeed() < maxSpeed) {
                 if (this.getYspeed() < lowSpeed) {
                     //set a baseline
-                    this.setYspeed(50);
+                    this.setYspeed(lowSpeed);
                 } else {
                     this.setYspeed(this.getYspeed() + acceleration);
                 }
@@ -122,7 +122,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getYspeed() > -maxSpeed) {
                 if (this.getYspeed() > - lowSpeed) {
                     //set a baseline
-                    this.setYspeed(-50);
+                    this.setYspeed(-lowSpeed);
                 } else {
                     this.setYspeed(this.getYspeed() - acceleration);
                 }
@@ -141,7 +141,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getXspeed() > -maxSpeed) {
                 if (this.getXspeed() > - lowSpeed) {
                     //set a baseline
-                    this.setXspeed(-50);
+                    this.setXspeed(-lowSpeed);
                 } else {
                     this.setXspeed(this.getXspeed() - acceleration);
                 }
@@ -160,7 +160,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getXspeed() < maxSpeed) {
                 if (this.getXspeed() < lowSpeed) {
                     //set a baseline
-                    this.setXspeed(50);
+                    this.setXspeed(lowSpeed);
                 } else {
                     this.setXspeed(this.getXspeed() + acceleration);
                 }
