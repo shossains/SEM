@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -51,8 +51,8 @@ public class ScoresScreen implements Screen {
         usernameTextField.setPosition(250,200);
         stage.addActor(usernameTextField);
 
-        ButtonFactory factory = new ButtonFactory(this.game, this);
-        TextButton button = factory.createTextButton("Done!");
+        AbstractButtonFactory buttonFactory = new TextButtonFactory(this.game, this);
+        Button button = buttonFactory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
                 new ClickListener() {
@@ -64,7 +64,7 @@ public class ScoresScreen implements Screen {
 
         stage.addActor(button);
 
-        TextButton exit = factory.createTransTextButton("Back", "ChooseGameScreen");
+        Button exit = buttonFactory.createTransButton("Back", "ChooseGameScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }

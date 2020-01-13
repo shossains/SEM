@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -20,11 +20,11 @@ public class MainMenuScreen implements Screen {
 
     public transient String username;
     public transient Stage stage;
-    public transient ImageButton playButton;
-    public transient ImageButton settingsButton;
-    public transient ImageButton logoutButton;
-    public transient ImageButton exitButton;
-    public transient ButtonFactory buttonFactory;
+    public transient Button playButton;
+    public transient Button settingsButton;
+    public transient Button logoutButton;
+    public transient Button exitButton;
+    public transient AbstractButtonFactory abstractButtonFactory;
 
     private transient boolean mutePressed;
 
@@ -41,11 +41,12 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.buttonFactory = new ButtonFactory(game, this);
-        playButton = buttonFactory.createTransImButton("assets/play.png", "ChooseGameScreen");
-        settingsButton = buttonFactory.createTransImButton("assets/settings.png", "SettingsScreen");
-        logoutButton = buttonFactory.createTransImButton("assets/logout.png", "LoginScreen");
-        exitButton = buttonFactory.createTransImButton("assets/exit.png", "Exit");
+        this.abstractButtonFactory = new ImageButtonFactory(game, this);
+        playButton = abstractButtonFactory.createTransButton("assets/play.png", "ChooseGameScreen");
+        settingsButton = abstractButtonFactory.createTransButton("assets/settings.png",
+                "SettingsScreen");
+        logoutButton = abstractButtonFactory.createTransButton("assets/logout.png", "LoginScreen");
+        exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "Exit");
 
         playButton.setPosition(230, 320);
         settingsButton.setPosition(230, 250);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -18,11 +18,11 @@ public class ChooseGameScreen implements Screen {
     final transient AirHockeyGame game;
 
     public transient Stage stage;
-    public transient ImageButton backButton;
-    public transient ImageButton localGameButton;
-    public transient ImageButton vsAiGameButton;
-    public transient ImageButton onlineGameButton;
-    public transient ButtonFactory buttonFactory;
+    public transient Button backButton;
+    public transient Button localGameButton;
+    public transient Button vsAiGameButton;
+    public transient Button onlineGameButton;
+    public transient AbstractButtonFactory abstractButtonFactory;
 
     private transient boolean mutePressed;
 
@@ -37,12 +37,12 @@ public class ChooseGameScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.buttonFactory = new ButtonFactory(game, this);
+        this.abstractButtonFactory = new ImageButtonFactory(game, this);
 
-        localGameButton = buttonFactory.createTransImButton("assets/local.png", "GameScreen");
-        vsAiGameButton = buttonFactory.createImButton("assets/vsAI.png");
-        onlineGameButton = buttonFactory.createImButton("assets/online.png");
-        backButton = buttonFactory.createTransImButton("assets/back.png", "MainMenuScreen");
+        localGameButton = abstractButtonFactory.createTransButton("assets/local.png", "GameScreen");
+        vsAiGameButton = abstractButtonFactory.createButton("assets/vsAI.png");
+        onlineGameButton = abstractButtonFactory.createButton("assets/online.png");
+        backButton = abstractButtonFactory.createTransButton("assets/back.png", "MainMenuScreen");
 
         localGameButton.setPosition(220, 300);
         vsAiGameButton.setPosition(220, 230);
