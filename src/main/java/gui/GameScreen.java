@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import gamelogic.CollisionsEngine;
@@ -41,9 +41,9 @@ public class GameScreen implements Screen {
     transient Paddle paddle2;
 
     transient Stage stage;
-    transient ButtonFactory buttonFactory;
-    transient ImageButton resumeButton;
-    transient ImageButton exitButton;
+    transient AbstractButtonFactory abstractButtonFactory;
+    transient Button resumeButton;
+    transient Button exitButton;
 
     transient CollisionsEngine collisionsEngine;
     transient BasicScoringSystem basicScoringSystem;
@@ -71,8 +71,8 @@ public class GameScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        buttonFactory = new ButtonFactory(game, this);
-        resumeButton = buttonFactory.createImButton("assets/resume.png");
+        abstractButtonFactory = new ImageButtonFactory(game, this);
+        resumeButton = abstractButtonFactory.createButton("assets/resume.png");
         resumeButton.addListener(
                 new ClickListener() {
                     @Override
@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
                     }
                 });
 
-        exitButton = buttonFactory.createTransImButton("assets/exit.png", "MainMenuScreen");
+        exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "MainMenuScreen");
 
         stage.addActor(resumeButton);
         stage.addActor(exitButton);

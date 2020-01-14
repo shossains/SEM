@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import database.Query;
+import gamelogic.CredentialsChecker;
 
 /**
  * The meaning of this class is to create an graphical user interface
@@ -37,6 +37,8 @@ public class LoginScreen implements Screen {
     final transient TextField usernameTextField;
     final transient TextField passwordTextField;
 
+    private transient DialogFactory dialogFactory;
+
     /**
      * Constructor for login screen.
      * Here, using the gui.TextFieldFactory and gui.ButtonFactory classes,
@@ -50,6 +52,7 @@ public class LoginScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        this.dialogFactory = new DialogFactory(game, this);
 
         textFieldFactory = new TextFieldFactory(this.game, this);
         usernameTextField = textFieldFactory.createTextField();
@@ -65,10 +68,10 @@ public class LoginScreen implements Screen {
         image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
 
-        ButtonFactory factory = new ButtonFactory(this.game, this);
-        TextButton exit = factory.createTransTextButton("Exit!", "LoginScreen");
+        TextButtonFactory factory = new TextButtonFactory(this.game, this);
+        Button exit = factory.createTransButton("Exit!", "LoginScreen");
         exit.setPosition(900, 600);
-        TextButton button = factory.createTextButton("Done!");
+        Button button = factory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
                 new ClickListener() {
@@ -94,33 +97,37 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
 
-        if (username.equals("") || password.equals("")) {
-            Dialog dialog = new Dialog("Empty fields",
-                    textFieldFactory.createSkin(),
-                    "dialog") {
-            };
-            dialog.setColor(Color.RED);
-            dialog.setSize(400, 200);
-            dialog.text("Please fill in all fields!");
-            dialog.button("Ok", false);
-            dialog.show(stage);
-        } else {
-            if (Query.verifyLogin(username, password)) {
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this);
+        String response = credentialsChecker.checkLoginCredentials(username, password);
+        switch (response) {
+            case "empty" : {
+                Dialog dialog = dialogFactory.createDialog("Empty fields",
+                        "Please fill in all fields!");
+                dialog.show(stage);
+                break;
+            }
+
+            case "correct": {
                 MainMenuScreen m = new MainMenuScreen(game);
                 m.username = username;
                 ((Game) Gdx.app.getApplicationListener()).setScreen(m);
-            } else {
-                Dialog dialog = new Dialog("Incorrect credentials",
-                        textFieldFactory.createSkin(),
-                        "dialog") {
-                };
-                dialog.setColor(Color.RED);
-                dialog.setSize(400, 200);
-                dialog.text("Incorrect user and/or password");
-                dialog.button("Ok", false);
+                break;
+            }
+
+            case "incorrect": {
+                Dialog dialog = dialogFactory.createDialog("Incorrect credentials",
+                        "Incorrect username and/or password");
                 dialog.show(stage);
+                break;
+            }
+            default: {
+                Dialog dialog = dialogFactory.createDialog("Error",
+                        "Please try again");
+                dialog.show(stage);
+                break;
             }
         }
+
     }
 
     @Override

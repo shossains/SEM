@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import database.Query;
+import gamelogic.CredentialsChecker;
 
 /**
  * The purpose of this class is to create a graphical user interface
@@ -35,6 +35,7 @@ public class RegistrationScreen implements Screen {
     private transient String passwordAgain;
     private transient Image image;
     private transient TextFieldFactory textFieldFactory;
+    private transient DialogFactory dialogFactory;
 
     final transient TextField usernameTextField;
     final transient TextField passwordTextField;
@@ -53,6 +54,8 @@ public class RegistrationScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         textFieldFactory = new TextFieldFactory(this.game, this);
+        dialogFactory = new DialogFactory(this.game, this);
+
         usernameTextField = textFieldFactory.createTextField();
         passwordTextField = textFieldFactory.createTextField();
         emailTextField = textFieldFactory.createTextField();
@@ -71,8 +74,8 @@ public class RegistrationScreen implements Screen {
         stage.addActor(passwordAgainTextField);
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
-        ButtonFactory factory = new ButtonFactory(this.game, this);
-        TextButton button = factory.createTextButton("Done");
+        AbstractButtonFactory factory = new TextButtonFactory(this.game, this);
+        Button button = factory.createButton("Done");
         button.setPosition(50, 500);
         button.addListener(
                 new ClickListener() {
@@ -82,7 +85,7 @@ public class RegistrationScreen implements Screen {
                     }
                 });
         stage.addActor(button);
-        TextButton exit = factory.createTransTextButton("Back", "LoginScreen");
+        Button exit = factory.createTransButton("Back", "LoginScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }
@@ -100,44 +103,45 @@ public class RegistrationScreen implements Screen {
         password = passwordTextField.getText();
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
-        if (username.equals("") || password.equals("")
-                || email.equals("") || passwordAgain.equals("")) {
-            Dialog dialoga = new Dialog("Empty fields",
-                    textFieldFactory.createSkin(),
-                    "dialog") {
-                public void result(Object obj) {
-                    System.out.println("result " + obj);
-                }
-            };
-            dialoga.setColor(Color.RED);
-            dialoga.setSize(400, 200);
-            dialoga.text("Please fill in all fields.");
-            dialoga.button("Ok", false);
-            dialoga.show(stage);
-        } else if  (!passwordAgain.equals(password)) {
-            Dialog dialog = new Dialog("Warning - wrong password",
-                    textFieldFactory.createSkin(), "dialog") {
-            };
-            dialog.setColor(Color.ROYAL);
-            dialog.setSize(400, 200);
-            dialog.text("Please enter the password again."
-                    + " Your passwords do not match.");
-            dialog.button("Ok", false);
-            dialog.show(stage);
-        } else {
-            dispose();
-            if (Query.addNewUser(username, password, email)) {
+
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this);
+        String result = credentialsChecker.checkRegisterCredentials(username, password,
+                email, passwordAgain);
+
+        switch (result) {
+            case "empty": {
+                Dialog dialog = dialogFactory.createDialog("Empty fields",
+                        "Please fill in all fields!");
+                dialog.show(stage);
+                break;
+            }
+
+            case "passwordsNotMatching": {
+                Dialog dialog = dialogFactory.createDialog("Warning - wrong password",
+                        "Please enter the password again."
+                        + " Your passwords do not match.");
+                dialog.show(stage);
+                break;
+            }
+
+            case "correct": {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new
                         MainMenuScreen(game));
-            } else {
-                Dialog dialog = new Dialog("Email or username already in use.",
-                        textFieldFactory.createSkin(), "dialog") {
-                };
-                dialog.setColor(Color.ROYAL);
-                dialog.setSize(400, 200);
-                dialog.text("Please try again.");
-                dialog.button("Ok", false);
+                break;
+            }
+
+            case "incorrect": {
+                Dialog dialog = dialogFactory.createDialog("Email or username already in use.",
+                        "Please try again.");
                 dialog.show(stage);
+                break;
+            }
+
+            default: {
+                Dialog dialog = dialogFactory.createDialog("Error.",
+                        "Please try again.");
+                dialog.show(stage);
+                break;
             }
         }
     }

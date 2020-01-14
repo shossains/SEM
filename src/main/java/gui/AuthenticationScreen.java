@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -36,12 +36,12 @@ public class AuthenticationScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        ButtonFactory buttonFactory = new ButtonFactory(this.game, this);
-        ImageButton loginButton = buttonFactory.createTransImButton("assets/login.png",
+        ImageButtonFactory abstractButtonFactory = new ImageButtonFactory(this.game, this);
+        Button loginButton = abstractButtonFactory.createTransButton("assets/login.png",
                 "Credentials");
-        ImageButton registerButton = buttonFactory.createTransImButton("assets/register.png",
+        Button registerButton = abstractButtonFactory.createTransButton("assets/register.png",
                 "Registration");
-        ImageButton exitButton = buttonFactory.createTransImButton("assets/exit2.png", "Exit");
+        Button exitButton = abstractButtonFactory.createTransButton("assets/exit2.png", "Exit");
 
         exitButton.setPosition(1130, 640);
         loginButton.setPosition(500, 200);

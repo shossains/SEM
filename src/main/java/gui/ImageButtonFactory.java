@@ -5,24 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-/**
- * The purpose of this class is to create different kind
- * of buttons and their functionality.
- * This class makes use of the gui.TextFieldFactory class which
- * creates a basic skin, needed for the Image Buttons.
- * This class is used by the graphical user interface.
- */
-public class ButtonFactory {
+public class ImageButtonFactory implements AbstractButtonFactory {
 
     final transient AirHockeyGame game;
     private transient Screen screen;
 
-    public ButtonFactory(AirHockeyGame game, Screen screen) {
+    public ImageButtonFactory(AirHockeyGame game, Screen screen) {
         this.screen = screen;
         this.game = game;
     }
@@ -33,7 +26,7 @@ public class ButtonFactory {
      * @param path to the image resource
      * @return the created ImageButton
      */
-    public ImageButton createImButton(String path) {
+    public Button createButton(String path) {
         Texture myTexture = new Texture(Gdx.files.internal(path));
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
@@ -46,51 +39,6 @@ public class ButtonFactory {
     }
 
     /**
-     * Method for creating a text button, using a basic skin.
-     * @param text for the button.
-     * @return the actual text button.
-     */
-    public TextButton createTextButton(String text) {
-        TextFieldFactory textFieldFactory = new TextFieldFactory(this.game, this.screen);
-        TextButton textButton = new TextButton(text, textFieldFactory.createSkin());
-        textButton.setSize(100, 50);
-        return textButton;
-    }
-
-    /**
-     * Method for creating a text button with a given functionality.
-     * @param text the name of the button.
-     * @param newScreen screen for redirection.
-     * @return a new functional text button.
-     */
-    public TextButton createTransTextButton(String text, String newScreen) {
-        TextButton button = createTextButton(text);
-        button.addListener(
-                new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        screen.dispose();
-                        switch (newScreen) {
-                            case "LoginScreen":
-                                game.setScreen(new AuthenticationScreen(game));
-                                break;
-                            case "Exit":
-                                Gdx.app.exit();
-                                break;
-                            case "ChooseGameScreen":
-                                game.setScreen(new ChooseGameScreen(game));
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Screen type does not exist");
-
-                        }
-                    }
-                }
-        );
-        return button;
-    }
-
-    /**
      * Creator for ImageButton that is used to transition between screens
      *  or exit the application.
      *
@@ -99,9 +47,9 @@ public class ButtonFactory {
      * @return the created ImageButton
      * @throws IllegalArgumentException if the specified screen type is not defined
      */
-    public ImageButton createTransImButton(String path, String newScreen) {
+    public Button createTransButton(String path, String newScreen) {
 
-        ImageButton button = createImButton(path);
+        Button button = createButton(path);
 
         button.addListener(
                 new ClickListener() {
@@ -142,6 +90,5 @@ public class ButtonFactory {
         );
         return button;
     }
-
 
 }
