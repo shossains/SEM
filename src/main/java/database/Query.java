@@ -116,8 +116,7 @@ public class Query {
      * of a user that exists in the database.
      * @param nickname of the user.
      * @param score won by the user.
-     * @return the best score of this user, -1 if this user
-     * is not in the database.
+     * @return the best score of this user, -1 if this user is not in the database.
      */
     public int getScoreExistingUser(String nickname, int score) {
         try {

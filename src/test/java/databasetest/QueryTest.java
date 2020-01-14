@@ -69,11 +69,11 @@ public class QueryTest {
     @Test
     public void getScoresTest() throws SQLException {
         query.getScore("nickname", 100);
-        verify(stmt, times(1)).executeUpdate();
+        verify(stmt, times(2)).executeUpdate();
 
         when(rs.next()).thenReturn(false);
         query.getScore("nickname2", 200);
-        verify(stmt, times(2)).executeUpdate();
+        verify(stmt, times(3)).executeUpdate();
     }
 
     @Test
