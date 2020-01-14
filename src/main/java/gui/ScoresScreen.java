@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import database.Adapter;
 import database.Query;
 
 /**
@@ -58,7 +59,7 @@ public class ScoresScreen implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        checkScore(score);
+                            checkScore(score);
                     }
                 });
 
@@ -76,8 +77,10 @@ public class ScoresScreen implements Screen {
      */
     public void checkScore(int score) {
         String username = usernameTextField.getText();
-        Query.getScore(username, score);
-        String scores = Query.getTopScores();
+        Adapter adapter = new Adapter();
+        Query query = new Query(adapter.conn);
+        query.getScore(username, score);
+        String scores = query.getTopScores();
         Dialog dialog = new Dialog("Top 5 scores",
                 textFieldFactory.createSkin(),
                 "dialog") {

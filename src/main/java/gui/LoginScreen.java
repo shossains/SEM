@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import gamelogic.CredentialsChecker;
 
+import java.sql.SQLException;
+
 /**
  * The meaning of this class is to create an graphical user interface
  * for loggin in. If the user already has an account, he/she can enter
@@ -78,7 +80,7 @@ public class LoginScreen implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        submitCredentials();
+                            submitCredentials();
                     }
                 });
 
@@ -145,7 +147,7 @@ public class LoginScreen implements Screen {
 
         boolean enterPressed = Gdx.input.isKeyJustPressed(Input.Keys.ENTER);
         if (enterPressed) {
-            submitCredentials();
+                submitCredentials();
         }
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

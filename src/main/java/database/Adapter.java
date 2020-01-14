@@ -6,11 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
 public class Adapter {
     /* 01 Database variables ------------------------------- */
-    public static Connection conn = null;
-    private transient Statement stmt = null;
-    private transient ResultSet rs = null;
+    public transient Connection conn;
+    private transient Statement stmt;
+    private transient ResultSet rs;
 
     /* 02 Variables ---------------------------------------- */
     private transient String jdbcUrl = "jdbc:postgresql://ec2-176-34-183-20.eu-west-1."
@@ -22,45 +23,21 @@ public class Adapter {
 
     /* 03 Constructor for DbAdapter ------------------------ */
     public Adapter() {
+        conn = this.connect();
     }
 
     /**
      *  Connect to the database.
      */
-    public void connect() {
+    public Connection connect() {
         try {
-            // Step 2 - Open connection
             conn = DriverManager.getConnection(jdbcUrl, username, password);
-
-            // Print connected
             System.out.println("DbAdapter: Connection to database established");
+            return conn;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-    } // connect
-
-    /**
-     * Disconnect from database.
-     */
-    public void disconnect() {
-        try {
-
-            // Step 5 Close connection
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-            // Print connected
-            System.out.println("DbAdapter: Connection to database closed");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    } // disconnect
+    }
 }
