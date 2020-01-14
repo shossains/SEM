@@ -1,11 +1,15 @@
 package gamelogic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+
 public class CollisionsEngine {
 
     private transient Puck puck;
     private transient Paddle paddle1;
     private transient Paddle paddle2;
     private transient float coefficientr;
+    private transient Sound sound;
 
     /**
      * Constructor.
@@ -23,6 +27,7 @@ public class CollisionsEngine {
         this.paddle1 = paddle1;
         this.paddle2 = paddle2;
         this.coefficientr = e;
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("data/mysound.mp3"));
     }
 
     /**
@@ -31,9 +36,11 @@ public class CollisionsEngine {
     public void collide() {
         if (isIntersecting(puck, paddle1)) {
             newSpeeds(puck, paddle1);
+            sound.play();
         }
         if (isIntersecting(puck, paddle2)) {
             newSpeeds(puck, paddle2);
+            sound.play();
         }
     }
 
