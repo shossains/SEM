@@ -16,7 +16,7 @@ public class AirHockeyGame extends Game {
     public static final int S_WIDTH = 1280;
     public static final int S_HEIGHT = 720;
 
-    protected transient SpriteBatch spriteBatch;
+    public transient SpriteBatch spriteBatch;
     protected transient BitmapFont font;
 
     transient Music sound;
@@ -25,7 +25,8 @@ public class AirHockeyGame extends Game {
     public void create() {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
-        this.setScreen(new AuthenticationScreen(this));
+        //this.setScreen(new AuthenticationScreen(this));
+        this.setScreen(new GameScreen(this));
 
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
         sound.setLooping(true);

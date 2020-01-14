@@ -162,15 +162,25 @@ public class GameScreen implements Screen {
      */
     public void update(float delta) {
         //update the camera
+
         camera.update();
+
+        puck.update(delta);
+
+        paddle1.update(delta);
+        paddle2.update(delta);
+
+        collisionsEngine.collide();
+
         // Updated the game clock
-        hud.updateTime(delta);
+        //hud.updateTime(delta);
         //move the puck
-        puck.move(delta);
+        ///puck.move(delta);
         //ensure it is within boundaries
-        puck.fixPosition();
+        ///puck.fixPosition();
 
         // Check if the puck's in one of the goals
+        /*
         int goal = basicScoringSystem.goal();
         if (goal != 0) {
             if (goal == PLAYER_ONE) {
@@ -224,6 +234,8 @@ public class GameScreen implements Screen {
 
         paddle1.fixPosition();
         paddle2.fixPosition();
+        */
+
     }
 
     /**
@@ -238,9 +250,15 @@ public class GameScreen implements Screen {
         game.spriteBatch.begin();
 
         // Draw the board
-        game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
+        //game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
+        board.render(game, boardImage);
 
+        puck.render(game, puckImage);
 
+        paddle1.render(game, paddle1Image);
+        paddle2.render(game, paddle2Image);
+
+        /*
         //draw the puck as the texture and in the place that the puck exists
         //Maybe there is some border, or the radius doesn't perfectly scale up the image
         //the boundary is still not totally correct
@@ -252,6 +270,9 @@ public class GameScreen implements Screen {
 
         game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
                 paddle2.radius * 2, paddle2.radius * 2);
+
+
+         */
 
         game.spriteBatch.end();
         // Draw the hud on top of the board.

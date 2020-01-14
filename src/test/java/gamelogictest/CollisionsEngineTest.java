@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import gamelogic.CollisionsEngine;
-import gamelogic.Paddle;
-import gamelogic.PlayerType;
-import gamelogic.Puck;
+import gamelogic.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.swing.*;
 
 public class CollisionsEngineTest {
 
@@ -194,7 +193,9 @@ public class CollisionsEngineTest {
 
         paddle1.setXspeed(0);
         paddle1.setYspeed(0);
-        paddle1.setSpeeds(true, false, false, false);
+
+        paddle1.direction = new Direction(false, false, true, false);
+        paddle1.setSpeeds();
         puck.setXspeed(-30);
         puck.setYspeed(50);
 
@@ -223,7 +224,9 @@ public class CollisionsEngineTest {
 
         paddle1.setXspeed(0);
         paddle1.setYspeed(0);
-        paddle1.setSpeeds(true, false, false, false);
+
+        paddle1.direction = new Direction(false, false, true, false);
+        paddle1.setSpeeds();
         puck.setXspeed(-30);
         puck.setYspeed(50);
 

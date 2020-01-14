@@ -1,12 +1,18 @@
 package scoring;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import gamelogic.Entity;
+import gui.AirHockeyGame;
 
 import java.io.Serializable;
 
-public class Board extends Rectangle implements Serializable {
+public class Board extends Rectangle implements Serializable, Entity {
 
     private static final long serialVersionUID = 1L;
+
+    //private transient Texture boardImage = new Texture(Gdx.files.internal("assets/table.png"));
 
     /**
      * The board object.
@@ -17,5 +23,15 @@ public class Board extends Rectangle implements Serializable {
      */
     public Board(float x, float y, float width, float height) {
         super(x, y, width, height);
+    }
+
+    @Override
+    public void update(float delta) {
+
+    }
+
+    @Override
+    public void render(AirHockeyGame game, Texture texture) {
+        game.spriteBatch.draw(texture, this.x, this.y, this.width, this.height);
     }
 }
