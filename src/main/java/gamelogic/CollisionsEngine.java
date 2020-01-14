@@ -27,7 +27,7 @@ public class CollisionsEngine {
         this.paddle1 = paddle1;
         this.paddle2 = paddle2;
         this.coefficientr = e;
-        this.sound = Gdx.audio.newSound(Gdx.files.internal("data/mysound.mp3"));
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
     }
 
     /**
