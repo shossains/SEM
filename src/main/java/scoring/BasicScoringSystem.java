@@ -1,5 +1,8 @@
 package scoring;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl.audio.Wav;
 import gamelogic.Puck;
 
 /**
@@ -14,8 +17,11 @@ import gamelogic.Puck;
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
 
+    private transient Sound sound;
+
     public BasicScoringSystem(Puck puck, Hud hud) {
         super(puck, hud);
+        sound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
     }
 
     /**
@@ -27,10 +33,12 @@ public class BasicScoringSystem extends ScoringSystem {
         if (goalPlayerOne(puck)) {
             hud.addScoreOne();
             //Gdx.app.log("GOAL", "Player 1 scored");
+            sound.play();
             return 1;
         } else if (goalPlayerTwo(puck)) {
             hud.addScoreTwo();
             //Gdx.app.log("GOAL", "Player 2 scored");
+            sound.play();
             return 2;
         } else {
             return 0;
