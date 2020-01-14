@@ -22,8 +22,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-
-
 @RunWith(MockitoJUnitRunner.class)
 public class QueryTest {
 

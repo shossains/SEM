@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @SuppressWarnings("PMD.CloseResource")
-public class Query extends Adapter {
+public class Query {
 
     private transient Connection conn;
     private transient PreparedStatements statements;
