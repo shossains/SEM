@@ -57,6 +57,9 @@ public class ImageButtonFactory implements AbstractButtonFactory {
                     public void clicked(InputEvent event, float x, float y) {
                         screen.dispose();
                         switch (newScreen) {
+                            case "Scores":
+                                game.setScreen(new ScoresScreen(game, 0));
+                                break;
                             case "MainMenuScreen":
                                 game.setScreen(new MainMenuScreen(game));
                                 break;
