@@ -4,13 +4,15 @@ import com.badlogic.gdx.Screen;
 import database.Adapter;
 import database.Query;
 
-import java.sql.SQLException;
-
 public class CredentialsChecker {
 
     transient Screen screen;
     transient Query query;
 
+    /**
+     * Constructor for the credentials checker class.
+     * @param screen the screen that is currently on.
+     */
     public CredentialsChecker(Screen screen) {
         this.screen = screen;
         Adapter adapter = new Adapter();

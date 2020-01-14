@@ -80,7 +80,7 @@ public class LoginScreen implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                            submitCredentials();
+                        submitCredentials();
                     }
                 });
 
@@ -147,7 +147,7 @@ public class LoginScreen implements Screen {
 
         boolean enterPressed = Gdx.input.isKeyJustPressed(Input.Keys.ENTER);
         if (enterPressed) {
-                submitCredentials();
+            submitCredentials();
         }
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -81,7 +81,7 @@ public class RegistrationScreen implements Screen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                            submitCredentials();
+                        submitCredentials();
                     }
                 });
         stage.addActor(button);
@@ -160,7 +160,7 @@ public class RegistrationScreen implements Screen {
 
         boolean enterPressed = Gdx.input.isKeyJustPressed(Input.Keys.ENTER);
         if (enterPressed) {
-                submitCredentials();
+            submitCredentials();
         }
 
         Gdx.gl.glClearColor((float)1, (float)150 / 255, 1, 1);
