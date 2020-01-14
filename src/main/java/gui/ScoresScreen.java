@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
-import database.Query;
+import database.TopScores;
+import database.UserScore;
 
 /**
  * The purpose of this class is to create an graphical user interface
@@ -78,9 +79,11 @@ public class ScoresScreen implements Screen {
     public void checkScore(int score) {
         String username = usernameTextField.getText();
         Adapter adapter = new Adapter();
-        Query query = new Query(adapter.conn);
-        query.getScore(username, score);
-        String scores = query.getTopScores();
+        UserScore userScore = new UserScore(adapter.conn, username, score);
+        userScore.execute(adapter.conn);
+        TopScores topScores = new TopScores(adapter.conn);
+        String scores = topScores.execute(adapter.conn);
+
         Dialog dialog = new Dialog("Top 5 scores",
                 textFieldFactory.createSkin(),
                 "dialog") {

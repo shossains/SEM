@@ -2,12 +2,13 @@ package gamelogic;
 
 import com.badlogic.gdx.Screen;
 import database.Adapter;
-import database.Query;
+import database.RegisterUser;
+import database.VerifyLogin;
 
 public class CredentialsChecker {
 
     transient Screen screen;
-    transient Query query;
+    private transient Adapter adapter;
 
     /**
      * Constructor for the credentials checker class.
@@ -15,8 +16,7 @@ public class CredentialsChecker {
      */
     public CredentialsChecker(Screen screen) {
         this.screen = screen;
-        Adapter adapter = new Adapter();
-        query = new Query(adapter.conn);
+        adapter = new Adapter();
     }
 
     /**
@@ -31,7 +31,8 @@ public class CredentialsChecker {
         if (username.equals("") || password.equals("")) {
             return "empty";
         }
-        if (query.verifyLogin(username, password)) {
+        VerifyLogin verifyLogin = new VerifyLogin(adapter.conn, username, password);
+        if (verifyLogin.execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";
@@ -58,7 +59,8 @@ public class CredentialsChecker {
         if (!password.equals(passwordAgain)) {
             return "passwordsNotMatching";
         }
-        if (query.addNewUser(username, password, email)) {
+        RegisterUser registerUser = new RegisterUser(adapter.conn, username, password, email);
+        if (registerUser.execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";
