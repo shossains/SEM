@@ -12,13 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import gamelogic.CollisionsEngine;
-import gamelogic.Paddle;
-import gamelogic.PlayerType;
-import gamelogic.Puck;
+import gamelogic.*;
 import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
+
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
@@ -46,6 +45,8 @@ public class GameScreen implements Screen {
     transient Puck puck;
     transient Paddle paddle1;
     transient Paddle paddle2;
+
+    private transient GameContainer gameContainer;
 
     transient Stage stage;
     transient AbstractButtonFactory abstractButtonFactory;
@@ -96,6 +97,15 @@ public class GameScreen implements Screen {
         paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 
+        ArrayList<Texture> textures = new ArrayList<>();
+
+        textures.add(boardImage);
+        textures.add(puckImage);
+        textures.add(paddle1Image);
+        textures.add(paddle2Image);
+
+        //gameContainer = new GameContainer();
+
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
         camera.setToOrtho(false, width, height);
@@ -113,6 +123,14 @@ public class GameScreen implements Screen {
                 PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
                 PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
+
+        ArrayList<Entity> entities = new ArrayList<>();
+        entities.add(board);
+        entities.add(puck);
+        entities.add(paddle1);
+        entities.add(paddle2);
+
+        gameContainer = new GameContainer(entities, textures);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
         basicScoringSystem = new BasicScoringSystem(puck, hud);
@@ -165,10 +183,11 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        puck.update(delta);
+        gameContainer.update(delta);
+        //puck.update(delta);
 
-        paddle1.update(delta);
-        paddle2.update(delta);
+        //paddle1.update(delta);
+        //paddle2.update(delta);
 
         collisionsEngine.collide();
 
@@ -251,12 +270,14 @@ public class GameScreen implements Screen {
 
         // Draw the board
         //game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
-        board.render(game, boardImage);
+        //board.render(game, boardImage);
 
-        puck.render(game, puckImage);
+        //puck.render(game, puckImage);
 
-        paddle1.render(game, paddle1Image);
-        paddle2.render(game, paddle2Image);
+        //paddle1.render(game, paddle1Image);
+        //paddle2.render(game, paddle2Image);
+
+        gameContainer.render(game);
 
         /*
         //draw the puck as the texture and in the place that the puck exists
