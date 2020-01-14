@@ -1,5 +1,6 @@
 package databasetest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -83,6 +84,19 @@ public class QueryTest {
         when(rs.next()).thenReturn(true).thenReturn(false);
         assertFalse(query.getTopScores().equals(""));
         verify(stmt, times(1)).executeQuery();
+    }
+
+    @Test
+    public void getScoresNonExistentUser() throws SQLException {
+        when(rs.next()).thenReturn(false);
+        assertEquals(-1, query.getScoreExistingUser("nick", 300));
+    }
+
+    @Test
+    public void getScoresSmallerScore() throws SQLException {
+        when(rs.next()).thenReturn(true);
+        when(rs.getInt(1)).thenReturn(250);
+        assertEquals(250, query.getScore("nickname", 100));
     }
 
 }
