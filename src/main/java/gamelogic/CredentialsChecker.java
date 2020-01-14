@@ -14,9 +14,9 @@ public class CredentialsChecker {
      * Constructor for the credentials checker class.
      * @param screen the screen that is currently on.
      */
-    public CredentialsChecker(Screen screen) {
+    public CredentialsChecker(Screen screen, Adapter adapter) {
         this.screen = screen;
-        adapter = new Adapter();
+        this.adapter = adapter;
     }
 
     /**

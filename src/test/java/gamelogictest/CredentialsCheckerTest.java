@@ -3,15 +3,22 @@ package gamelogictest;
 import static org.junit.Assert.assertEquals;
 
 import com.badlogic.gdx.Screen;
+import database.Adapter;
 import gamelogic.CredentialsChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+/**
+ * The purpose of this test class is to be a integration test suite,
+ * so not mocking the database. The tests pass as long as there is a
+ * connection with the database.
+ */
 public class CredentialsCheckerTest {
 
     transient Screen screen;
     transient CredentialsChecker checker;
+
     final transient String pass = "pass";
     final transient String username = "test";
     final transient String email = "test@test.com";
@@ -20,7 +27,7 @@ public class CredentialsCheckerTest {
     @BeforeEach
     public void setUp() {
         screen = Mockito.mock(Screen.class);
-        checker = new CredentialsChecker(screen);
+        checker = new CredentialsChecker(screen, new Adapter());
     }
 
     @Test
