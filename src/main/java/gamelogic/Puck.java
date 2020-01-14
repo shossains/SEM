@@ -1,5 +1,8 @@
 package gamelogic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+
 public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
@@ -8,6 +11,8 @@ public class Puck extends Collidable implements java.io.Serializable {
      * The co-efficient of restitution.
      */
     private transient float puckWalle;
+
+    private transient Sound sound;
 
     /**
      * Constructor.
@@ -24,6 +29,8 @@ public class Puck extends Collidable implements java.io.Serializable {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.puckWalle = e;
+
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
     }
 
     /**
@@ -35,10 +42,12 @@ public class Puck extends Collidable implements java.io.Serializable {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
             this.setXspeed(- this.getXspeed() * puckWalle);
+            sound.play();
         }
         if (this.x > getWidth() - this.radius) {
             this.x = getWidth() - this.radius;
             this.setXspeed(- this.getXspeed() * puckWalle);
+            sound.play();
         }
     }
 
@@ -51,10 +60,12 @@ public class Puck extends Collidable implements java.io.Serializable {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             this.setYspeed(- this.getYspeed() * puckWalle);
+            sound.play();
         }
         if (this.y > getHeight() - this.radius) {
             this.y = getHeight() - this.radius;
             this.setYspeed(- this.getYspeed() * puckWalle);
+            sound.play();
         }
     }
 
