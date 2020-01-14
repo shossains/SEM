@@ -80,26 +80,14 @@ public class Query {
      */
     public int getScore(String nickname, int score) {
         try {
-            PreparedStatement getScoreUser = statements.getGetScoreUser();
-            getScoreUser.setString(1, nickname);
-            ResultSet resultSet = this.execute(getScoreUser);
-            if (resultSet.next()) {
-                int oldScore = resultSet.getInt(1);
-                if (score > oldScore) {
-                    PreparedStatement updateScore = statements.getUpdateScore();
-                    updateScore.setInt(1, score);
-                    updateScore.setString(2, nickname);
-                    updateScore.executeUpdate();
-                    return score;
-                } else {
-                    return oldScore;
-                }
-            } else {
+            if (getScoreExistingUser(nickname, score) == -1) {
                 PreparedStatement addScore = statements.getAddScore();
                 addScore.setInt(1, score);
                 addScore.setString(2, nickname);
                 addScore.executeUpdate();
                 return score;
+            } else {
+                return getScoreExistingUser(nickname, score);
             }
         } catch (Exception e) {
             return score;
@@ -121,7 +109,38 @@ public class Query {
         } catch (Exception e) {
             return "";
         }
+    }
 
+    /**
+     * Method that retrieves the best score
+     * of a user that exists in the database.
+     * @param nickname of the user.
+     * @param score won by the user.
+     * @return the best score of this user, -1 if this user
+     * is not in the database.
+     */
+    public int getScoreExistingUser(String nickname, int score) {
+        try {
+            PreparedStatement getScoreUser = statements.getGetScoreUser();
+            getScoreUser.setString(1, nickname);
+            ResultSet resultSet = this.execute(getScoreUser);
+            if (resultSet.next()) {
+                int oldScore = resultSet.getInt(1);
+                if (score > oldScore) {
+                    PreparedStatement updateScore = statements.getUpdateScore();
+                    updateScore.setInt(1, score);
+                    updateScore.setString(2, nickname);
+                    updateScore.executeUpdate();
+                    return score;
+                } else {
+                    return oldScore;
+                }
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            return score;
+        }
     }
 
 }
