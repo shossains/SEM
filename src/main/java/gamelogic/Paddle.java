@@ -5,12 +5,12 @@ public class Paddle extends Collidable implements java.io.Serializable {
     public static final transient long serialVersionUID = 4328743;
 
     private transient PlayerType playerType;
-    private transient float xupper = 1280;
-    private transient float xlower = 0;
+    private transient float xupper;
+    private transient float xlower;
 
-    private transient float maxSpeed = 200;
-    private transient float acceleration = 6;
-    private transient float lowSpeed = 50;
+    private transient float maxSpeed;
+    private transient float acceleration;
+    private transient float lowSpeed;
 
     /**
      * Constructor.
@@ -22,18 +22,23 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * @param radius Radius.
      */
     public Paddle(float x, float y, float xspeed, float yspeed, float radius, float mass,
-                  PlayerType playerType) {
+                  float width, float height, PlayerType playerType, float maxSpeed,
+                  float acceleration, float lowSpeed) {
 
-        super(x, y, radius, xspeed, yspeed, mass);
+        super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.playerType = playerType;
 
+        this.maxSpeed = maxSpeed;
+        this.acceleration = acceleration;
+        this.lowSpeed = lowSpeed;
+
         //set the X boundaries based on whether it is the first or the second player puck
         if (this.playerType == PlayerType.PLAYER1) {
-            xupper = 1280;
-            xlower = 640;
+            xupper = getWidth();
+            xlower = getWidth() / 2;
         } else {
-            xupper = 640;
+            xupper = getWidth() / 2;
             xlower = 0;
         }
     }
@@ -98,7 +103,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getYspeed() < maxSpeed) {
                 if (this.getYspeed() < lowSpeed) {
                     //set a baseline
-                    this.setYspeed(50);
+                    this.setYspeed(lowSpeed);
                 } else {
                     this.setYspeed(this.getYspeed() + acceleration);
                 }
@@ -117,7 +122,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getYspeed() > -maxSpeed) {
                 if (this.getYspeed() > - lowSpeed) {
                     //set a baseline
-                    this.setYspeed(-50);
+                    this.setYspeed(-lowSpeed);
                 } else {
                     this.setYspeed(this.getYspeed() - acceleration);
                 }
@@ -136,7 +141,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getXspeed() > -maxSpeed) {
                 if (this.getXspeed() > - lowSpeed) {
                     //set a baseline
-                    this.setXspeed(-50);
+                    this.setXspeed(-lowSpeed);
                 } else {
                     this.setXspeed(this.getXspeed() - acceleration);
                 }
@@ -155,20 +160,12 @@ public class Paddle extends Collidable implements java.io.Serializable {
             if (this.getXspeed() < maxSpeed) {
                 if (this.getXspeed() < lowSpeed) {
                     //set a baseline
-                    this.setXspeed(50);
+                    this.setXspeed(lowSpeed);
                 } else {
                     this.setXspeed(this.getXspeed() + acceleration);
                 }
             }
         }
-    }
-
-    /**
-     * Method to ensure the puck is within the correct boundaries.
-     */
-    public void fixPosition() {
-        fixXPosition();
-        fixYPosition();
     }
 
     /**
@@ -190,8 +187,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
         }
-        if (this.y > 720 - this.radius) {
-            this.y = 720 - this.radius;
+        if (this.y > getHeight() - this.radius) {
+            this.y = getHeight() - this.radius;
         }
     }
 }
