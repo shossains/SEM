@@ -11,6 +11,8 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
     private float xspeed;
     private float yspeed;
     private float mass;
+    private float width;
+    private float height;
 
     /**
      * Constructor.
@@ -26,11 +28,14 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
      * @param mass The mass of the object (somewhat arbitrary, but the important part is the
      *             ratio between the masses of the objects in collision).
      */
-    public Collidable(float x, float y, float radius, float xspeed, float yspeed, float mass) {
+    public Collidable(float x, float y, float radius, float xspeed, float yspeed, float mass,
+                      float width, float height) {
         super(x, y, radius);
         this.xspeed = xspeed;
         this.yspeed = yspeed;
         this.mass = mass;
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -46,7 +51,14 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
     /**
      * The method to ensure the object stays within bounds.
      */
-    public abstract void fixPosition();
+    public void fixPosition() {
+        fixXPosition();
+        fixYPosition();
+    }
+
+    public abstract void fixXPosition();
+
+    public abstract void fixYPosition();
 
     public float getXspeed() {
         return xspeed;
@@ -70,5 +82,21 @@ public abstract class Collidable extends Circle implements java.io.Serializable 
 
     public void setMass(float mass) {
         this.mass = mass;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 }

@@ -20,12 +20,13 @@ import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
 
-
-
 public class GameScreen implements Screen {
 
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
+
+    private static final float width = 1280;
+    private static final float height = 720;
 
     final transient AirHockeyGame game;
 
@@ -49,8 +50,6 @@ public class GameScreen implements Screen {
     transient BasicScoringSystem basicScoringSystem;
 
     transient OrthographicCamera camera;
-
-    transient boolean initMove = true;
 
     private transient boolean mutePressed;
 
@@ -93,19 +92,21 @@ public class GameScreen implements Screen {
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
-        camera.setToOrtho(false, 1280, 720);
+        camera.setToOrtho(false, width, height);
 
         // Create the board
-        board = new Board(0, 0, 1280, 720);
+        board = new Board(0, 0, width, height);
 
         // Create the HUD
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER1, 200, 6, 50);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER2, 200, 6, 50);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
         basicScoringSystem = new BasicScoringSystem(puck, hud);

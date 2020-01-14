@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class CollisionsEngine {
 
     private transient Puck puck;
