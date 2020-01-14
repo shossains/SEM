@@ -32,6 +32,7 @@ public class LoginScreen implements Screen {
     private transient Image image;
 
     final transient TextFieldFactory textFieldFactory;
+    private transient AbstractButtonFactory buttonFactory;
 
     private transient boolean mutePressed;
     final transient TextField usernameTextField;
@@ -68,10 +69,10 @@ public class LoginScreen implements Screen {
         image = new Image(new Texture("assets/air3.png"));
         stage.addActor(image);
 
-        TextButtonFactory factory = new TextButtonFactory(this.game, this);
-        Button exit = factory.createTransButton("Exit!", "LoginScreen");
+        buttonFactory = new TextButtonFactory(this.game, this);
+        Button exit = buttonFactory.createTransButton("Exit!", "LoginScreen");
         exit.setPosition(900, 600);
-        Button button = factory.createButton("Done!");
+        Button button = buttonFactory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
                 new ClickListener() {

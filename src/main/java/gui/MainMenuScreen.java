@@ -50,6 +50,7 @@ public class MainMenuScreen implements Screen {
         exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "Exit");
         scoresButton = abstractButtonFactory.createTransButton("assets/scores.png", "Scores");
 
+
         playButton.setPosition(230, 420);
         settingsButton.setPosition(230, 350);
         logoutButton.setPosition(230, 280);
@@ -57,7 +58,7 @@ public class MainMenuScreen implements Screen {
         scoresButton.setPosition(530, 540);
 
         stage.addActor(playButton);
-        stage.addActor(settingsButton);
+        //stage.addActor(settingsButton);
         stage.addActor(logoutButton);
         stage.addActor(exitButton);
         stage.addActor(scoresButton);

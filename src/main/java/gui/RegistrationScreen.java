@@ -74,8 +74,8 @@ public class RegistrationScreen implements Screen {
         stage.addActor(passwordAgainTextField);
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
-        AbstractButtonFactory factory = new TextButtonFactory(this.game, this);
-        Button button = factory.createButton("Done");
+        AbstractButtonFactory buttonFactory = new TextButtonFactory(this.game, this);
+        Button button = buttonFactory.createButton("Done");
         button.setPosition(50, 500);
         button.addListener(
                 new ClickListener() {
@@ -85,7 +85,7 @@ public class RegistrationScreen implements Screen {
                     }
                 });
         stage.addActor(button);
-        Button exit = factory.createTransButton("Back", "LoginScreen");
+        Button exit = buttonFactory.createTransButton("Back", "LoginScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }

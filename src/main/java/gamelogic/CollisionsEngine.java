@@ -1,7 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.math.Circle;
-
 public class CollisionsEngine {
 
     private transient Puck puck;
@@ -196,5 +194,26 @@ public class CollisionsEngine {
         c1.move(0.01f);
         c2.move(0.01f);
 
+        //now make sure the puck and paddle don't get stuck together
+
+        fixCollision(c1, c2);
+
+    }
+
+    /**
+     * This method ensures that when the puck and paddle collide,
+     * they don't get stuck inside of each other.
+     * @param c1 The first object in the collision.
+     * @param c2 The second object in the collision.
+     */
+    public void fixCollision(Collidable c1, Collidable c2) {
+        while (isIntersecting(c1, c2)) {
+            //they should not be still colliding
+            //move them away from each other so they are not colliding
+
+            c1.move(0.01f);
+            c2.move(0.01f);
+
+        }
     }
 }

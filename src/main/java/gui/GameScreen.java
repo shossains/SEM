@@ -20,12 +20,19 @@ import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
 
-
-
 public class GameScreen implements Screen {
 
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
+
+    private static final float width = 1280;
+    private static final float height = 720;
+
+    private static final float paddleMaxSpeed = 300;
+    private static final float paddleLowSpeed = 75;
+    private static final float paddleAcceleration = 10;
+    public static final float paddlePucke = 0.8f;
+    public static final float puckWalle = 0.85f;
 
     final transient AirHockeyGame game;
 
@@ -49,8 +56,6 @@ public class GameScreen implements Screen {
     transient BasicScoringSystem basicScoringSystem;
 
     transient OrthographicCamera camera;
-
-    transient boolean initMove = true;
 
     private transient boolean mutePressed;
 
@@ -93,21 +98,23 @@ public class GameScreen implements Screen {
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
-        camera.setToOrtho(false, 1280, 720);
+        camera.setToOrtho(false, width, height);
 
         // Create the board
-        board = new Board(0, 0, 1280, 720);
+        board = new Board(0, 0, width, height);
 
         // Create the HUD
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 50f, 0f, 30f, 5);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
         basicScoringSystem = new BasicScoringSystem(puck, hud);
 
         //background colour

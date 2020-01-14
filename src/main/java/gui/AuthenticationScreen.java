@@ -23,6 +23,7 @@ public class AuthenticationScreen implements Screen {
     public transient Stage stage;
     public transient Image image;
     private transient boolean mutePressed;
+    private transient ImageButtonFactory buttonFactory;
 
     /**
      * Constructor for the authentication page.
@@ -36,12 +37,12 @@ public class AuthenticationScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        ImageButtonFactory abstractButtonFactory = new ImageButtonFactory(this.game, this);
-        Button loginButton = abstractButtonFactory.createTransButton("assets/login.png",
+        buttonFactory = new ImageButtonFactory(this.game, this);
+        Button loginButton = buttonFactory.createTransButton("assets/login.png",
                 "Credentials");
-        Button registerButton = abstractButtonFactory.createTransButton("assets/register.png",
+        Button registerButton = buttonFactory.createTransButton("assets/register.png",
                 "Registration");
-        Button exitButton = abstractButtonFactory.createTransButton("assets/exit2.png", "Exit");
+        Button exitButton = buttonFactory.createTransButton("assets/exit2.png", "Exit");
 
         exitButton.setPosition(1130, 640);
         loginButton.setPosition(500, 200);

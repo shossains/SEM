@@ -51,8 +51,8 @@ public class ScoresScreen implements Screen {
         usernameTextField.setPosition(250,200);
         stage.addActor(usernameTextField);
 
-        AbstractButtonFactory factory = new TextButtonFactory(this.game, this);
-        Button button = factory.createButton("Done!");
+        AbstractButtonFactory buttonFactory = new TextButtonFactory(this.game, this);
+        Button button = buttonFactory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
                 new ClickListener() {
@@ -64,7 +64,7 @@ public class ScoresScreen implements Screen {
 
         stage.addActor(button);
 
-        Button exit = factory.createTransButton("Back", "ChooseGameScreen");
+        Button exit = buttonFactory.createTransButton("Back", "ChooseGameScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }
