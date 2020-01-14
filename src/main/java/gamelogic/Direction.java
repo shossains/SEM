@@ -6,7 +6,15 @@ public class Direction {
     public boolean rightPressed;
     public boolean leftPressed;
 
-    public Direction(boolean upPressed, boolean downPressed, boolean rightPressed, boolean leftPressed) {
+    /**
+     * Direction object. Keeps track of the direction the paddle should move in.
+     * @param upPressed Whether up is pressed.
+     * @param downPressed Whether down is pressed.
+     * @param rightPressed Whether right is pressed.
+     * @param leftPressed Whether left is pressed.
+     */
+    public Direction(boolean upPressed, boolean downPressed,
+                     boolean rightPressed, boolean leftPressed) {
         this.upPressed = upPressed;
         this.downPressed = downPressed;
         this.rightPressed = rightPressed;

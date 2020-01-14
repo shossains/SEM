@@ -5,11 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import gamelogic.*;
+import gamelogic.CollisionsEngine;
+import gamelogic.Direction;
+import gamelogic.Paddle;
+import gamelogic.PlayerType;
+import gamelogic.Puck;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.*;
 
 public class CollisionsEngineTest {
 
@@ -28,7 +31,7 @@ public class CollisionsEngineTest {
         paddle2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
                 PlayerType.PLAYER2, 200, 6, 50);
         puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f);
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
+        collisionsEngine = new CollisionsEngine(0.8f);
 
     }
 
@@ -199,7 +202,7 @@ public class CollisionsEngineTest {
         puck.setXspeed(-30);
         puck.setYspeed(50);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle1, puck);
 
         assertEquals(2, paddle1.getXspeed(), delta);
         assertEquals(0, paddle1.getYspeed(), delta);
@@ -230,7 +233,7 @@ public class CollisionsEngineTest {
         puck.setXspeed(-30);
         puck.setYspeed(50);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle1, puck);
 
         assertEquals(50, paddle1.getXspeed(), delta);
         assertEquals(0, paddle1.getYspeed(), delta);
@@ -257,7 +260,7 @@ public class CollisionsEngineTest {
         puck.setXspeed(-40);
         puck.setYspeed(-30);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle2, puck);
 
         assertEquals(40, paddle2.getXspeed(), delta);
         assertEquals(120, paddle2.getYspeed(), delta);

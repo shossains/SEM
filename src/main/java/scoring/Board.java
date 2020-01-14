@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import gamelogic.Entity;
+import gamelogic.EntityType;
 import gui.AirHockeyGame;
 
 import java.io.Serializable;
@@ -11,6 +12,8 @@ import java.io.Serializable;
 public class Board extends Rectangle implements Serializable, Entity {
 
     private static final long serialVersionUID = 1L;
+
+    private transient EntityType entityType = EntityType.BOARD;
 
     //private transient Texture boardImage = new Texture(Gdx.files.internal("assets/table.png"));
 
@@ -33,5 +36,10 @@ public class Board extends Rectangle implements Serializable, Entity {
     @Override
     public void render(AirHockeyGame game, Texture texture) {
         game.spriteBatch.draw(texture, this.x, this.y, this.width, this.height);
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
     }
 }

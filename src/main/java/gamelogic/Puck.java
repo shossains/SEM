@@ -8,7 +8,10 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
-    //private transient Texture puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
+    private transient EntityType entityType = EntityType.PUCK;
+
+    //private transient Texture puckImage =
+    // new Texture(Gdx.files.internal("assets/hockey-puck.png"));
 
     /**
      * The co-efficient of restitution.
@@ -88,5 +91,10 @@ public class Puck extends Collidable implements java.io.Serializable {
         game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
                 this.radius * 2, this.radius * 2);
 
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
     }
 }

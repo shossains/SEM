@@ -1,6 +1,5 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -12,12 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import gamelogic.*;
+import gamelogic.CollisionsEngine;
+import gamelogic.Entity;
+import gamelogic.GameContainer;
+import gamelogic.Paddle;
+import gamelogic.PlayerType;
+import gamelogic.Puck;
+import java.util.ArrayList;
 import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
 
-import java.util.ArrayList;
+
 
 public class GameScreen implements Screen {
 
@@ -132,7 +137,7 @@ public class GameScreen implements Screen {
 
         gameContainer = new GameContainer(entities, textures);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
+        collisionsEngine = new CollisionsEngine(paddlePucke);
         basicScoringSystem = new BasicScoringSystem(puck, hud);
 
         //background colour
@@ -180,16 +185,11 @@ public class GameScreen implements Screen {
      */
     public void update(float delta) {
         //update the camera
-
         camera.update();
 
         gameContainer.update(delta);
-        //puck.update(delta);
 
-        //paddle1.update(delta);
-        //paddle2.update(delta);
-
-        collisionsEngine.collide();
+        gameContainer.collideEntities();
 
         // Updated the game clock
         //hud.updateTime(delta);
@@ -230,29 +230,6 @@ public class GameScreen implements Screen {
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
         }
-
-        //the movement variables for player 1
-        boolean rightPressed1 = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean leftPressed1 = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-        boolean upPressed1 = Gdx.input.isKeyPressed(Input.Keys.UP);
-        boolean downPressed1 = Gdx.input.isKeyPressed(Input.Keys.DOWN);
-
-        //the movement variables for player 2
-        boolean rightPressed2 = Gdx.input.isKeyPressed(Input.Keys.D);
-        boolean leftPressed2 = Gdx.input.isKeyPressed(Input.Keys.A);
-        boolean upPressed2 = Gdx.input.isKeyPressed(Input.Keys.W);
-        boolean downPressed2 = Gdx.input.isKeyPressed(Input.Keys.S);
-
-        paddle1.setSpeeds(rightPressed1, leftPressed1, upPressed1, downPressed1);
-        paddle2.setSpeeds(rightPressed2, leftPressed2, upPressed2, downPressed2);
-
-        paddle1.move(delta);
-        paddle2.move(delta);
-
-        collisionsEngine.collide();
-
-        paddle1.fixPosition();
-        paddle2.fixPosition();
         */
 
     }
@@ -268,32 +245,7 @@ public class GameScreen implements Screen {
 
         game.spriteBatch.begin();
 
-        // Draw the board
-        //game.spriteBatch.draw(boardImage, board.x, board.y, board.width, board.height);
-        //board.render(game, boardImage);
-
-        //puck.render(game, puckImage);
-
-        //paddle1.render(game, paddle1Image);
-        //paddle2.render(game, paddle2Image);
-
         gameContainer.render(game);
-
-        /*
-        //draw the puck as the texture and in the place that the puck exists
-        //Maybe there is some border, or the radius doesn't perfectly scale up the image
-        //the boundary is still not totally correct
-        game.spriteBatch.draw(puckImage, puck.x - puck.radius, puck.y - puck.radius,
-                puck.radius * 2, puck.radius * 2);
-
-        game.spriteBatch.draw(paddle1Image, paddle1.x - paddle1.radius, paddle1.y - paddle1.radius,
-                paddle1.radius * 2, paddle1.radius * 2);
-
-        game.spriteBatch.draw(paddle2Image, paddle2.x - paddle2.radius, paddle2.y - paddle2.radius,
-                paddle2.radius * 2, paddle2.radius * 2);
-
-
-         */
 
         game.spriteBatch.end();
         // Draw the hud on top of the board.

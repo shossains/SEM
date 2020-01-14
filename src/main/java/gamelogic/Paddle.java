@@ -9,6 +9,7 @@ public class Paddle extends Collidable implements java.io.Serializable {
     public static final transient long serialVersionUID = 4328743;
 
     private transient PlayerType playerType;
+    private transient EntityType entityType = EntityType.PADDLE;
     private transient float xupper;
     private transient float xlower;
 
@@ -229,5 +230,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
         game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
                 this.radius * 2, this.radius * 2);
 
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
     }
 }
