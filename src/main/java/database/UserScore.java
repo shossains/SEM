@@ -28,8 +28,41 @@ public class UserScore implements Query {
         statements = new PreparedStatements(connection);
     }
 
+    /**
+     * Method that returns the highest
+     * score of a user in each of the following cases:
+     * if the user exists in the database, if the user
+     * does not exist in the database.
+     * @param connection to the database.
+     * @return highest score of user with this nickname.
+     */
     @Override
     public Integer execute(Connection connection) {
+        try {
+            if (checkScore(nickname, score) == -1) {
+                PreparedStatement addScore = statements.getAddScore();
+                addScore.setInt(1, score);
+                addScore.setString(2, nickname);
+                addScore.executeUpdate();
+                addScore.close();
+                return score;
+            } else {
+                return checkScore(nickname, score);
+            }
+        } catch (Exception e) {
+            return score;
+        }
+    }
+
+    /**
+     * Checks whether this user exists in the database.
+     * If yes, then the highest score is returned.
+     * Otherwise, -1 is returned.
+     * @param nickname of the user.
+     * @param score of the user.
+     * @return
+     */
+    private Integer checkScore(String nickname, int score) {
         try {
             PreparedStatement getScoreUser = statements.getGetScoreUser();
             getScoreUser.setString(1, nickname);
@@ -49,15 +82,11 @@ public class UserScore implements Query {
                     return oldScore;
                 }
             } else {
-                PreparedStatement addScore = statements.getAddScore();
-                addScore.setInt(1, score);
-                addScore.setString(2, nickname);
-                addScore.executeUpdate();
-                addScore.close();
-                return score;
+                return -1;
             }
         } catch (Exception e) {
-            return score;
+            return -1;
         }
+
     }
 }

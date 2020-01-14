@@ -73,11 +73,11 @@ public class QueryTest {
     public void getScoresTest() throws SQLException {
         UserScore userScore = new UserScore(connection, "nickname", 100);
         userScore.execute(connection);
-        verify(stmt, times(1)).executeUpdate();
+        verify(stmt, times(2)).executeUpdate();
 
         when(rs.next()).thenReturn(false);
         userScore.execute(connection);
-        verify(stmt, times(2)).executeUpdate();
+        verify(stmt, times(3)).executeUpdate();
     }
 
     @Test
