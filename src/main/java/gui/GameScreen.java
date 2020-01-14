@@ -189,7 +189,7 @@ public class GameScreen implements Screen {
                     ScoresScreen(game, 100));
         }
 
-        // Check if one of the players wont the game
+        // Check if one of the players won the game
         if (basicScoringSystem.checkScorePlayerOne()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");

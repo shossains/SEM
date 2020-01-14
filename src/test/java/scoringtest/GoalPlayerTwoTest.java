@@ -12,7 +12,7 @@ import scoring.BasicScoringSystem;
 import scoring.Hud;
 
 
-public class GoalPlayerTwoTest {
+public class GoalPlayerTwoTest extends GameTest {
 
     private transient Puck puck;
     private transient Hud mockHud;
