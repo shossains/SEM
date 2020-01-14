@@ -3,6 +3,7 @@ package scoringtest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
+import com.badlogic.gdx.audio.Sound;
 import gamelogic.Puck;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import scoring.BasicScoringSystem;
 import scoring.Hud;
-
 
 public class GoalPlayerOneTests {
 
@@ -20,9 +20,10 @@ public class GoalPlayerOneTests {
 
     @BeforeEach
     void setUp() {
-        this.puck = new Puck(360f, 360f, 0, 0, 15, 1, 1280, 720, 0.85f);
+        this.puck = new Puck(360f, 360f, 0, 0, 15, 1,
+                1280, 720, 0.85f, mock(Sound.class));
         this.mockHud = mock(Hud.class);
-        this.basicScoringSystem = new BasicScoringSystem(puck, mockHud);
+        this.basicScoringSystem = new BasicScoringSystem(puck, mockHud, mock(Sound.class));
     }
 
     @AfterEach

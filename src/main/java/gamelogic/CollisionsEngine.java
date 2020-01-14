@@ -22,12 +22,12 @@ public class CollisionsEngine {
      * @param paddle2 Player 2 paddle.
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
-    public CollisionsEngine(Puck puck, Paddle paddle1, Paddle paddle2, float e) {
+    public CollisionsEngine(Puck puck, Paddle paddle1, Paddle paddle2, float e, Sound sound) {
         this.puck = puck;
         this.paddle1 = paddle1;
         this.paddle2 = paddle2;
         this.coefficientr = e;
-        this.sound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
+        this.sound = sound;
     }
 
     /**

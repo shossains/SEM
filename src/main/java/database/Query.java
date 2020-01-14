@@ -60,10 +60,8 @@ public class Query extends Adapter {
                 return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.print("User could not be added.");
+            return false;
         }
-        return false;
     }
 
     /**

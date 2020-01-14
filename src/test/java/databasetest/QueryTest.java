@@ -22,7 +22,7 @@ public class QueryTest {
 
     @BeforeEach
     void intialize() {
-    //    Adapter ad = mock(Adapter.class);
+        //    Adapter ad = mock(Adapter.class);
     }
 
     @Test

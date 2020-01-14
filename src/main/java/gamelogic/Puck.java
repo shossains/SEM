@@ -1,6 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 public class Puck extends Collidable implements java.io.Serializable {
@@ -25,12 +24,12 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param radius The radius.
      */
     public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
-                float height, float e) {
+                float height, float e, Sound sound) {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.puckWalle = e;
 
-        this.sound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
+        this.sound = sound;
     }
 
     /**

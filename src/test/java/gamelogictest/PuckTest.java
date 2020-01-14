@@ -2,7 +2,9 @@ package gamelogictest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
+import com.badlogic.gdx.audio.Sound;
 import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,9 +20,12 @@ public class PuckTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        puck1 = new Puck(10, 100, 0, 100, 15, 10, 1280, 720, 0.85f);
-        puck2 = new Puck(640, 360, 64, 36, 15, 10, 1280, 720, 0.85f);
-        puck3 = new Puck(640, 360, -64, -36, 15, 10, 1280, 720, 0.85f);
+        puck1 = new Puck(10, 100, 0, 100, 15,
+                10, 1280, 720, 0.85f, mock(Sound.class));
+        puck2 = new Puck(640, 360, 64, 36, 15,
+                10, 1280, 720, 0.85f,  mock(Sound.class));
+        puck3 = new Puck(640, 360, -64, -36, 15,
+                10, 1280, 720, 0.85f,  mock(Sound.class));
 
     }
 

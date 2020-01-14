@@ -19,9 +19,9 @@ public class BasicScoringSystem extends ScoringSystem {
 
     private transient Sound sound;
 
-    public BasicScoringSystem(Puck puck, Hud hud) {
+    public BasicScoringSystem(Puck puck, Hud hud, Sound sound) {
         super(puck, hud);
-        sound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
+        this.sound = sound;
     }
 
     /**

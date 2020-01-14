@@ -107,15 +107,18 @@ public class GameScreen implements Screen {
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle,
+                Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav")));
 
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
                 PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
                 PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
-        basicScoringSystem = new BasicScoringSystem(puck, hud);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke,
+                Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav")));
+        basicScoringSystem = new BasicScoringSystem(puck, hud,
+                Gdx.audio.newSound(Gdx.files.internal("assets/score.wav")));
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
