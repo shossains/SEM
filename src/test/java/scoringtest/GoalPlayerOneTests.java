@@ -20,7 +20,7 @@ public class GoalPlayerOneTests {
 
     @BeforeEach
     void setUp() {
-        this.puck = new Puck(360f, 360f, 0, 0, 15, 1, 1280, 720);
+        this.puck = new Puck(360f, 360f, 0, 0, 15, 1, 1280, 720, 0.85f);
         this.mockHud = mock(Hud.class);
         this.basicScoringSystem = new BasicScoringSystem(puck, mockHud);
     }
