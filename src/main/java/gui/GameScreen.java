@@ -18,6 +18,7 @@ import gamelogic.PlayerType;
 import gamelogic.Puck;
 import scoring.BasicScoringSystem;
 import scoring.Board;
+import scoring.Goal;
 import scoring.Hud;
 
 public class GameScreen implements Screen {
@@ -25,14 +26,16 @@ public class GameScreen implements Screen {
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
 
-    private static final float width = 1280;
-    private static final float height = 720;
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 720;
 
-    private static final float paddleMaxSpeed = 300;
-    private static final float paddleLowSpeed = 75;
-    private static final float paddleAcceleration = 10;
-    public static final float paddlePucke = 0.8f;
-    public static final float puckWalle = 0.85f;
+    private static final float BASIC_GOAL_DEPTH = 15;
+
+    private static final float PADDLE_MAX_SPEED = 300;
+    private static final float PADDLE_LOW_SPEED = 75;
+    private static final float PADDLE_ACCELERATION = 10;
+    public static final float PADDLE_PUCK_E = 0.8f;
+    public static final float PUCK_WALL_E = 0.85f;
 
     final transient AirHockeyGame game;
 
@@ -43,6 +46,8 @@ public class GameScreen implements Screen {
 
     transient Hud hud;
     transient Board board;
+    transient Goal goalLeft;
+    transient Goal goalRight;
     transient Puck puck;
     transient Paddle paddle1;
     transient Paddle paddle2;
@@ -98,24 +103,28 @@ public class GameScreen implements Screen {
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
-        camera.setToOrtho(false, width, height);
+        camera.setToOrtho(false, WIDTH, HEIGHT);
+
+        // Create the goals for the board
+        goalLeft = new Goal( (HEIGHT / 3),2 * (HEIGHT / 3), BASIC_GOAL_DEPTH);
+        goalRight = new Goal( (HEIGHT / 3), 2 * (HEIGHT / 3), WIDTH - BASIC_GOAL_DEPTH);
 
         // Create the board
-        board = new Board(0, 0, width, height);
+        board = new Board(0, 0, WIDTH, HEIGHT, goalLeft, goalRight);
 
         // Create the HUD
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, WIDTH, HEIGHT, PUCK_WALL_E);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
-                PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
-                PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
+                PlayerType.PLAYER1, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
+                PlayerType.PLAYER2, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
-        basicScoringSystem = new BasicScoringSystem(puck, hud);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, PADDLE_PUCK_E);
+        basicScoringSystem = new BasicScoringSystem(puck, hud, board);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);

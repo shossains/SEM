@@ -13,13 +13,11 @@ import gamelogic.Puck;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
-    private static final int BASIC_WIDTH = 1280;
-    private static final int BASIC_TOP = 240;
-    private static final int BASIC_BOTTOM = 480;
-    private static final int BASIC_DEPTH = 15;
+    private Board board;
 
-    public BasicScoringSystem(Puck puck, Hud hud) {
+    public BasicScoringSystem(Puck puck, Hud hud, Board board) {
         super(puck, hud);
+        this.board = board;
     }
 
     /**
@@ -30,11 +28,9 @@ public class BasicScoringSystem extends ScoringSystem {
     public int goal() {
         if (goalPlayerOne(puck)) {
             hud.addScoreOne();
-            //Gdx.app.log("GOAL", "Player 1 scored");
             return 1;
         } else if (goalPlayerTwo(puck)) {
             hud.addScoreTwo();
-            //Gdx.app.log("GOAL", "Player 2 scored");
             return 2;
         } else {
             return 0;
@@ -57,9 +53,9 @@ public class BasicScoringSystem extends ScoringSystem {
      * @return true if the puck is in PlayerTwos goal.
      */
     private boolean goalPlayerOne(Puck puck) {
-        return (puck.x + (puck.radius / 2)  >= BASIC_WIDTH - BASIC_DEPTH
-                && puck.y + (puck.radius / 2) >= BASIC_TOP
-                && puck.y + (puck.radius / 2) <= BASIC_BOTTOM);
+        return (puck.x + (puck.radius / 2)  >= this.board.getGoalRight().getDepth()
+                && puck.y + (puck.radius / 2) >= this.board.getGoalRight().getTopPost()
+                && puck.y + (puck.radius / 2) <= this.board.getGoalRight().getBottomPost());
     }
 
     /**
@@ -68,9 +64,9 @@ public class BasicScoringSystem extends ScoringSystem {
      * @return true if the puck is in PlayerOnes goal.
      */
     private boolean goalPlayerTwo(Puck puck) {
-        return (puck.x - (puck.radius / 2) <= BASIC_DEPTH
-                && puck.y - (puck.radius / 2)  >= BASIC_TOP
-                && puck.y + (puck.radius / 2) <= BASIC_BOTTOM);
+        return (puck.x - (puck.radius / 2) <= this.board.getGoalLeft().getDepth()
+                && puck.y - (puck.radius / 2)  >= this.board.getGoalLeft().getTopPost()
+                && puck.y + (puck.radius / 2) <= this.board.getGoalLeft().getBottomPost());
     }
 
 
