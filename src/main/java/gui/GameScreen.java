@@ -23,8 +23,6 @@ import scoring.Board;
 import scoring.Goal;
 import scoring.Hud;
 
-
-
 public class GameScreen implements Screen {
 
     private static final int PLAYER_ONE = 1;
@@ -51,8 +49,8 @@ public class GameScreen implements Screen {
     transient Texture goalTwoImage;
 
     transient Hud hud;
-    transient Goal goal1;
-    transient Goal goal2;
+    transient Goal goalOne;
+    transient Goal goalTwo;
     transient Board board;
     transient Puck puck;
     transient Paddle paddle1;
@@ -104,13 +102,13 @@ public class GameScreen implements Screen {
         stage.addActor(resumeButton);
         stage.addActor(exitButton);
 
+
         boardImage = new Texture(Gdx.files.internal("assets/board2.png"));
         goalOneImage = new Texture(Gdx.files.internal("assets/leftGoal.png"));
         goalTwoImage = new Texture(Gdx.files.internal("assets/rightGoal.png"));
-        puckImage = new Texture(Gdx.files.internal("assets/hockey-puck.png"));
+        puckImage = new Texture(Gdx.files.internal("assets/puck.png"));
         paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
-
 
         ArrayList<Texture> textures = new ArrayList<>();
 
@@ -132,13 +130,13 @@ public class GameScreen implements Screen {
         basicScoringSystem = new BasicScoringSystem(hud, this);
 
         // Create the goals
-        goal1 = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
+        goalOne = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
                 BASIC_GOAL_DEPTH, basicScoringSystem);
-        goal2 = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
+        goalTwo = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
                 (WIDTH - BASIC_GOAL_DEPTH), basicScoringSystem);
 
         // Create the board
-        board = new Board(0, 0, WIDTH, HEIGHT, goal1, goal2);
+        board = new Board(0, 0, WIDTH, HEIGHT, goalOne, goalTwo);
 
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, WIDTH, HEIGHT, PUCK_WALL_E);
@@ -150,8 +148,8 @@ public class GameScreen implements Screen {
 
         ArrayList<Entity> entities = new ArrayList<>();
         entities.add(board);
-        entities.add(goal1);
-        entities.add(goal2);
+        entities.add(goalOne);
+        entities.add(goalTwo);
         entities.add(puck);
         entities.add(paddle1);
         entities.add(paddle2);
@@ -160,7 +158,6 @@ public class GameScreen implements Screen {
         collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E);
 
         gameContainer = new GameContainer(entities, textures, basicScoringSystem);
-
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

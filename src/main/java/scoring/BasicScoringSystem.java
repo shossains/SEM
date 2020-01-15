@@ -16,6 +16,7 @@ import gui.ScoresScreen;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
+
     private static final int END_TIME = 0;
     transient GameScreen gameScreen;
 
@@ -96,10 +97,10 @@ public class BasicScoringSystem extends ScoringSystem {
      * resets the positions of paddles, then resumes the game.
      */
     public void goalPlayerTwo() {
-        this.scorePlayerTwo++;
-        this.hud.modifyScoreTwo(this.scorePlayerTwo);
-        this.gameScreen.pause();
-        this.gameScreen.resetPaddles();
-        this.gameScreen.resume();
-    }
+            this.scorePlayerTwo++;
+            this.hud.modifyScoreTwo(this.scorePlayerTwo);
+            this.gameScreen.pause();
+            this.gameScreen.resetPaddles();
+            this.gameScreen.resume();
+     }
 }
