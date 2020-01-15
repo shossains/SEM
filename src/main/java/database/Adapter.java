@@ -45,7 +45,7 @@ public class Adapter {
      * @return the property of the attribute.
      * @throws IOException Throw if something goes wrong.
      */
-    public static Properties readPropertiesFile(String fileName) {
+    private static Properties readPropertiesFile(String fileName) {
         FileInputStream fis = null;
         Properties prop = null;
         try {
