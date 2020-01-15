@@ -3,11 +3,9 @@ package scoringtest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-import gamelogic.Puck;
 import gui.GameScreen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import scoring.BasicScoringSystem;
 import scoring.Hud;
