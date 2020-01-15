@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -65,7 +66,7 @@ public class GameScreen implements Screen {
 
     private transient Sound collisionSound;
     private transient Sound scoreSound;
-    private transient Sound endSound;
+    private transient Music endSound;
 
     public enum  State {
         PAUSE,
@@ -82,7 +83,7 @@ public class GameScreen implements Screen {
         //initialize sounds
         collisionSound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
-        endSound = Gdx.audio.newSound(Gdx.files.internal("assets/cheering.wav"));
+        endSound = Gdx.audio.newMusic(Gdx.files.internal("assets/cheering.wav"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
