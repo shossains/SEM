@@ -3,6 +3,7 @@ package gamelogictest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import gamelogic.Direction;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +42,9 @@ public class PaddleTest {
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
 
-        paddle1.setSpeeds(true, false, true, false);
+        paddle1.direction = new Direction(true, false, true, false);
+
+        paddle1.setSpeeds();
 
         paddle1.move(deltaTime2);
         assertEquals(600, paddle1.x);
@@ -53,7 +56,9 @@ public class PaddleTest {
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
 
-        paddle1.setSpeeds(false, true, false, true);
+        paddle1.direction = new Direction(false, true, false, true);
+
+        paddle1.setSpeeds();
 
         paddle1.move(deltaTime1);
         assertEquals(-150, paddle1.x);
@@ -65,7 +70,9 @@ public class PaddleTest {
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
 
-        paddle1.setSpeeds(true, true, true, true);
+        paddle1.direction = new Direction(true, true, true, true);
+
+        paddle1.setSpeeds();
 
         paddle1.move(deltaTime1);
         assertEquals(100, paddle1.x);
@@ -77,7 +84,9 @@ public class PaddleTest {
         assertEquals(100, paddle1.x);
         assertEquals(100, paddle1.y);
 
-        paddle1.setSpeeds(false, false, false, false);
+        paddle1.direction = new Direction(false, false, false, false);
+
+        paddle1.setSpeeds();
 
         paddle1.move(deltaTime1);
         assertEquals(100, paddle1.x);
@@ -89,7 +98,9 @@ public class PaddleTest {
         assertEquals(1000, paddle3.x);
         assertEquals(360, paddle3.y);
 
-        paddle3.setSpeeds(false, true, false, true);
+        paddle3.direction = new Direction(false, true, false, true);
+
+        paddle3.setSpeeds();
 
         paddle3.move(deltaTime2);
         //500, -140
@@ -104,7 +115,9 @@ public class PaddleTest {
         assertEquals(1000, paddle3.x);
         assertEquals(360, paddle3.y);
 
-        paddle3.setSpeeds(true, false, true, false);
+        paddle3.direction = new Direction(true, false, true, false);
+
+        paddle3.setSpeeds();
 
         paddle3.move(deltaTime2);
 
@@ -121,7 +134,9 @@ public class PaddleTest {
         assertEquals(360, paddle4.x);
         assertEquals(360, paddle4.y);
 
-        paddle4.setSpeeds(true, false, true, false);
+        paddle4.direction = new Direction(true, false, true, false);
+
+        paddle4.setSpeeds();
 
         paddle4.move(deltaTime2);
         paddle4.fixPosition();
@@ -135,7 +150,9 @@ public class PaddleTest {
         assertEquals(360, paddle4.x);
         assertEquals(360, paddle4.y);
 
-        paddle4.setSpeeds(false, true, false, true);
+        paddle4.direction = new Direction(false, true, false, true);
+
+        paddle4.setSpeeds();
 
         paddle4.move(deltaTime2);
         paddle4.fixPosition();

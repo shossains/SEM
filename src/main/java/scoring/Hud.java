@@ -93,21 +93,21 @@ public class Hud implements Disposable, HudInterface {
     }
 
     /**
-     * Add 1 point to score1 (player1).
+     * Modify the score of Player One by a specified amount.
+     * @param newScore New score of the Player One.
      */
     @Override
-    public void addScoreOne() {
-        score1++;
-        scoreLabel1.setText(String.format(scoreFormat, score1));
+    public void modifyScoreOne(int newScore) {
+        scoreLabel1.setText(String.format(scoreFormat, newScore));
     }
 
     /**
-     * Add 1 point to score2 (player2).
+     * Modify the score of Player Two by a specified amount.
+     * @param newScore New score of the Player Two.
      */
     @Override
-    public void addScoreTwo() {
-        score2++;
-        scoreLabel2.setText(String.format(scoreFormat, score2));
+    public void modifyScoreTwo(int newScore) {
+        scoreLabel2.setText(String.format(scoreFormat, newScore));
     }
 
     /**

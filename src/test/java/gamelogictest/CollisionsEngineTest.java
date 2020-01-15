@@ -4,13 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import gamelogic.CollisionsEngine;
+import gamelogic.Direction;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import scoring.Board;
+import scoring.Goal;
 
 public class CollisionsEngineTest {
 
@@ -29,7 +34,7 @@ public class CollisionsEngineTest {
         paddle2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
                 PlayerType.PLAYER2, 200, 6, 50);
         puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f);
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
+        collisionsEngine = new CollisionsEngine(0.8f);
 
     }
 
@@ -194,11 +199,13 @@ public class CollisionsEngineTest {
 
         paddle1.setXspeed(0);
         paddle1.setYspeed(0);
-        paddle1.setSpeeds(true, false, false, false);
+
+        paddle1.direction = new Direction(false, false, true, false);
+        paddle1.setSpeeds();
         puck.setXspeed(-30);
         puck.setYspeed(50);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle1, puck);
 
         assertEquals(2, paddle1.getXspeed(), delta);
         assertEquals(0, paddle1.getYspeed(), delta);
@@ -223,11 +230,13 @@ public class CollisionsEngineTest {
 
         paddle1.setXspeed(0);
         paddle1.setYspeed(0);
-        paddle1.setSpeeds(true, false, false, false);
+
+        paddle1.direction = new Direction(false, false, true, false);
+        paddle1.setSpeeds();
         puck.setXspeed(-30);
         puck.setYspeed(50);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle1, puck);
 
         assertEquals(50, paddle1.getXspeed(), delta);
         assertEquals(0, paddle1.getYspeed(), delta);
@@ -254,7 +263,7 @@ public class CollisionsEngineTest {
         puck.setXspeed(-40);
         puck.setYspeed(-30);
 
-        collisionsEngine.collide();
+        collisionsEngine.collide(paddle2, puck);
 
         assertEquals(40, paddle2.getXspeed(), delta);
         assertEquals(120, paddle2.getYspeed(), delta);
@@ -263,5 +272,94 @@ public class CollisionsEngineTest {
 
         assertFalse(collisionsEngine.isIntersecting(paddle2, puck));
     }
+
+    @Test
+    public void collideEntities1() {
+        paddle2.setX(0);
+        paddle2.setY(0);
+        puck.setX(0);
+        puck.setY(0);
+
+        paddle2.setXspeed(160);
+        paddle2.setYspeed(120);
+        puck.setXspeed(-40);
+        puck.setYspeed(-30);
+
+        collisionsEngine.collideEntities(paddle2, puck);
+
+        assertEquals(40, paddle2.getXspeed(), delta);
+        assertEquals(120, paddle2.getYspeed(), delta);
+        assertEquals(200, puck.getXspeed(), delta);
+        assertEquals(-30, puck.getYspeed(), delta);
+    }
+
+    @Test
+    public void collideEntities2() {
+        paddle2.setX(0);
+        paddle2.setY(0);
+        puck.setX(0);
+        puck.setY(0);
+
+        paddle2.setXspeed(160);
+        paddle2.setYspeed(120);
+        puck.setXspeed(-40);
+        puck.setYspeed(-30);
+
+        collisionsEngine.collideEntities(puck, paddle2);
+
+        assertEquals(40, paddle2.getXspeed(), delta);
+        assertEquals(120, paddle2.getYspeed(), delta);
+        assertEquals(200, puck.getXspeed(), delta);
+        assertEquals(-30, puck.getYspeed(), delta);
+    }
+
+    @Test
+    public void collideEntities3() {
+        paddle2.setX(0);
+        paddle2.setY(0);
+
+        paddle2.setXspeed(160);
+        paddle2.setYspeed(120);
+        paddle1.setY(600);
+        paddle1.setX(600);
+
+        collisionsEngine.collideEntities(paddle1, paddle2);
+        assertEquals(600, paddle1.x);
+    }
+
+    @Test
+    public void collideEntities4() {
+        puck.setX(0);
+        puck.setY(0);
+        puck.setXspeed(-40);
+        puck.setYspeed(-30);
+
+        collisionsEngine.collideEntities(puck, puck);
+        assertEquals(0.0, puck.x);
+    }
+
+    @Test
+    public void collideEntities5() {
+        puck.setX(0);
+        puck.setY(0);
+        puck.setXspeed(-40);
+        puck.setYspeed(-30);
+        Board board = new Board(0, 0, 1250, 600, mock(Goal.class), mock(Goal.class));
+        collisionsEngine.collideEntities(board, puck);
+        assertEquals(0.0, puck.x);
+    }
+
+    @Test
+    public void collideEntities6() {
+        Goal goal = mock(Goal.class);
+        puck.setX(100);
+        puck.setY(100);
+        Board board1 = new Board(0, 0, 1250, 600, goal, goal);
+        Board board2 = new Board(0, 0, 1250, 600, goal, goal);
+        collisionsEngine.collideEntities(board1, board2);
+        assertEquals(100.0, puck.x);
+        assertEquals(100.0, puck.y);
+    }
+
 
 }

@@ -1,8 +1,17 @@
 package gamelogic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import gui.AirHockeyGame;
+
 public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
+
+    private transient EntityType entityType = EntityType.PUCK;
+
+    //private transient Texture puckImage =
+    // new Texture(Gdx.files.internal("assets/hockey-puck.png"));
 
     /**
      * The co-efficient of restitution.
@@ -68,4 +77,34 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.setYspeed(0);
     }
 
+    public void resetLeft() {
+        this.resetPosition();
+        this.setXspeed(50f);
+    }
+
+    public void resetRight() {
+        this.resetPosition();
+        this.setXspeed(-50f);
+    }
+
+    @Override
+    public void update(float delta) {
+        this.move(delta);
+        this.fixPosition();
+    }
+
+    @Override
+    public void render(AirHockeyGame game, Texture texture) {
+
+        //todo check if only a spritebatch is needed
+
+        game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
+                this.radius * 2, this.radius * 2);
+
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
+    }
 }
