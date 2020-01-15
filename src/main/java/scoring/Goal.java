@@ -15,6 +15,7 @@ public class Goal implements Serializable, Entity {
     public final float topPost;
     public final float bottomPost;
     public final float depth;
+
     public final BasicScoringSystem scoringSystem;
 
     /**
