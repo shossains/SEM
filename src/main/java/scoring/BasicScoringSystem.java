@@ -57,8 +57,27 @@ public class BasicScoringSystem extends ScoringSystem {
 
     private void endGame() {
         this.gameScreen.pause();
-        ((Game) Gdx.app.getApplicationListener())
-                .setScreen(new ScoresScreen(this.gameScreen.game, 100));
+        int winner = getTheWinner();
+
+        switch (winner) {
+            case 1 : {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, scorePlayerOne * 10));
+                break;
+            }
+
+            case 2: {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, scorePlayerTwo * 10));
+                break;
+            }
+
+            default: {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, 100));
+                break;
+            }
+        }
     }
 
     /**

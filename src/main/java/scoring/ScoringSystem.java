@@ -1,7 +1,5 @@
 package scoring;
 
-import gamelogic.Puck;
-
 /**
  * Interface for different scoring systems implemented in the game.
  * Provides the basic constructor, and methods for the basic game logic.
