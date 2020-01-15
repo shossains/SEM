@@ -6,8 +6,6 @@ import gui.AirHockeyGame;
 import java.util.ArrayList;
 import scoring.ScoringSystem;
 
-
-
 public class GameContainer {
 
     private transient CollisionsEngine collisionsEngine = new CollisionsEngine(0.8f,
