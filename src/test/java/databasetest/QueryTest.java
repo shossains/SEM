@@ -1,68 +1,108 @@
 package databasetest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import database.Query;
+import database.RegisterUser;
+import database.TopScores;
+import database.UserScore;
+import database.VerifyLogin;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+@RunWith(MockitoJUnitRunner.class)
 public class QueryTest {
-    private transient String jdbcUrl = "jdbc:postgresql://ec2-176-34-183-20.eu-west-1."
-            + "compute.amazonaws.com:5432/dains1dt33rtkd";
 
-    private transient String username = "lfxghibojyjdle";
-    private transient String password =
-            "0dc939d4eb5bd22284f2fe0aed23351b366c098a2bf6cf42f9fc697c0d6ba6d7";
-
-    private transient String userTestName = "nonexistent";
-    //    public Adapter ad;
+    @Mock
+    private transient Connection connection;
+    @Mock
+    private transient PreparedStatement stmt;
+    @Mock
+    private transient ResultSet rs;
 
     @BeforeEach
-    void intialize() {
-    //    Adapter ad = mock(Adapter.class);
+    void setUp() throws SQLException {
+        connection = mock(Connection.class);
+        stmt = mock(PreparedStatement.class);
+        rs = mock(ResultSet.class);
+        when(connection.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(stmt.executeQuery()).thenReturn(rs);
+        when(rs.next()).thenReturn(true);
     }
 
     @Test
-    public void verifyLoginTest() {
-        Query q = new Query();
-        assertTrue(q.verifyLogin("test","pass"));
-        assertFalse(q.verifyLogin("test","notthecorrectpass"));
-        assertFalse(q.verifyLogin("test","wrong"));
+    public void verifyLoginTest() throws SQLException {
+        VerifyLogin verifyLogin = new VerifyLogin(connection, "test", "pass");
+        when(rs.first()).thenReturn(true);
+        when(rs.getString(2)).thenReturn(BCrypt.hashpw("pass", BCrypt.gensalt()));
+        assertTrue(verifyLogin.execute(connection));
 
-        //verify(DriverManager.getConnection(jdbcUrl, username, password));
-
-        //assertThrows(NullPointerException.class, () -> ad.connect());
+        when(rs.next()).thenReturn(false);
+        assertFalse(verifyLogin.execute(connection));
     }
 
     @Test
-    public void addNewUserTest() {
-        Query q = new Query();
-        assertFalse(q.verifyLogin(userTestName,"incorrect"));
+    public void addNewUserTest() throws SQLException {
+        when(stmt.executeUpdate()).thenReturn(1);
+        RegisterUser registerUser = new RegisterUser(connection, "username", "pass", "email");
+        assertTrue(registerUser.execute(connection));
+        verify(stmt, times(1)).executeUpdate();
 
-        q.addNewUser(userTestName, "bla", "empty@delft.nl");
-        assertTrue(q.verifyLogin(userTestName,"bla"));
-
-        q.deleteUser(userTestName);
-        assertFalse(q.verifyLogin(userTestName,"incorrect"));
-        //verify(DriverManager.getConnection(jdbcUrl, username, password));
-
-        //assertThrows(NullPointerException.class, () -> ad.connect());
+        when(stmt.executeUpdate()).thenReturn(0);
+        assertFalse(registerUser.execute(connection));
+        verify(stmt, times(2)).executeUpdate();
     }
 
     @Test
-    public void getScoresTest() {
-        Query q = new Query();
-        q.addNewUser(userTestName, "bla", "empty@delft.nl");
-        int firstScore = q.getScore(userTestName, 9999);
-        assertEquals(9999, firstScore);
+    public void getScoresTest() throws SQLException {
+        UserScore userScore = new UserScore(connection, "nickname", 100);
+        userScore.execute(connection);
+        verify(stmt, times(2)).executeUpdate();
 
-        int secondScore = q.getScore(userTestName, 1);
-        assertEquals(9999, secondScore);
+        when(rs.next()).thenReturn(false);
+        userScore.execute(connection);
+        verify(stmt, times(3)).executeUpdate();
+    }
 
-        q.deleteUser(userTestName);
+    @Test
+    public void getTopScores() throws SQLException {
+        when(rs.getString(2)).thenReturn("User1");
+        when(rs.getInt(1)).thenReturn(100);
+        when(rs.next()).thenReturn(true).thenReturn(false);
+        TopScores topScores = new TopScores(connection);
+        assertFalse(topScores.execute(connection).equals(""));
+        verify(stmt, times(1)).executeQuery();
+    }
+
+    @Test
+    public void getScoresNonExistentUser() throws SQLException {
+        when(rs.next()).thenReturn(false);
+        UserScore userScore = new UserScore(connection, "nick", 300);
+        assertEquals(300, (int) userScore.execute(connection));
+    }
+
+    @Test
+    public void getScoresSmallerScore() throws SQLException {
+        when(rs.next()).thenReturn(true);
+        when(rs.getInt(1)).thenReturn(250);
+        UserScore userScore = new UserScore(connection, "nickname", 100);
+        assertEquals(250, (int) userScore.execute(connection));
     }
 
 }

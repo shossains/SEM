@@ -15,7 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import database.Adapter;
 import gamelogic.CredentialsChecker;
+
+import java.sql.SQLException;
 
 /**
  * The meaning of this class is to create an graphical user interface
@@ -98,7 +101,7 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
 
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this);
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter());
         String response = credentialsChecker.checkLoginCredentials(username, password);
         switch (response) {
             case "empty" : {
