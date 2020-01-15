@@ -8,48 +8,43 @@ import gamelogic.Puck;
  */
 public abstract class ScoringSystem {
 
-    protected transient Puck puck;
     protected transient Hud hud;
+    protected transient int scorePlayerOne;
+    protected transient int scorePlayerTwo;
 
-    public ScoringSystem(Puck puck, Hud hud) {
-        this.puck = puck;
+    public ScoringSystem(Hud hud) {
         this.hud = hud;
     }
 
-    /**
-     * Checks if one of the players scored a point.
-     * @return an integer representing player who scored the point.
-     */
-    public abstract int goal();
+//    /**
+//     * Checks if one of the players scored a point.
+//     * @return an integer representing player who scored the point.
+//     */
+//    public abstract int goal();
 
     /**
      * Check if the games clock's ran out.
-     * @return true if the game's ended.
      */
-    public boolean checkIfGameEnded() {
-        return (this.hud.getGameTimer() <= 0);
-    }
+    public abstract void checkTime();
 
     /**
      * Check if PlayerOne gathered enough points to win the game.
-     * @return true if PlayerOne gathered enough points.
      */
-    public abstract boolean checkScorePlayerOne();
+    public abstract void checkScorePlayerOne();
 
     /**
      * Check if PlayerTwo gathered enough points to win the game.
-     * @return true if PlayerTwo gathered enough points.
      */
-    public abstract boolean checkScorePlayerTwo();
+    public abstract void checkScorePlayerTwo();
 
     /**
      * Compare the scores of the players and establish the winner.
      * @return an int representing the player who won. 0 if it is a tie.
      */
     public int getTheWinner() {
-        if (hud.getScoreOne() > hud.getScoreTwo()) {
+        if (this.scorePlayerOne > this.scorePlayerTwo) {
             return 1;
-        } else if (hud.getScoreTwo() > hud.getScoreOne()) {
+        } else if (this.scorePlayerTwo > this.scorePlayerOne) {
             return 2;
         } else {
             return 0;

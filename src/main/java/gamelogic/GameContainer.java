@@ -2,6 +2,8 @@ package gamelogic;
 
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
+import scoring.BasicScoringSystem;
+import scoring.ScoringSystem;
 
 import java.util.ArrayList;
 
@@ -13,9 +15,12 @@ public class GameContainer {
 
     public transient ArrayList<Texture> textures;
 
-    public GameContainer(ArrayList<Entity> entities, ArrayList<Texture> textures) {
+    public transient ScoringSystem scoringSystem;
+
+    public GameContainer(ArrayList<Entity> entities, ArrayList<Texture> textures, ScoringSystem scoringSystem) {
         this.entities = entities;
         this.textures = textures;
+        this.scoringSystem = scoringSystem;
     }
 
     /**
@@ -23,10 +28,15 @@ public class GameContainer {
      * @param delta the time that has passed since the last frame.
      */
     public void update(float delta) {
-
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update(delta);
         }
+        this.scoringSystem.checkTime();
+       // System.out.println("TIME CHECKED");
+        this.scoringSystem.checkScorePlayerOne();
+        //System.out.println("SCORE PLAYER ONE CHECKED");
+        this.scoringSystem.checkScorePlayerTwo();
+        //System.out.println("SCORE PLAYER TWO CHECKED");
 
     }
 

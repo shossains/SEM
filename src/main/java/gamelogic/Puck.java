@@ -77,6 +77,16 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.setYspeed(0);
     }
 
+    public void resetLeft() {
+        this.resetPosition();
+        this.setXspeed(50f);
+    }
+
+    public void resetRight() {
+        this.resetPosition();
+        this.setXspeed(-50f);
+    }
+
     @Override
     public void update(float delta) {
         this.move(delta);

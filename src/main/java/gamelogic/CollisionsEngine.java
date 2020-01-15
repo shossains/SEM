@@ -1,5 +1,8 @@
 package gamelogic;
 
+import scoring.Board;
+import scoring.Goal;
+
 public class CollisionsEngine {
 
     private transient float coefficientr;
@@ -13,7 +16,6 @@ public class CollisionsEngine {
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
     public CollisionsEngine(float e) {
-
         this.coefficientr = e;
     }
 
@@ -32,7 +34,12 @@ public class CollisionsEngine {
             collide((Collidable) e1, (Collidable) e2);
 
         }
-
+//        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.BOARD) {
+//              checkGoal((Puck) e1, (Board) e2);
+//        }
+        if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
+            checkGoal((Puck) e2, (Board) e1);
+        }
     }
 
     /**
@@ -224,6 +231,31 @@ public class CollisionsEngine {
             c1.move(0.01f);
             c2.move(0.01f);
 
+        }
+    }
+
+    /**
+     * Check if there was a goal scored by any of the players.
+     * @param puck Puck
+     * @param board Board
+     */
+    public void checkGoal(Puck puck, Board board) {
+        // Check if the puck is in the goal of Player One
+        if (puck.x + (puck.radius / 2) >= board.getGoal2().getDepth()
+            && puck.y + (puck.radius / 2) >= board.getGoal2().getTopPost()
+            && puck.y + (puck.radius / 2) <= board.getGoal2().getBottomPost()) {
+
+            board.getGoal2().getScoringSystem().goalPlayerOne();
+            board.getGoal2().getScoringSystem().checkScorePlayerOne();
+            puck.resetLeft();
+        }// Check if the puck is in the goal of Player Two
+        if (puck.x - (puck.radius / 2) <= board.getGoal1().getDepth()
+                && puck.y - (puck.radius / 2) >= board.getGoal1().getTopPost()
+                && puck.y + (puck.radius / 2) <= board.getGoal1().getBottomPost()) {
+
+            board.getGoal1().getScoringSystem().goalPlayerTwo();
+            board.getGoal1().getScoringSystem().checkScorePlayerTwo();
+            puck.resetRight();
         }
     }
 }
