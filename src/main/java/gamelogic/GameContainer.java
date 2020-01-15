@@ -1,15 +1,15 @@
 package gamelogic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
 import java.util.ArrayList;
 import scoring.ScoringSystem;
 
-
-
 public class GameContainer {
 
-    private transient CollisionsEngine collisionsEngine = new CollisionsEngine(0.8f);
+    private transient CollisionsEngine collisionsEngine = new CollisionsEngine(0.8f,
+            Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav")));
 
     public transient ArrayList<Entity> entities;
 

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import com.badlogic.gdx.audio.Sound;
 import gamelogic.CollisionsEngine;
 import gamelogic.Direction;
 import gamelogic.Paddle;
@@ -33,8 +34,10 @@ public class CollisionsEngineTest {
                 PlayerType.PLAYER1, 200, 6, 50);
         paddle2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
                 PlayerType.PLAYER2, 200, 6, 50);
-        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f);
-        collisionsEngine = new CollisionsEngine(0.8f);
+
+        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f, mock(Sound.class));
+        collisionsEngine = new CollisionsEngine(0.8f, mock(Sound.class));
+
 
     }
 

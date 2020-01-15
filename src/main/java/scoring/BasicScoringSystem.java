@@ -1,7 +1,8 @@
 package scoring;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Game;
 import gui.GameScreen;
 import gui.ScoresScreen;
 
@@ -16,23 +17,25 @@ import gui.ScoresScreen;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
-
     private static final int END_TIME = 0;
+
+    private transient Sound sound;
     transient GameScreen gameScreen;
+
 
     /**
      * Constructor of the BasicScoringSystem.
      * @param hud Hud used during the game.
      * @param gameScreen The screen displayed with the game. Used here to pause and resume the game.
      */
-    public BasicScoringSystem(Hud hud, GameScreen gameScreen) {
+    public BasicScoringSystem(Hud hud, GameScreen gameScreen, Sound sound) {
         super(hud);
         this.gameScreen = gameScreen;
         this.scorePlayerOne = 0;
         this.scorePlayerTwo = 0;
+        this.sound = sound;
     }
 
-    @Override
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
             endGame();
@@ -85,6 +88,7 @@ public class BasicScoringSystem extends ScoringSystem {
      */
     public void goalPlayerOne() {
         this.scorePlayerOne++;
+        sound.play();
         this.hud.modifyScoreOne(this.scorePlayerOne);
         this.gameScreen.pause();
         this.gameScreen.resetPaddles();
@@ -97,10 +101,12 @@ public class BasicScoringSystem extends ScoringSystem {
      * resets the positions of paddles, then resumes the game.
      */
     public void goalPlayerTwo() {
-            this.scorePlayerTwo++;
-            this.hud.modifyScoreTwo(this.scorePlayerTwo);
-            this.gameScreen.pause();
-            this.gameScreen.resetPaddles();
-            this.gameScreen.resume();
-     }
+        this.scorePlayerTwo++;
+        sound.play();
+        this.hud.modifyScoreTwo(this.scorePlayerTwo);
+        this.gameScreen.pause();
+        this.gameScreen.resetPaddles();
+        this.gameScreen.resume();
+    }
+
 }

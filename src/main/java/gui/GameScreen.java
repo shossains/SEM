@@ -3,6 +3,8 @@ package gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,9 +26,6 @@ import scoring.Goal;
 import scoring.Hud;
 
 public class GameScreen implements Screen {
-
-    private static final int PLAYER_ONE = 1;
-    private static final int PLAYER_TWO = 2;
 
     private static final float WIDTH = 1280;
     private static final float HEIGHT = 720;
@@ -73,6 +72,9 @@ public class GameScreen implements Screen {
     private transient boolean escPressed;
     private transient State state = State.RUN;
 
+    private transient Sound collisionSound;
+    private transient Sound scoreSound;
+
     public enum  State {
         PAUSE,
         RUN
@@ -84,6 +86,10 @@ public class GameScreen implements Screen {
      */
     public GameScreen(final AirHockeyGame game) {
         this.game = game;
+
+        //initialize sounds
+        collisionSound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
+        scoreSound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -127,7 +133,7 @@ public class GameScreen implements Screen {
         // Create the HUD
         hud = new Hud(game.spriteBatch);
         // Create the scoring system
-        basicScoringSystem = new BasicScoringSystem(hud, this);
+        basicScoringSystem = new BasicScoringSystem(hud, this, scoreSound);
 
         // Create the goals
         goalOne = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
@@ -139,14 +145,16 @@ public class GameScreen implements Screen {
         board = new Board(0, 0, WIDTH, HEIGHT, goalOne, goalTwo);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, WIDTH, HEIGHT, PUCK_WALL_E);
+
+        puck = new Puck(640f, 360f, 30f, 0f, 30f,
+                5, WIDTH, HEIGHT, PUCK_WALL_E, collisionSound);
 
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
                 PlayerType.PLAYER1, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
         paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
                 PlayerType.PLAYER2, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
-
         ArrayList<Entity> entities = new ArrayList<>();
+
         entities.add(board);
         entities.add(goalOne);
         entities.add(goalTwo);
@@ -154,13 +162,13 @@ public class GameScreen implements Screen {
         entities.add(paddle1);
         entities.add(paddle2);
 
-
-        collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E);
+        collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E, collisionSound);
 
         gameContainer = new GameContainer(entities, textures, basicScoringSystem);
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
     }
 
     @Override
@@ -276,6 +284,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        scoreSound.dispose();
+        collisionSound.dispose();
         puckImage.dispose();
         stage.dispose();
     }

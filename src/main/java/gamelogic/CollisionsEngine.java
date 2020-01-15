@@ -1,10 +1,13 @@
 package gamelogic;
 
+import com.badlogic.gdx.audio.Sound;
+
 import scoring.Board;
 
 public class CollisionsEngine {
 
     private transient float coefficientr;
+    private transient Sound sound;
 
     /**
      * Constructor.
@@ -14,8 +17,9 @@ public class CollisionsEngine {
      * of the collisions.
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
-    public CollisionsEngine(float e) {
+    public CollisionsEngine(float e, Sound sound) {
         this.coefficientr = e;
+        this.sound = sound;
     }
 
     /**
@@ -24,7 +28,6 @@ public class CollisionsEngine {
      * @param e1 First Entity.
      * @param e2 Second Entity.
      */
-
     public void collideEntities(Entity e1, Entity e2) {
         if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE
                 || e2.getEntityType() == EntityType.PUCK
@@ -46,6 +49,7 @@ public class CollisionsEngine {
     public void collide(Collidable c1, Collidable c2) {
         if (isIntersecting(c1, c2)) {
             newSpeeds(c1, c2);
+            sound.play();
         }
     }
 

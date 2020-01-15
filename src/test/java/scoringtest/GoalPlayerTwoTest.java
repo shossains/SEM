@@ -1,15 +1,15 @@
 package scoringtest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
+import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import scoring.BasicScoringSystem;
 import scoring.Hud;
-
 
 public class GoalPlayerTwoTest {
 
@@ -21,7 +21,8 @@ public class GoalPlayerTwoTest {
     void setUp() {
         this.mockHud = mock(Hud.class);
         this.mockGameScreen = mock(GameScreen.class);
-        this.basicScoringSystem = new BasicScoringSystem(mockHud, mockGameScreen);
+        this.basicScoringSystem = new BasicScoringSystem(mockHud,
+                mockGameScreen, mock(Sound.class));
     }
 
     @AfterEach

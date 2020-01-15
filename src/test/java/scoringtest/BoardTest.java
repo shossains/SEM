@@ -11,7 +11,6 @@ import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Goal;
 
-
 public class BoardTest {
 
     transient Board board;

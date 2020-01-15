@@ -53,7 +53,7 @@ public class MainMenuScreen implements Screen {
 
         playButton.setPosition(230, 420);
         settingsButton.setPosition(230, 350);
-        logoutButton.setPosition(230, 280);
+        logoutButton.setPosition(230, 310);
         exitButton.setPosition(230, 210);
         scoresButton.setPosition(530, 540);
 

@@ -1,9 +1,10 @@
 package scoringtest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import gamelogic.Puck;
+import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import scoring.BasicScoringSystem;
 import scoring.Hud;
-
-
 
 public class BasicScoringSystemTest {
 
@@ -24,7 +23,8 @@ public class BasicScoringSystemTest {
     void setUp() {
         this.mockHud = mock(Hud.class);
         this.gameScreenMock = mock(GameScreen.class);
-        this.basicScoringSystem = new BasicScoringSystem(mockHud, gameScreenMock);
+        this.basicScoringSystem = new BasicScoringSystem(mockHud,
+                gameScreenMock, mock(Sound.class));
     }
 
     @AfterEach
