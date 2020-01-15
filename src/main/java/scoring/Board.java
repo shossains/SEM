@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Board extends Rectangle implements Serializable, Entity {
 
     private static final long serialVersionUID = 1L;
+
     public final Goal goalOne;
     public final Goal goalTwo;
 
@@ -25,10 +26,10 @@ public class Board extends Rectangle implements Serializable, Entity {
      * @param goal1 Goal of the Player 1
      * @param goal2 Goal of the Player 2
      */
-    public Board(float x, float y, float width, float height, Goal goal1, Goal goal2) {
+    public Board(float x, float y, float width, float height, Goal goalOne, Goal goalTwo) {
         super(x, y, width, height);
-        this.goalOne = goal1;
-        this.goalTwo = goal2;
+        this.goalOne = goalOne;
+        this.goalTwo = goalTwo;
     }
 
     public Goal getGoalOne() {
