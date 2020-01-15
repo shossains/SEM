@@ -2,7 +2,7 @@ package gamelogic;
 
 import com.badlogic.gdx.math.Circle;
 
-public abstract class Collidable extends Circle implements java.io.Serializable {
+public abstract class Collidable extends Circle implements java.io.Serializable, Entity {
 
     //Using the template method.
 

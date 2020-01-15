@@ -1,11 +1,13 @@
 package gamelogic;
 
+import com.badlogic.gdx.audio.Sound;
+
+import scoring.Board;
+
 public class CollisionsEngine {
 
-    private transient Puck puck;
-    private transient Paddle paddle1;
-    private transient Paddle paddle2;
     private transient float coefficientr;
+    private transient Sound sound;
 
     /**
      * Constructor.
@@ -13,29 +15,44 @@ public class CollisionsEngine {
      * collisions between the puck and paddles.
      * Please see the collision theory md file for more documentation behind the mathematical theory
      * of the collisions.
-     * @param puck The puck.
-     * @param paddle1 Player 1 paddle.
-     * @param paddle2 Player 2 paddle.
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
-    public CollisionsEngine(Puck puck, Paddle paddle1, Paddle paddle2, float e) {
-        this.puck = puck;
-        this.paddle1 = paddle1;
-        this.paddle2 = paddle2;
+    public CollisionsEngine(float e, Sound sound) {
         this.coefficientr = e;
+        this.sound = sound;
     }
 
     /**
-     * Method that calculates the collisions between the puck and paddles.
+     * Method to first see if two entities are colliding
+     * and then collide them if necessary.
+     * @param e1 First Entity.
+     * @param e2 Second Entity.
      */
-    public void collide() {
-        if (isIntersecting(puck, paddle1)) {
-            newSpeeds(puck, paddle1);
+    public void collideEntities(Entity e1, Entity e2) {
+        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE
+                || e2.getEntityType() == EntityType.PUCK
+                && e1.getEntityType() == EntityType.PADDLE) {
+
+            collide((Collidable) e1, (Collidable) e2);
+
         }
-        if (isIntersecting(puck, paddle2)) {
-            newSpeeds(puck, paddle2);
+        if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
+            checkGoal((Puck) e2, (Board) e1);
         }
     }
+
+    /**
+     * Method to collide two Collidable objects (Puck and Paddle).
+     * @param c1 First Collidable.
+     * @param c2 Second Collidable.
+     */
+    public void collide(Collidable c1, Collidable c2) {
+        if (isIntersecting(c1, c2)) {
+            newSpeeds(c1, c2);
+            sound.play();
+        }
+    }
+
 
     /**
      * Method that calculates the distance between the circles.
@@ -214,6 +231,32 @@ public class CollisionsEngine {
             c1.move(0.01f);
             c2.move(0.01f);
 
+        }
+    }
+
+    /**
+     * Check if there was a goal scored by any of the players.
+     * @param puck Puck
+     * @param board Board
+     */
+    public void checkGoal(Puck puck, Board board) {
+        // Check if the puck is in the goal of Player One
+        if (puck.x + (puck.radius / 2) >= board.getGoalTwo().getDepth()
+            && puck.y + (puck.radius / 2) >= board.getGoalTwo().getTopPost()
+            && puck.y + (puck.radius / 2) <= board.getGoalTwo().getBottomPost()) {
+
+            board.getGoalTwo().getScoringSystem().goalPlayerOne();
+            board.getGoalTwo().getScoringSystem().checkScorePlayerOne();
+            puck.resetLeft();
+        }
+        // Check if the puck is in the goal of Player Two
+        if (puck.x - (puck.radius / 2) <= board.getGoalOne().getDepth()
+                && puck.y - (puck.radius / 2) >= board.getGoalOne().getTopPost()
+                && puck.y + (puck.radius / 2) <= board.getGoalOne().getBottomPost()) {
+
+            board.getGoalOne().getScoringSystem().goalPlayerTwo();
+            board.getGoalOne().getScoringSystem().checkScorePlayerTwo();
+            puck.resetRight();
         }
     }
 }

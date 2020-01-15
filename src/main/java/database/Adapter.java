@@ -5,17 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Adapter {
-    /* 01 Database variables ------------------------------- */
-    public static Connection conn = null;
-    private transient Statement stmt = null;
-    private transient ResultSet rs = null;
 
     /* 02 Variables ---------------------------------------- */
     transient Properties prop = readPropertiesFile("database.properties");
@@ -24,75 +19,23 @@ public class Adapter {
     private transient String username = prop.getProperty("username");
     private transient String password = prop.getProperty("password");
 
-    /* 03 Constructor for DbAdapter ------------------------ */
     public Adapter() {
+        conn = this.connect();
     }
 
     /**
-     *  Connect to the database.
+     * Method that creates a connection to the database.
+     * @return a new connection if possible, null otherwise.
      */
-    public void connect() {
+    private Connection connect() {
         try {
-            // Step 2 - Open connection
             conn = DriverManager.getConnection(jdbcUrl, username, password);
-
-            // Print connected
             System.out.println("DbAdapter: Connection to database established");
+            return conn;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-    } // connect
-
-    /**
-     * Disconnect from database.
-     */
-    public void disconnect() {
-        try {
-
-            // Step 5 Close connection
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-            // Print connected
-            System.out.println("DbAdapter: Connection to database closed");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    } // disconnect
-
-    /**
-     * This method retrieves data from a properties file.
-     * This is neccesary since the db credentials are in a seperate file
-     * @param fileName name of the properties file.
-     * @return the property of the attribute.
-     * @throws IOException Throw if something goes wrong.
-     */
-    public static Properties readPropertiesFile(String fileName) {
-        FileInputStream fis = null;
-        Properties prop = null;
-        try {
-            fis = new FileInputStream(fileName);
-            prop = new Properties();
-            prop.load(fis);
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            try {
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return prop;
     }
 }

@@ -1,13 +1,20 @@
 package gamelogic;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import gui.AirHockeyGame;
 
 public class Puck extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
+    private transient EntityType entityType = EntityType.PUCK;
+
     /**
      * The co-efficient of restitution.
      */
     private transient float puckWalle;
+
+    private transient Sound sound;
 
     /**
      * Constructor.
@@ -20,10 +27,12 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param radius The radius.
      */
     public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
-                float height, float e) {
+                float height, float e, Sound sound) {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
         this.puckWalle = e;
+
+        this.sound = sound;
     }
 
     /**
@@ -35,10 +44,12 @@ public class Puck extends Collidable implements java.io.Serializable {
         if (this.x - this.radius < 0) {
             this.x = 0 + this.radius;
             this.setXspeed(- this.getXspeed() * puckWalle);
+            sound.play();
         }
         if (this.x > getWidth() - this.radius) {
             this.x = getWidth() - this.radius;
             this.setXspeed(- this.getXspeed() * puckWalle);
+            sound.play();
         }
     }
 
@@ -51,10 +62,12 @@ public class Puck extends Collidable implements java.io.Serializable {
         if (this.y - this.radius < 0) {
             this.y = 0 + this.radius;
             this.setYspeed(- this.getYspeed() * puckWalle);
+            sound.play();
         }
         if (this.y > getHeight() - this.radius) {
             this.y = getHeight() - this.radius;
             this.setYspeed(- this.getYspeed() * puckWalle);
+            sound.play();
         }
     }
 
@@ -68,4 +81,34 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.setYspeed(0);
     }
 
+    public void resetLeft() {
+        this.resetPosition();
+        this.setXspeed(50f);
+    }
+
+    public void resetRight() {
+        this.resetPosition();
+        this.setXspeed(-50f);
+    }
+
+    @Override
+    public void update(float delta) {
+        this.move(delta);
+        this.fixPosition();
+    }
+
+    @Override
+    public void render(AirHockeyGame game, Texture texture) {
+
+        //todo check if only a spritebatch is needed
+
+        game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
+                this.radius * 2, this.radius * 2);
+
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
+    }
 }
