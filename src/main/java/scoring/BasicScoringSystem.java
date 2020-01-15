@@ -17,8 +17,9 @@ import gui.ScoresScreen;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
-    private transient Sound sound;
     private static final int END_TIME = 0;
+
+    private transient Sound sound;
     transient GameScreen gameScreen;
 
 
@@ -107,4 +108,5 @@ public class BasicScoringSystem extends ScoringSystem {
         this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
+
 }
