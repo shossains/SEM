@@ -2,10 +2,10 @@ package gamelogic;
 
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
-import scoring.BasicScoringSystem;
+import java.util.ArrayList;
 import scoring.ScoringSystem;
 
-import java.util.ArrayList;
+
 
 public class GameContainer {
 
@@ -17,14 +17,25 @@ public class GameContainer {
 
     public transient ScoringSystem scoringSystem;
 
-    public GameContainer(ArrayList<Entity> entities, ArrayList<Texture> textures, ScoringSystem scoringSystem) {
+    /**
+     * A Constructor for the GameContainer Object.
+     * The GameContainer holds all the interactive elements of the board.
+     * The GameContainer handles updating, colliding and rendering of these objects.
+     * @param entities An ArrayList of entities present on the board during the game.
+     * @param textures An ArrayList of Textures of objects present on the board during the game.
+     * @param scoringSystem The ScoringSystem used during the game.
+     */
+    public GameContainer(ArrayList<Entity> entities, ArrayList<Texture> textures,
+                         ScoringSystem scoringSystem) {
         this.entities = entities;
         this.textures = textures;
         this.scoringSystem = scoringSystem;
     }
 
     /**
-     * Method to update the positions of the Entities.
+     * Method to update the positions of the Entities and status of the game.
+     * The status of the game is checked with ScoringSystem functionality.
+     * It checks if the timer for the game has run out and if one of the players won the game.
      * @param delta the time that has passed since the last frame.
      */
     public void update(float delta) {
@@ -32,12 +43,8 @@ public class GameContainer {
             entities.get(i).update(delta);
         }
         this.scoringSystem.checkTime();
-       // System.out.println("TIME CHECKED");
         this.scoringSystem.checkScorePlayerOne();
-        //System.out.println("SCORE PLAYER ONE CHECKED");
         this.scoringSystem.checkScorePlayerTwo();
-        //System.out.println("SCORE PLAYER TWO CHECKED");
-
     }
 
     /**

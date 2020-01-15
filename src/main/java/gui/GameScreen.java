@@ -132,10 +132,10 @@ public class GameScreen implements Screen {
         basicScoringSystem = new BasicScoringSystem(hud, this);
 
         // Create the goals
-        goal1 = new Goal( (HEIGHT / 3), 2 * (HEIGHT / 3), BASIC_GOAL_DEPTH, basicScoringSystem);
-        System.out.println("GOAL 1: " + goal1.topPost + " " + goal1.bottomPost + " " + goal1.depth);
-        goal2 = new Goal( (HEIGHT / 3), 2 * (HEIGHT / 3), WIDTH - BASIC_GOAL_DEPTH, basicScoringSystem);
-        System.out.println("GOAL 2: " + goal2.topPost + " " + goal2.bottomPost + " " + goal2.depth);
+        goal1 = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
+                BASIC_GOAL_DEPTH, basicScoringSystem);
+        goal2 = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
+                (WIDTH - BASIC_GOAL_DEPTH), basicScoringSystem);
 
         // Create the board
         board = new Board(0, 0, WIDTH, HEIGHT, goal1, goal2);
@@ -211,48 +211,6 @@ public class GameScreen implements Screen {
         gameContainer.update(delta);
 
         gameContainer.collideEntities();
-
-        // Updated the game clock
-        //hud.updateTime(delta);
-        //move the puck
-        ///puck.move(delta);
-        //ensure it is within boundaries
-        ///puck.fixPosition();
-
-        // Check if the puck's in one of the goals
-        /*
-        int goal = basicScoringSystem.goal();
-        if (goal != 0) {
-            if (goal == PLAYER_ONE) {
-                resetRight();
-            } else if (goal == PLAYER_TWO) {
-                resetLeft();
-            }
-        }
-
-        // Check if the game's timer haven't run out
-        if (basicScoringSystem.checkIfGameEnded()) {
-            Gdx.app.log("END", "The timer run out");
-            pause();
-            basicScoringSystem.getTheWinner();
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    ScoresScreen(game, 100));
-        }
-
-        // Check if one of the players wont the game
-        if (basicScoringSystem.checkScorePlayerOne()) {
-            pause();
-            Gdx.app.log("END", "Player 1 wins");
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    ScoresScreen(game, 100));
-        } else if (basicScoringSystem.checkScorePlayerTwo()) {
-            pause();
-            Gdx.app.log("END", "Player 2 wins");
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                    ScoresScreen(game, 100));
-        }
-        */
-
     }
 
     /**
@@ -274,30 +232,9 @@ public class GameScreen implements Screen {
         hud.stage.draw();
     }
 
-//    /**
-//     * Reset the board after player2 scored.
-//     * The puck moves towards the player who lost a point, the player1.
-//     */
-//    public void resetLeft() {
-//        pause();
-//        puck.resetLeft();
-//        resetPaddles();
-//        resume();
-//    }
-
-//    /**
-//     * Reset the board after player1 scored.
-//     * The puck moves towards the player who lost a point, the player2.
-//     */
-//    public void resetRight() {
-//        pause();
-//        puck.resetRight();
-//        resetPaddles();
-//        resume();
-//    }
 
     /**
-     * Reset the paddles on the board to the initial position.
+     * Reset the paddles on the board to their initial positions.
      */
     public void resetPaddles() {
         this.paddle1.setX(1000f);

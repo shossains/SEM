@@ -34,9 +34,6 @@ public class CollisionsEngine {
             collide((Collidable) e1, (Collidable) e2);
 
         }
-//        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.BOARD) {
-//              checkGoal((Puck) e1, (Board) e2);
-//        }
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
             checkGoal((Puck) e2, (Board) e1);
         }
@@ -248,7 +245,8 @@ public class CollisionsEngine {
             board.getGoal2().getScoringSystem().goalPlayerOne();
             board.getGoal2().getScoringSystem().checkScorePlayerOne();
             puck.resetLeft();
-        }// Check if the puck is in the goal of Player Two
+        }
+        // Check if the puck is in the goal of Player Two
         if (puck.x - (puck.radius / 2) <= board.getGoal1().getDepth()
                 && puck.y - (puck.radius / 2) >= board.getGoal1().getTopPost()
                 && puck.y + (puck.radius / 2) <= board.getGoal1().getBottomPost()) {

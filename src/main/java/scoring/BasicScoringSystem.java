@@ -31,27 +31,10 @@ public class BasicScoringSystem extends ScoringSystem {
         this.scorePlayerTwo = 0;
     }
 
-//    /**
-//     * Checks if one of the players have scored a goal.
-//     * @return an integer representing the player. 0 otherwise.
-//     */
-//    @Override
-//    public int goal() {
-//        if (goalPlayerOne(puck)) {
-//            hud.addScoreOne();
-//            return 1;
-//        } else if (goalPlayerTwo(puck)) {
-//            hud.addScoreTwo();
-//            return 2;
-//        } else {
-//            return 0;
-//        }
-//    }
-
     @Override
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
-           endGame();
+            endGame();
         }
     }
 
@@ -59,7 +42,7 @@ public class BasicScoringSystem extends ScoringSystem {
     public void checkScorePlayerOne() {
         System.out.println("SCORE PLAYER ONE: " + scorePlayerOne);
         if (this.scorePlayerOne == END_SCORE) {
-           endGame();
+            endGame();
         }
     }
 
@@ -74,10 +57,15 @@ public class BasicScoringSystem extends ScoringSystem {
 
     private void endGame() {
         this.gameScreen.pause();
-        ((Game) Gdx.app.getApplicationListener()).
-                setScreen(new ScoresScreen(this.gameScreen.game, 100));
+        ((Game) Gdx.app.getApplicationListener())
+                .setScreen(new ScoresScreen(this.gameScreen.game, 100));
     }
 
+    /**
+     * This method adds one point to the pool of points of the Player One.
+     * After doing that it pauses the state of the game,
+     * resets the positions of paddles, then resumes the game.
+     */
     public void goalPlayerOne() {
         this.scorePlayerOne++;
         this.hud.modifyScoreOne(this.scorePlayerOne);
@@ -86,6 +74,11 @@ public class BasicScoringSystem extends ScoringSystem {
         this.gameScreen.resume();
     }
 
+    /**
+     * This method adds one point to the pool of points of the Player Two.
+     * After doing that it pauses the state of the game,
+     * resets the positions of paddles, then resumes the game.
+     */
     public void goalPlayerTwo() {
         this.scorePlayerTwo++;
         this.hud.modifyScoreTwo(this.scorePlayerTwo);
@@ -93,26 +86,4 @@ public class BasicScoringSystem extends ScoringSystem {
         this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
-
-   /* *//**
-     * Check if the puck's in the PLayerTwos goal.
-     * @param puck the games puck.
-     * @return true if the puck is in PlayerTwos goal.
-     *//*
-    private boolean goalPlayerOne(Puck puck) {
-        return (puck.x + (puck.radius / 2)  >= this.board.getGoal2().getDepth()
-                && puck.y + (puck.radius / 2) >= this.board.getGoal2().getTopPost()
-                && puck.y + (puck.radius / 2) <= this.board.getGoal1().getBottomPost());
-    }
-
-    *//**
-     * Check if the puck's in the PlayerOnes goal.
-     * @param puck the games puck.
-     * @return true if the puck is in PlayerOnes goal.
-     *//*
-    private boolean goalPlayerTwo(Puck puck) {
-        return (puck.x - (puck.radius / 2) <= this.board.getGoal1().getDepth()
-                && puck.y - (puck.radius / 2)  >= this.board.getGoal1().getTopPost()
-                && puck.y + (puck.radius / 2) <= this.board.getGoal1().getBottomPost());
-    }*/
 }

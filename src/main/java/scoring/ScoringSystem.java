@@ -9,18 +9,13 @@ import gamelogic.Puck;
 public abstract class ScoringSystem {
 
     protected transient Hud hud;
-    protected transient int scorePlayerOne;
-    protected transient int scorePlayerTwo;
+    public transient int scorePlayerOne;
+    public transient int scorePlayerTwo;
 
     public ScoringSystem(Hud hud) {
         this.hud = hud;
     }
 
-//    /**
-//     * Checks if one of the players scored a point.
-//     * @return an integer representing player who scored the point.
-//     */
-//    public abstract int goal();
 
     /**
      * Check if the games clock's ran out.

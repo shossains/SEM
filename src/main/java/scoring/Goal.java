@@ -17,6 +17,13 @@ public class Goal implements Serializable, Entity {
     public final float depth;
     public final BasicScoringSystem scoringSystem;
 
+    /**
+     * Constructor for the Goal Object.
+     * @param topPost The Y coordinates of the left post of the goal.
+     * @param bottomPost The Y coordinates of the right post of the goal.
+     * @param depth The X coordinate indicating the goal line.
+     * @param scoringSystem The scoring system used during the game, updated on goals.
+     */
     public Goal(float topPost, float bottomPost, float depth, BasicScoringSystem scoringSystem) {
         this.topPost = topPost;
         this.bottomPost = bottomPost;
