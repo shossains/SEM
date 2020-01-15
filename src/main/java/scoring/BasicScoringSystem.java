@@ -2,8 +2,9 @@ package scoring;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.backends.lwjgl.audio.Wav;
-import gamelogic.Puck;
+import com.badlogic.gdx.Game;
+import gui.GameScreen;
+import gui.ScoresScreen;
 
 /**
  * The basic version of the scoring system for AirHockey game.
@@ -16,66 +17,94 @@ import gamelogic.Puck;
  */
 public class BasicScoringSystem extends ScoringSystem {
     private static final int END_SCORE = 11;
-
     private transient Sound sound;
+    private static final int END_TIME = 0;
+    transient GameScreen gameScreen;
 
-    public BasicScoringSystem(Puck puck, Hud hud, Sound sound) {
-        super(puck, hud);
+
+    /**
+     * Constructor of the BasicScoringSystem.
+     * @param hud Hud used during the game.
+     * @param gameScreen The screen displayed with the game. Used here to pause and resume the game.
+     */
+    public BasicScoringSystem(Hud hud, GameScreen gameScreen, Sound sound) {
+        super(hud);
+        this.gameScreen = gameScreen;
+        this.scorePlayerOne = 0;
+        this.scorePlayerTwo = 0;
         this.sound = sound;
     }
 
-    /**
-     * Checks if one of the players have scored a goal.
-     * @return an integer representing the player. 0 otherwise.
-     */
-    @Override
-    public int goal() {
-        if (goalPlayerOne(puck)) {
-            hud.addScoreOne();
-            //Gdx.app.log("GOAL", "Player 1 scored");
-            sound.play();
-            return 1;
-        } else if (goalPlayerTwo(puck)) {
-            hud.addScoreTwo();
-            //Gdx.app.log("GOAL", "Player 2 scored");
-            sound.play();
-            return 2;
-        } else {
-            return 0;
+    public void checkTime() {
+        if (this.hud.getGameTimer() <= END_TIME) {
+            endGame();
         }
     }
 
     @Override
-    public boolean checkScorePlayerOne() {
-        return (hud.getScoreOne() == END_SCORE);
+    public void checkScorePlayerOne() {
+        if (this.scorePlayerOne == END_SCORE) {
+            endGame();
+        }
     }
 
     @Override
-    public boolean checkScorePlayerTwo() {
-        return (hud.getScoreTwo() == END_SCORE);
+    public void checkScorePlayerTwo() {
+        if (this.scorePlayerTwo == END_SCORE) {
+            endGame();
+        }
+    }
+
+    private void endGame() {
+        this.gameScreen.pause();
+        int winner = getTheWinner();
+
+        switch (winner) {
+            case 1 : {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, scorePlayerOne * 10));
+                break;
+            }
+
+            case 2: {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, scorePlayerTwo * 10));
+                break;
+            }
+
+            default: {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new ScoresScreen(this.gameScreen.game, 100));
+                break;
+            }
+        }
     }
 
     /**
-     * Check if the puck's in the PLayerTwos goal.
-     * @param puck the games puck.
-     * @return true if the puck is in PlayerTwos goal.
+     * This method adds one point to the pool of points of the Player One.
+     * After doing that it pauses the state of the game,
+     * resets the positions of paddles, then resumes the game.
      */
-    private boolean goalPlayerOne(Puck puck) {
-        return (puck.x + (puck.radius / 2)  >= 1265
-                && puck.y + (puck.radius / 2) >= 270
-                && puck.y + (puck.radius / 2) <= 454);
+    public void goalPlayerOne() {
+        this.scorePlayerOne++;
+        sound.play();
+        this.hud.modifyScoreOne(this.scorePlayerOne);
+        this.gameScreen.pause();
+        this.gameScreen.resetPaddles();
+        this.gameScreen.resume();
     }
 
     /**
-     * Check if the puck's in the PlayerOnes goal.
-     * @param puck the games puck.
-     * @return true if the puck is in PlayerOnes goal.
+     * This method adds one point to the pool of points of the Player Two.
+     * After doing that it pauses the state of the game,
+     * resets the positions of paddles, then resumes the game.
      */
-    private boolean goalPlayerTwo(Puck puck) {
-        return (puck.x - (puck.radius / 2) <= 15
-                && puck.y - (puck.radius / 2)  >= 270
-                && puck.y + (puck.radius / 2) <= 465);
+    public void goalPlayerTwo() {
+        this.scorePlayerTwo++;
+        sound.play();
+        this.hud.modifyScoreTwo(this.scorePlayerTwo);
+        this.gameScreen.pause();
+        this.gameScreen.resetPaddles();
+        this.gameScreen.resume();
     }
-
-
 }

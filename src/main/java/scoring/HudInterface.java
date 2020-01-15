@@ -11,12 +11,12 @@ public interface HudInterface {
     /**
      * Give certain amount of points to PLayerOne.
      */
-    void addScoreOne();
+    void modifyScoreOne(int amount);
 
     /**
      * Give certain amount of points to PLayerTwo.
      */
-    void addScoreTwo();
+    void modifyScoreTwo(int amount);
 
     /**
      * Get the remaining time for the current game.

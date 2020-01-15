@@ -1,16 +1,26 @@
 package gamelogic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import gui.AirHockeyGame;
+
 public class Paddle extends Collidable implements java.io.Serializable {
 
     public static final transient long serialVersionUID = 4328743;
 
     private transient PlayerType playerType;
+    private transient EntityType entityType = EntityType.PADDLE;
     private transient float xupper;
     private transient float xlower;
 
     private transient float maxSpeed;
     private transient float acceleration;
     private transient float lowSpeed;
+
+    public transient Direction direction;
+    public transient InputHandler inputHandler;
+
+    //private transient Texture image;
 
     /**
      * Constructor.
@@ -37,9 +47,17 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if (this.playerType == PlayerType.PLAYER1) {
             xupper = getWidth();
             xlower = getWidth() / 2;
+
+            inputHandler = new Paddle1InputHandler();
+
+            //image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         } else {
             xupper = getWidth() / 2;
             xlower = 0;
+
+            inputHandler = new Paddle2InputHandler();
+
+            //image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
         }
     }
 
@@ -48,13 +66,13 @@ public class Paddle extends Collidable implements java.io.Serializable {
      * This is a very important method as it is how the player actively controls
      * their paddle.
      * I plan to add an interface in future for the movement of the puck
-     * @param rightPressed If right is pressed.
-     * @param leftPressed If left is pressed.
-     * @param upPressed If up is pressed.
-     * @param downPressed If down is pressed.
      */
-    public void setSpeeds(boolean rightPressed, boolean leftPressed,
-                           boolean upPressed, boolean downPressed) {
+    public void setSpeeds() {
+
+        boolean rightPressed = direction.isRightPressed();
+        boolean leftPressed = direction.isLeftPressed();
+        boolean upPressed = direction.isUpPressed();
+        boolean downPressed = direction.isDownPressed();
 
         setLateralSpeeds(rightPressed, leftPressed);
 
@@ -190,5 +208,32 @@ public class Paddle extends Collidable implements java.io.Serializable {
         if (this.y > getHeight() - this.radius) {
             this.y = getHeight() - this.radius;
         }
+    }
+
+    @Override
+    public void update(float delta) {
+        //set the speeds
+        //input handling
+        direction = inputHandler.handleInput();
+
+        this.setSpeeds();
+
+        this.move(delta);
+
+        this.fixPosition();
+
+    }
+
+    @Override
+    public void render(AirHockeyGame game, Texture texture) {
+
+        game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
+                this.radius * 2, this.radius * 2);
+
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return this.entityType;
     }
 }
