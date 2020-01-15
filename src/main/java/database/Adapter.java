@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
-@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.AssignmentToNonFinalStatic"})
 public class Adapter {
+    public static Connection conn = null;
 
-    /* 02 Variables ---------------------------------------- */
     transient Properties prop = readPropertiesFile("database.properties");
 
     private transient String jdbcUrl = prop.getProperty("jdbcUrl");
@@ -37,5 +36,33 @@ public class Adapter {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * This method retrieves data from a properties file.
+     * This is neccesary since the db credentials are in a seperate file
+     * @param fileName name of the properties file.
+     * @return the property of the attribute.
+     * @throws IOException Throw if something goes wrong.
+     */
+    public static Properties readPropertiesFile(String fileName) {
+        FileInputStream fis = null;
+        Properties prop = null;
+        try {
+            fis = new FileInputStream(fileName);
+            prop = new Properties();
+            prop.load(fis);
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return prop;
     }
 }
