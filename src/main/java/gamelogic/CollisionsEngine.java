@@ -238,21 +238,21 @@ public class CollisionsEngine {
      */
     public void checkGoal(Puck puck, Board board) {
         // Check if the puck is in the goal of Player One
-        if (puck.x + (puck.radius / 2) >= board.getGoal2().getDepth()
-            && puck.y + (puck.radius / 2) >= board.getGoal2().getTopPost()
-            && puck.y + (puck.radius / 2) <= board.getGoal2().getBottomPost()) {
+        if (puck.x + (puck.radius / 2) >= board.getGoalTwo().getDepth()
+            && puck.y + (puck.radius / 2) >= board.getGoalTwo().getTopPost()
+            && puck.y + (puck.radius / 2) <= board.getGoalTwo().getBottomPost()) {
 
-            board.getGoal2().getScoringSystem().goalPlayerOne();
-            board.getGoal2().getScoringSystem().checkScorePlayerOne();
+            board.getGoalTwo().getScoringSystem().goalPlayerOne();
+            board.getGoalTwo().getScoringSystem().checkScorePlayerOne();
             puck.resetLeft();
         }
         // Check if the puck is in the goal of Player Two
-        if (puck.x - (puck.radius / 2) <= board.getGoal1().getDepth()
-                && puck.y - (puck.radius / 2) >= board.getGoal1().getTopPost()
-                && puck.y + (puck.radius / 2) <= board.getGoal1().getBottomPost()) {
+        if (puck.x - (puck.radius / 2) <= board.getGoalOne().getDepth()
+                && puck.y - (puck.radius / 2) >= board.getGoalOne().getTopPost()
+                && puck.y + (puck.radius / 2) <= board.getGoalOne().getBottomPost()) {
 
-            board.getGoal1().getScoringSystem().goalPlayerTwo();
-            board.getGoal1().getScoringSystem().checkScorePlayerTwo();
+            board.getGoalOne().getScoringSystem().goalPlayerTwo();
+            board.getGoalOne().getScoringSystem().checkScorePlayerTwo();
             puck.resetRight();
         }
     }

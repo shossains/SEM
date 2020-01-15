@@ -1,10 +1,10 @@
-/*
 package scoringtest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import gamelogic.Puck;
+import gui.GameScreen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,54 +16,21 @@ import scoring.Hud;
 public class GoalPlayerOneTests {
 
     private transient Hud mockHud;
-    private transient
+    private transient GameScreen mockGameScreen;
     private transient BasicScoringSystem basicScoringSystem;
 
     @BeforeEach
     void setUp() {
-        this.puck = new Puck(360f, 360f, 0, 0, 15, 1, 1280, 720, 0.85f);
         this.mockHud = mock(Hud.class);
-        this.basicScoringSystem = new BasicScoringSystem(puck, mockHud);
+        this.mockGameScreen = mock(GameScreen.class);
+        this.basicScoringSystem = new BasicScoringSystem(mockHud, mockGameScreen);
     }
 
     @AfterEach
     void cleanUp() {
         mockHud.dispose();
+        mockGameScreen.dispose();
     }
 
-    @Test
-    void goalPlayerOneTest() {
-        puck.setX(1265);
-        puck.setY(300);
-        assertEquals(1, basicScoringSystem.goal());
-    }
 
-    @Test
-    void noGoalPlayerOneTest1() {
-        puck.setX(1265);
-        puck.setY(700);
-        assertEquals(0, basicScoringSystem.goal());
-    }
-
-    @Test
-    void noGoalPlayerOneTest2() {
-        puck.setX(700);
-        puck.setY(300);
-        assertEquals(0, basicScoringSystem.goal());
-    }
-
-    @Test
-    void noGoalPlayerOneTest3() {
-        puck.setX(0);
-        puck.setY(0);
-        assertEquals(0, basicScoringSystem.goal());
-    }
-
-    @Test
-    void noGoalPlayerOneTest4() {
-        puck.setX(1265);
-        puck.setY(0);
-        assertEquals(0, basicScoringSystem.goal());
-    }
 }
-*/

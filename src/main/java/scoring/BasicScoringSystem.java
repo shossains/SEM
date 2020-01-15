@@ -40,7 +40,6 @@ public class BasicScoringSystem extends ScoringSystem {
 
     @Override
     public void checkScorePlayerOne() {
-        System.out.println("SCORE PLAYER ONE: " + scorePlayerOne);
         if (this.scorePlayerOne == END_SCORE) {
             endGame();
         }
@@ -48,8 +47,6 @@ public class BasicScoringSystem extends ScoringSystem {
 
     @Override
     public void checkScorePlayerTwo() {
-        System.out.println("SCORE PLAYER TWO: " + scorePlayerTwo);
-
         if (this.scorePlayerTwo == END_SCORE) {
             endGame();
         }
