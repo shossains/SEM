@@ -9,9 +9,6 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     private transient EntityType entityType = EntityType.PUCK;
 
-    //private transient Texture puckImage =
-    // new Texture(Gdx.files.internal("assets/hockey-puck.png"));
-
     /**
      * The co-efficient of restitution.
      */

@@ -1,6 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
 
@@ -19,8 +18,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     public transient Direction direction;
     public transient InputHandler inputHandler;
-
-    //private transient Texture image;
 
     /**
      * Constructor.
@@ -49,15 +46,11 @@ public class Paddle extends Collidable implements java.io.Serializable {
             xlower = getWidth() / 2;
 
             inputHandler = new Paddle1InputHandler();
-
-            //image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
         } else {
             xupper = getWidth() / 2;
             xlower = 0;
 
             inputHandler = new Paddle2InputHandler();
-
-            //image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
         }
     }
 
