@@ -108,5 +108,4 @@ public class BasicScoringSystem extends ScoringSystem {
         this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
-
 }
