@@ -103,7 +103,7 @@ public class GameScreen implements Screen {
         stage.addActor(exitButton);
 
 
-        boardImage = new Texture(Gdx.files.internal("assets/board2.png"));
+        boardImage = new Texture(Gdx.files.internal("assets/board.png"));
         goalOneImage = new Texture(Gdx.files.internal("assets/leftGoal.png"));
         goalTwoImage = new Texture(Gdx.files.internal("assets/rightGoal.png"));
         puckImage = new Texture(Gdx.files.internal("assets/puck.png"));
