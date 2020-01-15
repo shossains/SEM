@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -19,8 +19,8 @@ public class SettingsScreen implements Screen {
     final transient AirHockeyGame game;
 
     public transient Stage stage;
-    public transient ImageButton backButton;
-    public transient ButtonFactory buttonFactory;
+    public transient Button backButton;
+    public transient AbstractButtonFactory abstractButtonFactory;
 
     private transient boolean mutePressed;
 
@@ -33,8 +33,8 @@ public class SettingsScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        buttonFactory = new ButtonFactory(game, this);
-        backButton = buttonFactory.createTransImButton("assets/back.png", "MainMenuScreen");
+        abstractButtonFactory = new ImageButtonFactory(game, this);
+        backButton = abstractButtonFactory.createTransButton("assets/back.png", "MainMenuScreen");
         backButton.setPosition(220, 100);
         stage.addActor(backButton);
 

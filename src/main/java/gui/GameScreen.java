@@ -9,22 +9,30 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import gamelogic.CollisionsEngine;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
+import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Hud;
-import scoring.ScoringSystem;
-
 
 public class GameScreen implements Screen {
 
     private static final int PLAYER_ONE = 1;
     private static final int PLAYER_TWO = 2;
+
+    private static final float width = 1280;
+    private static final float height = 720;
+
+    private static final float paddleMaxSpeed = 300;
+    private static final float paddleLowSpeed = 75;
+    private static final float paddleAcceleration = 10;
+    public static final float paddlePucke = 0.8f;
+    public static final float puckWalle = 0.85f;
 
     final transient AirHockeyGame game;
 
@@ -40,16 +48,14 @@ public class GameScreen implements Screen {
     transient Paddle paddle2;
 
     transient Stage stage;
-    transient ButtonFactory buttonFactory;
-    transient ImageButton resumeButton;
-    transient ImageButton exitButton;
+    transient AbstractButtonFactory abstractButtonFactory;
+    transient Button resumeButton;
+    transient Button exitButton;
 
     transient CollisionsEngine collisionsEngine;
-    transient ScoringSystem scoringSystem;
+    transient BasicScoringSystem basicScoringSystem;
 
     transient OrthographicCamera camera;
-
-    transient boolean initMove = true;
 
     private transient boolean mutePressed;
 
@@ -70,8 +76,8 @@ public class GameScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        buttonFactory = new ButtonFactory(game, this);
-        resumeButton = buttonFactory.createImButton("assets/resume.png");
+        abstractButtonFactory = new ImageButtonFactory(game, this);
+        resumeButton = abstractButtonFactory.createButton("assets/resume.png");
         resumeButton.addListener(
                 new ClickListener() {
                     @Override
@@ -80,7 +86,7 @@ public class GameScreen implements Screen {
                     }
                 });
 
-        exitButton = buttonFactory.createTransImButton("assets/exit.png", "MainMenuScreen");
+        exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "MainMenuScreen");
 
         stage.addActor(resumeButton);
         stage.addActor(exitButton);
@@ -92,22 +98,24 @@ public class GameScreen implements Screen {
 
         camera = new OrthographicCamera();
         //we can change the resolution to whatever is appropriate later
-        camera.setToOrtho(false, 1280, 720);
+        camera.setToOrtho(false, width, height);
 
         // Create the board
-        board = new Board(0, 0, 1280, 720);
+        board = new Board(0, 0, width, height);
 
         // Create the HUD
         hud = new Hud(game.spriteBatch);
 
         //we should later change it to the resolution and so on...
-        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5);
+        puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle);
 
-        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER1);
-        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, PlayerType.PLAYER2);
+        paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
+        paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, width, height,
+                PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
 
-        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, 0.8f);
-        scoringSystem = new ScoringSystem(puck, hud);
+        collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke);
+        basicScoringSystem = new BasicScoringSystem(puck, hud);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
@@ -163,7 +171,7 @@ public class GameScreen implements Screen {
         puck.fixPosition();
 
         // Check if the puck's in one of the goals
-        int goal = scoringSystem.goal();
+        int goal = basicScoringSystem.goal();
         if (goal != 0) {
             if (goal == PLAYER_ONE) {
                 resetRight();
@@ -173,21 +181,21 @@ public class GameScreen implements Screen {
         }
 
         // Check if the game's timer haven't run out
-        if (scoringSystem.checkIfGameEnded()) {
+        if (basicScoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
             pause();
-            scoringSystem.getTheWinner();
+            basicScoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
         }
 
         // Check if one of the players wont the game
-        if (scoringSystem.checkScorePlayerOne()) {
+        if (basicScoringSystem.checkScorePlayerOne()) {
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
-        } else if (scoringSystem.checkScorePlayerTwo()) {
+        } else if (basicScoringSystem.checkScorePlayerTwo()) {
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new

@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import gui.AirHockeyGame;
 
-public class Hud implements Disposable {
+public class Hud implements Disposable, HudInterface {
 
     private static final int ONE = 1;
 
@@ -36,8 +36,9 @@ public class Hud implements Disposable {
     private transient String scoreFormat;
 
     /**
-     * scoring.Hud constructor.
-     *
+     * Constructor for the basic HUD, with
+     * clock and scores of both players.
+     * @param spriteBatch spriteBatch used by the game.
      */
     public Hud(SpriteBatch spriteBatch) {
         gameTimer = 300;
@@ -78,6 +79,7 @@ public class Hud implements Disposable {
      * Update the displayed time.
      * @param dt time difference in number of seconds.
      */
+    @Override
     public void updateTime(float dt) {
         timeCount += dt;
         // If at least 1 second has elapsed
@@ -93,6 +95,7 @@ public class Hud implements Disposable {
     /**
      * Add 1 point to score1 (player1).
      */
+    @Override
     public void addScoreOne() {
         score1++;
         scoreLabel1.setText(String.format(scoreFormat, score1));
@@ -101,14 +104,10 @@ public class Hud implements Disposable {
     /**
      * Add 1 point to score2 (player2).
      */
+    @Override
     public void addScoreTwo() {
         score2++;
         scoreLabel2.setText(String.format(scoreFormat, score2));
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     /**
@@ -123,6 +122,7 @@ public class Hud implements Disposable {
      * Getter for the score of the player 1.
      * @return the score of the player 1.
      */
+    @Override
     public int getScoreOne() {
         return this.score1;
     }
@@ -131,8 +131,15 @@ public class Hud implements Disposable {
      * Getter for the score of the player 2.
      * @return the score of the player 2.
      */
+    @Override
     public int getScoreTwo() {
         return this.score2;
     }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
 
 }

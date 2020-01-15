@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -19,12 +19,13 @@ public class MainMenuScreen implements Screen {
     final transient AirHockeyGame game;
 
     public transient String username;
-    public transient Stage stage;
-    public transient ImageButton playButton;
-    public transient ImageButton settingsButton;
-    public transient ImageButton logoutButton;
-    public transient ImageButton exitButton;
-    public transient ButtonFactory buttonFactory;
+    private transient Stage stage;
+    private transient Button playButton;
+    private transient Button settingsButton;
+    private transient Button logoutButton;
+    private transient Button exitButton;
+    private transient Button scoresButton;
+    private transient AbstractButtonFactory abstractButtonFactory;
 
     private transient boolean mutePressed;
 
@@ -41,22 +42,26 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.buttonFactory = new ButtonFactory(game, this);
-        playButton = buttonFactory.createTransImButton("assets/play.png", "ChooseGameScreen");
-        settingsButton = buttonFactory.createTransImButton("assets/settings.png", "SettingsScreen");
-        logoutButton = buttonFactory.createTransImButton("assets/logout.png", "LoginScreen");
-        exitButton = buttonFactory.createTransImButton("assets/exit.png", "Exit");
+        this.abstractButtonFactory = new ImageButtonFactory(game, this);
+        playButton = abstractButtonFactory.createTransButton("assets/play.png", "ChooseGameScreen");
+        settingsButton = abstractButtonFactory.createTransButton("assets/settings.png",
+                "SettingsScreen");
+        logoutButton = abstractButtonFactory.createTransButton("assets/logout.png", "LoginScreen");
+        exitButton = abstractButtonFactory.createTransButton("assets/exit.png", "Exit");
+        scoresButton = abstractButtonFactory.createTransButton("assets/scores.png", "Scores");
 
-        playButton.setPosition(230, 320);
-        settingsButton.setPosition(230, 250);
-        logoutButton.setPosition(230, 180);
-        exitButton.setPosition(230, 110);
+
+        playButton.setPosition(230, 420);
+        settingsButton.setPosition(230, 350);
+        logoutButton.setPosition(230, 280);
+        exitButton.setPosition(230, 210);
+        scoresButton.setPosition(530, 540);
 
         stage.addActor(playButton);
-        stage.addActor(settingsButton);
+        //stage.addActor(settingsButton);
         stage.addActor(logoutButton);
         stage.addActor(exitButton);
-
+        stage.addActor(scoresButton);
 
         game.font.setColor(Color.RED);
 
@@ -81,7 +86,7 @@ public class MainMenuScreen implements Screen {
         stage.draw();
         game.spriteBatch.begin();
         game.font.getData().setScale(1.4f);
-        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 450);
+        game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 600);
         game.spriteBatch.end();
     }
 
