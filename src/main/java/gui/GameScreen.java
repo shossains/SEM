@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,6 +63,10 @@ public class GameScreen implements Screen {
     private transient boolean escPressed;
     private transient State state = State.RUN;
 
+    private transient Sound collisionSound;
+    private transient Sound scoreSound;
+    private transient Sound endSound;
+
     public enum  State {
         PAUSE,
         RUN
@@ -73,6 +78,11 @@ public class GameScreen implements Screen {
      */
     public GameScreen(final AirHockeyGame game) {
         this.game = game;
+
+        //initialize sounds
+        collisionSound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
+        scoreSound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
+        endSound = Gdx.audio.newSound(Gdx.files.internal("assets/cheering.wav"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -108,7 +118,7 @@ public class GameScreen implements Screen {
 
         //we should later change it to the resolution and so on...
         puck = new Puck(640f, 360f, 30f, 0f, 30f, 5, width, height, puckWalle,
-                Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav")));
+                collisionSound);
 
         paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, width, height,
                 PlayerType.PLAYER1, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
@@ -116,13 +126,14 @@ public class GameScreen implements Screen {
                 PlayerType.PLAYER2, paddleMaxSpeed, paddleAcceleration, paddleLowSpeed);
 
         collisionsEngine = new CollisionsEngine(puck, paddle1, paddle2, paddlePucke,
-                Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav")));
+                collisionSound);
         basicScoringSystem = new BasicScoringSystem(puck, hud,
-                Gdx.audio.newSound(Gdx.files.internal("assets/score.wav")));
+                scoreSound);
 
         //background colour
         Gdx.gl.glClearColor(0, 0.6f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
     }
 
     @Override
@@ -186,6 +197,7 @@ public class GameScreen implements Screen {
         // Check if the game's timer haven't run out
         if (basicScoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
+            endSound.play();
             pause();
             basicScoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
@@ -194,11 +206,13 @@ public class GameScreen implements Screen {
 
         // Check if one of the players won the game
         if (basicScoringSystem.checkScorePlayerOne()) {
+            endSound.play();
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
         } else if (basicScoringSystem.checkScorePlayerTwo()) {
+            endSound.play();
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
@@ -332,6 +346,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        endSound.dispose();
+        scoreSound.dispose();
+        collisionSound.dispose();
         puckImage.dispose();
         stage.dispose();
     }
