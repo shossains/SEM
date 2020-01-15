@@ -66,7 +66,6 @@ public class GameScreen implements Screen {
 
     private transient Sound collisionSound;
     private transient Sound scoreSound;
-    private transient Music endSound;
 
     public enum  State {
         PAUSE,
@@ -83,7 +82,6 @@ public class GameScreen implements Screen {
         //initialize sounds
         collisionSound = Gdx.audio.newSound(Gdx.files.internal("assets/collide.wav"));
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("assets/score.wav"));
-        endSound = Gdx.audio.newMusic(Gdx.files.internal("assets/cheering.wav"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -198,7 +196,6 @@ public class GameScreen implements Screen {
         // Check if the game's timer haven't run out
         if (basicScoringSystem.checkIfGameEnded()) {
             Gdx.app.log("END", "The timer run out");
-            endSound.play();
             pause();
             basicScoringSystem.getTheWinner();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
@@ -207,13 +204,11 @@ public class GameScreen implements Screen {
 
         // Check if one of the players won the game
         if (basicScoringSystem.checkScorePlayerOne()) {
-            endSound.play();
             pause();
             Gdx.app.log("END", "Player 1 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
                     ScoresScreen(game, 100));
         } else if (basicScoringSystem.checkScorePlayerTwo()) {
-            endSound.play();
             pause();
             Gdx.app.log("END", "Player 2 wins");
             ((Game)Gdx.app.getApplicationListener()).setScreen(new
@@ -347,7 +342,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        endSound.dispose();
         scoreSound.dispose();
         collisionSound.dispose();
         puckImage.dispose();
