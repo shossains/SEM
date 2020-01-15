@@ -1,7 +1,6 @@
 package gamelogic;
 
 import scoring.Board;
-import scoring.Goal;
 
 public class CollisionsEngine {
 
