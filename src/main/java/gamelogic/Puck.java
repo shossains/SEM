@@ -1,4 +1,5 @@
 package gamelogic;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
