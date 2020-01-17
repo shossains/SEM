@@ -48,6 +48,17 @@ public class GameContainer {
     }
 
     /**
+     * The method that runs the collisions engine collide on the entities.
+     */
+    public void collideEntities() {
+        for (int i = 0; i < entities.size(); i++) {
+            for (int j = i + 1; j < entities.size(); j++) {
+                collisionsEngine.collideEntities(entities.get(i), entities.get(j));
+            }
+        }
+    }
+
+    /**
      * Method to render the Entities.
      * @param game The AirHockey game object.
      */
@@ -58,15 +69,4 @@ public class GameContainer {
     }
 
     //sound effect stuff in here
-
-    /**
-     * The method that runs the collisions engine collide on the entities.
-     */
-    public void collideEntities() {
-        for (int i = 0; i < entities.size(); i++) {
-            for (int j = i + 1; j < entities.size(); j++) {
-                collisionsEngine.collideEntities(entities.get(i), entities.get(j));
-            }
-        }
-    }
 }

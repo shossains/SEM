@@ -100,8 +100,6 @@ public class Puck extends Collidable implements java.io.Serializable {
     @Override
     public void render(AirHockeyGame game, Texture texture) {
 
-        //todo check if only a spritebatch is needed
-
         game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
                 this.radius * 2, this.radius * 2);
 

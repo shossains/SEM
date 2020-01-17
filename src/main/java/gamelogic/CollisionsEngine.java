@@ -39,6 +39,22 @@ public class CollisionsEngine {
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
             checkGoal((Puck) e2, (Board) e1);
         }
+
+        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.BOARD
+                || e2.getEntityType() == EntityType.PUCK
+                && e1.getEntityType() == EntityType.BOARD) {
+
+            //make a collide method fo the board and puck
+
+        }
+
+        if (e1.getEntityType() == EntityType.PADDLE && e2.getEntityType() == EntityType.BOARD
+                || e2.getEntityType() == EntityType.PADDLE
+                && e1.getEntityType() == EntityType.BOARD) {
+
+            //make a collide method fo the board and Paddle
+
+        }
     }
 
     /**
