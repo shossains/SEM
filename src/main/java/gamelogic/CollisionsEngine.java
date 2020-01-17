@@ -29,33 +29,90 @@ public class CollisionsEngine {
      * @param e2 Second Entity.
      */
     public void collideEntities(Entity e1, Entity e2) {
-        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE
-                || e2.getEntityType() == EntityType.PUCK
-                && e1.getEntityType() == EntityType.PADDLE) {
+        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE) {
 
             collide((Collidable) e1, (Collidable) e2);
 
         }
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
             checkGoal((Puck) e2, (Board) e1);
-        }
-
-        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.BOARD
-                || e2.getEntityType() == EntityType.PUCK
-                && e1.getEntityType() == EntityType.BOARD) {
-
-            //make a collide method fo the board and puck
+            collide((Puck) e2, (Board) e1);
 
         }
 
-        if (e1.getEntityType() == EntityType.PADDLE && e2.getEntityType() == EntityType.BOARD
-                || e2.getEntityType() == EntityType.PADDLE
-                && e1.getEntityType() == EntityType.BOARD) {
+        if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PADDLE) {
 
-            //make a collide method fo the board and Paddle
+            collide((Paddle) e2, (Board) e1);
 
         }
     }
+
+    public void collide(Puck puck, Board board) {
+        fixPuckPosition(puck, board);
+    }
+
+    public void collide(Paddle paddle, Board board) {
+        fixPaddlePosition(paddle, board);
+    }
+
+    public void fixPuckPosition(Puck puck, Board board) {
+        fixPuckXPosition(puck, board);
+        fixPuckYPosition(puck, board);
+    }
+
+    public void fixPaddlePosition(Paddle paddle, Board board) {
+        fixPaddleXposition(paddle, board);
+        fixPaddleYPosition(paddle, board);
+    }
+
+    public void fixPuckXPosition(Puck puck, Board board) {
+        if (puck.x - puck.radius < 0) {
+            puck.x = 0 + puck.radius;
+            puck.setXspeed(- puck.getXspeed() * coefficientr);
+            sound.play();
+        }
+        if (puck.x > board.width - puck.radius) {
+            puck.x = board.width - puck.radius;
+            puck.setXspeed(- puck.getXspeed() * coefficientr);
+            sound.play();
+        }
+    }
+
+    public void fixPuckYPosition(Puck puck, Board board) {
+        if (puck.y - puck.radius < 0) {
+            puck.y = 0 + puck.radius;
+            puck.setYspeed(- puck.getYspeed() * coefficientr);
+            sound.play();
+        }
+        if (puck.y > board.height - puck.radius) {
+            puck.y = board.height - puck.radius;
+            puck.setYspeed(- puck.getYspeed() * coefficientr);
+            sound.play();
+        }
+    }
+
+    public void fixPaddleXposition(Paddle paddle, Board board) {
+
+        if (paddle.x - paddle.radius < paddle.xlower) {
+            paddle.x = paddle.xlower + paddle.radius;
+        }
+        if (paddle.x > paddle.xupper - paddle.radius) {
+            paddle.x = paddle.xupper - paddle.radius;
+        }
+
+    }
+
+    public void fixPaddleYPosition(Paddle paddle, Board board) {
+        if (paddle.y - paddle.radius < 0) {
+            paddle.y = 0 + paddle.radius;
+        }
+        if (paddle.y > board.height - paddle.radius) {
+            paddle.y = board.height - paddle.radius;
+        }
+    }
+
+
+
 
     /**
      * Method to collide two Collidable objects (Puck and Paddle).

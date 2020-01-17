@@ -15,6 +15,7 @@ import gamelogic.Puck;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import scoring.BasicScoringSystem;
 import scoring.Board;
 import scoring.Goal;
 
@@ -37,6 +38,15 @@ public class CollisionsEngineTest {
 
         puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f, mock(Sound.class));
         collisionsEngine = new CollisionsEngine(0.8f, mock(Sound.class));
+
+        BasicScoringSystem basicScoringSystem = mock(BasicScoringSystem.class);
+
+        Goal goalOne = new Goal((1280 / 3), 2 * (720 / 3),
+                15, basicScoringSystem);
+        Goal goalTwo = new Goal((720 / 3), 2 * (720 / 3),
+                (1280 - 15), basicScoringSystem);
+
+        Board board = new Board(0, 0, 1280, 720, goalOne, goalTwo);
 
 
     }

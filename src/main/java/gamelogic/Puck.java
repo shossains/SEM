@@ -35,41 +35,6 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.sound = sound;
     }
 
-    /**
-     * This method makes sure the paddle is in the correct X boundaries.
-     * We check if the puck is outside of the board boundaries,
-     * and if it has hit an edge we calculate the speed after the resulting collision.
-     */
-    public void fixXPosition() {
-        if (this.x - this.radius < 0) {
-            this.x = 0 + this.radius;
-            this.setXspeed(- this.getXspeed() * puckWalle);
-            sound.play();
-        }
-        if (this.x > getWidth() - this.radius) {
-            this.x = getWidth() - this.radius;
-            this.setXspeed(- this.getXspeed() * puckWalle);
-            sound.play();
-        }
-    }
-
-    /**
-     * This method makes sure the paddle is in the correct Y boundaries.
-     * We check if the puck is outside of the board boundaries,
-     * and if it has hit an edge we calculate the speed after the resulting collision.
-     */
-    public void fixYPosition() {
-        if (this.y - this.radius < 0) {
-            this.y = 0 + this.radius;
-            this.setYspeed(- this.getYspeed() * puckWalle);
-            sound.play();
-        }
-        if (this.y > getHeight() - this.radius) {
-            this.y = getHeight() - this.radius;
-            this.setYspeed(- this.getYspeed() * puckWalle);
-            sound.play();
-        }
-    }
 
     /**
      * Set the puck's position on the board to the initial one.
@@ -94,7 +59,7 @@ public class Puck extends Collidable implements java.io.Serializable {
     @Override
     public void update(float delta) {
         this.move(delta);
-        this.fixPosition();
+        //this.fixPosition();
     }
 
     @Override

@@ -9,8 +9,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
 
     private transient PlayerType playerType;
     private transient EntityType entityType = EntityType.PADDLE;
-    private transient float xupper;
-    private transient float xlower;
+    public transient float xupper;
+    public transient float xlower;
 
     private transient float maxSpeed;
     private transient float acceleration;
@@ -179,29 +179,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
         }
     }
 
-    /**
-     * This method makes sure the paddle is in the correct X boundaries.
-     */
-    public void fixXPosition() {
-        if (this.x - this.radius < xlower) {
-            this.x = xlower + this.radius;
-        }
-        if (this.x > xupper - this.radius) {
-            this.x = xupper - this.radius;
-        }
-    }
-
-    /**
-     * This method makes sure the paddle is in the correct Y boundaries.
-     */
-    public void fixYPosition() {
-        if (this.y - this.radius < 0) {
-            this.y = 0 + this.radius;
-        }
-        if (this.y > getHeight() - this.radius) {
-            this.y = getHeight() - this.radius;
-        }
-    }
 
     @Override
     public void update(float delta) {
@@ -212,8 +189,6 @@ public class Paddle extends Collidable implements java.io.Serializable {
         this.setSpeeds();
 
         this.move(delta);
-
-        this.fixPosition();
 
     }
 
