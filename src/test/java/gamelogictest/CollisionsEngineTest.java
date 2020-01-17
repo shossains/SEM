@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.audio.Sound;
 import gamelogic.CollisionsEngine;
@@ -586,11 +585,30 @@ public class CollisionsEngineTest {
 
     @Test
     public void testGoalPlayer7() {
-        puck.setX(700);
-        puck.setY(700);
+        puck.setX(1270);
+        puck.setY(720);
 
         collisionsEngine.collideEntities(goalTwo, puck);
         verify(basicScoringSystem, times(0)).checkScorePlayerOne();
+    }
+
+    @Test
+    public void testGoalPlayer8() {
+        puck.setX(15);
+        puck.setY(700);
+
+        collisionsEngine.collideEntities(goalOne, puck);
+        verify(basicScoringSystem, times(0)).checkScorePlayerTwo();
+    }
+
+    @Test
+    public void testNoCollision() {
+        puck.setX(700);
+        puck.setY(700);
+
+        collisionsEngine.collideEntities(goalTwo, paddle1);
+        verify(basicScoringSystem, times(0)).checkScorePlayerOne();
+        verify(basicScoringSystem, times(0)).checkScorePlayerTwo();
     }
 
 }
