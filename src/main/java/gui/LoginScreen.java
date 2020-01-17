@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
+import database.VerifyLogin;
 import gamelogic.CredentialsChecker;
 
 import java.sql.SQLException;
@@ -101,8 +102,11 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
 
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter());
+        Adapter adapter = new Adapter();
+        VerifyLogin verifyLogin = new VerifyLogin(adapter.conn, username, password);
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, verifyLogin);
         String response = credentialsChecker.checkLoginCredentials(username, password);
+
         switch (response) {
             case "empty" : {
                 Dialog dialog = dialogFactory.createDialog("Empty fields",

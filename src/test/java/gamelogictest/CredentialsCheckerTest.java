@@ -1,13 +1,17 @@
 package gamelogictest;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Screen;
 import database.Adapter;
+import database.RegisterUser;
+import database.VerifyLogin;
 import gamelogic.CredentialsChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 /**
  * The purpose of this test class is to be a integration test suite,
@@ -17,7 +21,11 @@ import org.mockito.Mockito;
 public class CredentialsCheckerTest {
 
     transient Screen screen;
-    transient CredentialsChecker checker;
+    transient CredentialsChecker checkerLogin;
+    transient CredentialsChecker checkerRegister;
+
+    transient VerifyLogin verifyLogin;
+    transient RegisterUser registerUser;
 
     final transient String pass = "pass";
     final transient String username = "test";
@@ -26,70 +34,79 @@ public class CredentialsCheckerTest {
 
     @BeforeEach
     public void setUp() {
-        screen = Mockito.mock(Screen.class);
-        checker = new CredentialsChecker(screen, new Adapter());
+        screen = mock(Screen.class);
+        Adapter adapter = mock(Adapter.class);
+        verifyLogin = mock(VerifyLogin.class);
+        registerUser = mock(RegisterUser.class);
+        checkerLogin = new CredentialsChecker(screen, adapter, verifyLogin);
+        checkerRegister = new CredentialsChecker(screen, adapter, registerUser);
+
     }
 
     @Test
     public void checkCredentialsLoginEmpty1() {
-        assertEquals(checker.checkLoginCredentials("", pass), response);
+        assertEquals(checkerLogin.checkLoginCredentials("", pass), response);
     }
 
     @Test
     public void checkCredentialsLoginEmpty2() {
-        assertEquals(checker.checkLoginCredentials(username, ""), response);
+        assertEquals(checkerLogin.checkLoginCredentials(username, ""), response);
     }
 
     @Test
     public void checkCredentialsLoginValid() {
-        assertEquals(checker.checkLoginCredentials(username, pass), "correct");
+        when(verifyLogin.execute(any())).thenReturn(true);
+        assertEquals(checkerLogin.checkLoginCredentials(username, pass), "correct");
     }
 
     @Test
     public void checkCredentialsLoginIncorrect() {
-        assertEquals(checker.checkLoginCredentials("testtest", "passpass"), "incorrect");
+        when(verifyLogin.execute(any())).thenReturn(false);
+        assertEquals(checkerLogin.checkLoginCredentials("testtest", "passpass"), "incorrect");
     }
 
     @Test
     public void checkCredentialsRegistration() {
-        assertEquals(checker.checkRegisterCredentials(username, pass,
+        assertEquals(checkerRegister.checkRegisterCredentials(username, pass,
                 "", pass), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty() {
-        assertEquals(checker.checkRegisterCredentials("", pass,
+        assertEquals(checkerRegister.checkRegisterCredentials("", pass,
                 email, pass), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty2() {
-        assertEquals(checker.checkRegisterCredentials(username, "",
+        assertEquals(checkerRegister.checkRegisterCredentials(username, "",
                 email, pass), response);
     }
 
     @Test
     public void checkCredentialsRegistrationEmpty3() {
-        assertEquals(checker.checkRegisterCredentials(username, pass,
+        assertEquals(checkerRegister.checkRegisterCredentials(username, pass,
                 email, ""), response);
     }
 
     @Test
     public void checkCredentialsRegistrationPasswords() {
-        assertEquals(checker.checkRegisterCredentials(username, pass,
+        assertEquals(checkerRegister.checkRegisterCredentials(username, pass,
                 email, "pass2"), "passwordsNotMatching");
     }
 
     @Test
     public void checkCredentialsRegistrationIncorect() {
-        assertEquals(checker.checkRegisterCredentials(username, pass,
+        when(registerUser.execute(any())).thenReturn(false);
+        assertEquals(checkerRegister.checkRegisterCredentials(username, pass,
                 email, pass), "incorrect");
     }
 
     @Test
     public void checkCredentialsRegistrationCorrect() {
         double randomNumber = Math.random();
-        assertEquals(checker.checkRegisterCredentials(randomNumber + "", pass,
+        when(registerUser.execute(any())).thenReturn(true);
+        assertEquals(checkerRegister.checkRegisterCredentials(randomNumber + "", pass,
                 randomNumber + "", pass), "correct");
     }
 }

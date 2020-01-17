@@ -9,14 +9,27 @@ public class CredentialsChecker {
 
     transient Screen screen;
     private transient Adapter adapter;
+    private transient VerifyLogin verifyLogin;
+    private transient RegisterUser registerUser;
 
     /**
      * Constructor for the credentials checker class.
      * @param screen the screen that is currently on.
      */
-    public CredentialsChecker(Screen screen, Adapter adapter) {
+    public CredentialsChecker(Screen screen, Adapter adapter, VerifyLogin verifyLogin) {
         this.screen = screen;
         this.adapter = adapter;
+        this.verifyLogin = verifyLogin;
+    }
+
+    /**
+     * Constructor for the credentials checker class.
+     * @param screen the screen that is currently on.
+     */
+    public CredentialsChecker(Screen screen, Adapter adapter, RegisterUser registerUser) {
+        this.screen = screen;
+        this.adapter = adapter;
+        this.registerUser = registerUser;
     }
 
     /**
@@ -31,7 +44,6 @@ public class CredentialsChecker {
         if (username.equals("") || password.equals("")) {
             return "empty";
         }
-        VerifyLogin verifyLogin = new VerifyLogin(adapter.conn, username, password);
         if (verifyLogin.execute(adapter.conn)) {
             return "correct";
         } else {
@@ -59,7 +71,6 @@ public class CredentialsChecker {
         if (!password.equals(passwordAgain)) {
             return "passwordsNotMatching";
         }
-        RegisterUser registerUser = new RegisterUser(adapter.conn, username, password, email);
         if (registerUser.execute(adapter.conn)) {
             return "correct";
         } else {
