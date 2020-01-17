@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.audio.Sound;
 import gamelogic.CollisionsEngine;
@@ -64,7 +64,7 @@ public class CollisionsEngineTest {
 
         basicScoringSystem = mock(BasicScoringSystem.class);
 
-        goalOne = new Goal((1280 / 3), 2 * (720 / 3),
+        goalOne = new Goal((720 / 3), 2 * (720 / 3),
                 15, basicScoringSystem, PlayerType.PLAYER1);
         goalTwo = new Goal((720 / 3), 2 * (720 / 3),
                 (1280 - 15), basicScoringSystem, PlayerType.PLAYER2);
@@ -521,15 +521,71 @@ public class CollisionsEngineTest {
         assertEquals(paddle4.radius, paddle4.y);
     }
 
-//    @Test
-//    public void testGoalPlayer1() {
-//        puck.setX(0);
-//        puck.setY(360);
-//        collisionsEngine.collideEntities(puck, goalOne);
-//
-//        assertEquals(360, paddle1.x);
-//        assertEquals(360, paddle1.y);
-//
-//    }
+    @Test
+    public void testGoalPlayer1() {
+        puck.setX(0);
+        puck.setY(360);
+
+        collisionsEngine.collideEntities(goalOne, puck);
+        verify(basicScoringSystem, times(1)).checkScorePlayerTwo();
+    }
+
+    @Test
+    public void testGoalPlayer2() {
+        puck.setX(400);
+        puck.setY(360);
+
+        collisionsEngine.collideEntities(goalOne, puck);
+
+        assertEquals(400, puck.x);
+        assertEquals(360, puck.y);
+
+    }
+
+    @Test
+    public void testGoalPlayer3() {
+        puck.setX(1270);
+        puck.setY(360);
+
+        collisionsEngine.collideEntities(goalTwo, puck);
+        verify(basicScoringSystem, times(1)).checkScorePlayerOne();
+
+    }
+
+    @Test
+    public void testGoalPlayer4() {
+        puck.setX(0);
+        puck.setY(360);
+
+        collisionsEngine.collideEntities(goalTwo, puck);
+        verify(basicScoringSystem, times(0)).checkScorePlayerOne();
+    }
+
+    @Test
+    public void testGoalPlayer5() {
+        puck.setX(1270);
+        puck.setY(0);
+
+        collisionsEngine.collideEntities(goalTwo, puck);
+        verify(basicScoringSystem, times(0)).checkScorePlayerOne();
+    }
+
+    @Test
+    public void testGoalPlayer6() {
+        puck.setX(15);
+        puck.setY(0);
+
+        collisionsEngine.collideEntities(goalOne, puck);
+        verify(basicScoringSystem, times(0)).checkScorePlayerTwo();
+    }
+
+    @Test
+    public void testGoalPlayer7() {
+        puck.setX(700);
+        puck.setY(700);
+
+        collisionsEngine.collideEntities(goalTwo, puck);
+        verify(basicScoringSystem, times(0)).checkScorePlayerOne();
+    }
 
 }
