@@ -141,6 +141,8 @@ public class GameScreen implements Screen {
         gameContainer.update(delta);
 
         gameContainer.collideEntities();
+
+        gameContainer.updateAfterGoal();
     }
 
     /**
@@ -163,20 +165,20 @@ public class GameScreen implements Screen {
     }
 
 
-    /**
-     * Reset the paddles on the board to their initial positions.
-     */
-    public void resetPaddles() {
-        this.paddle1.setX(1000f);
-        this.paddle1.setY(360f);
-        this.paddle1.setXspeed(0);
-        this.paddle1.setYspeed(0);
-
-        this.paddle2.setX(360f);
-        this.paddle2.setY(360f);
-        this.paddle2.setXspeed(0);
-        this.paddle2.setYspeed(0);
-    }
+//    /**
+//     * Reset the paddles on the board to their initial positions.
+//     */
+//    public void resetPaddles() {
+//        this.paddle1.setX(1000f);
+//        this.paddle1.setY(360f);
+//        this.paddle1.setXspeed(0);
+//        this.paddle1.setYspeed(0);
+//
+//        this.paddle2.setX(360f);
+//        this.paddle2.setY(360f);
+//        this.paddle2.setXspeed(0);
+//        this.paddle2.setYspeed(0);
+//    }
 
 
     @Override

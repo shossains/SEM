@@ -20,6 +20,7 @@ public class BasicScoringSystem extends ScoringSystem {
     private static final int END_TIME = 0;
 
     private transient Sound sound;
+
     transient GameScreen gameScreen;
 
 
@@ -34,6 +35,7 @@ public class BasicScoringSystem extends ScoringSystem {
         this.scorePlayerOne = 0;
         this.scorePlayerTwo = 0;
         this.sound = sound;
+        this.justScored = false;
     }
 
     public void checkTime() {
@@ -91,7 +93,10 @@ public class BasicScoringSystem extends ScoringSystem {
         sound.play();
         this.hud.modifyScoreOne(this.scorePlayerOne);
         this.gameScreen.pause();
-        this.gameScreen.resetPaddles();
+
+        this.justScored = true;
+        //not in the game screen
+        //this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
 
@@ -105,7 +110,8 @@ public class BasicScoringSystem extends ScoringSystem {
         sound.play();
         this.hud.modifyScoreTwo(this.scorePlayerTwo);
         this.gameScreen.pause();
-        this.gameScreen.resetPaddles();
+        this.justScored = true;
+        //this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
 }

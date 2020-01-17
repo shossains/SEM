@@ -26,7 +26,7 @@ public class AirHockeyGame extends Game {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
         //this.setScreen(new AuthenticationScreen(this));
-        this.setScreen(new AuthenticationScreen(this));
+        this.setScreen(new GameScreen(this));
 
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets/test.ogg"));
         sound.setLooping(true);

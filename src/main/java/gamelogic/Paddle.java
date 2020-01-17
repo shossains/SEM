@@ -180,6 +180,10 @@ public class Paddle extends Collidable implements java.io.Serializable {
     }
 
 
+    public PlayerType getPlayerType() {
+        return playerType;
+    }
+
     @Override
     public void update(float delta) {
         //set the speeds

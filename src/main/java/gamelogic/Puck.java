@@ -35,7 +35,6 @@ public class Puck extends Collidable implements java.io.Serializable {
         this.sound = sound;
     }
 
-
     /**
      * Set the puck's position on the board to the initial one.
      */

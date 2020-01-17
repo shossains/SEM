@@ -58,11 +58,29 @@ public class LocalGameContainer implements GameContainer{
         }
     }
 
+    public void updateAfterGoal() {
+
+        //check if a goal has been scored
+        if (scoringSystem.justScored) {
+            for (int i = 0; i < entities.size(); i++) {
+                Entity ei = entities.get(i);
+
+                if(ei.getEntityType() == EntityType.PADDLE) {
+                    collisionsEngine.resetPosition((Paddle) ei);
+                }
+            }
+
+            scoringSystem.justScored = false;
+        }
+
+    }
+
     /**
      * Method to render the Entities.
      * @param game The AirHockey game object.
      */
     public void render(AirHockeyGame game) {
+
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(game, textures.get(i));
         }

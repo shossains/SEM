@@ -10,6 +10,8 @@ public abstract class ScoringSystem {
     public transient int scorePlayerOne;
     public transient int scorePlayerTwo;
 
+    public transient boolean justScored;
+
     public ScoringSystem(Hud hud) {
         this.hud = hud;
     }

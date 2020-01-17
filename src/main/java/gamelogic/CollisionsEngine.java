@@ -334,4 +334,23 @@ public class CollisionsEngine {
             puck.resetRight();
         }
     }
+
+    /**
+     * Reset the paddles on the board to their initial positions.
+     */
+    public void resetPosition(Paddle paddle) {
+        if(paddle.getPlayerType() == PlayerType.PLAYER1) {
+            paddle.setX(1000f);
+            paddle.setY(360f);
+            paddle.setXspeed(0);
+            paddle.setYspeed(0);
+        }
+        else {
+            paddle.setX(360f);
+            paddle.setY(360f);
+            paddle.setXspeed(0);
+            paddle.setYspeed(0);
+        }
+    }
+
 }
