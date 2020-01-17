@@ -313,29 +313,8 @@ public class CollisionsEngine {
     /**
      * Check if there was a goal scored by any of the players.
      * @param puck Puck
-     * @param board Board
+     * @param goal Goal
      */
-    public void checkGoal(Puck puck, Board board) {
-        // Check if the puck is in the goal of Player One
-        if (puck.x + (puck.radius / 2) >= board.getGoalTwo().getDepth()
-            && puck.y + (puck.radius / 2) >= board.getGoalTwo().getTopPost()
-            && puck.y + (puck.radius / 2) <= board.getGoalTwo().getBottomPost()) {
-
-            board.getGoalTwo().getScoringSystem().goalPlayerOne();
-            board.getGoalTwo().getScoringSystem().checkScorePlayerOne();
-            puck.resetLeft();
-        }
-        // Check if the puck is in the goal of Player Two
-        if (puck.x - (puck.radius / 2) <= board.getGoalOne().getDepth()
-                && puck.y - (puck.radius / 2) >= board.getGoalOne().getTopPost()
-                && puck.y + (puck.radius / 2) <= board.getGoalOne().getBottomPost()) {
-
-            board.getGoalOne().getScoringSystem().goalPlayerTwo();
-            board.getGoalOne().getScoringSystem().checkScorePlayerTwo();
-            puck.resetRight();
-        }
-    }
-
     public void checkGoal(Puck puck, Goal goal) {
         if(goal.getPlayerType() == PlayerType.PLAYER1) {
             if (puck.x - (puck.radius / 2) <= goal.getDepth()
@@ -344,7 +323,7 @@ public class CollisionsEngine {
 
                 goal.getScoringSystem().goalPlayerTwo();
                 goal.getScoringSystem().checkScorePlayerTwo();
-                puck.resetRight();
+                resetRight(puck);
             }
         }
         else {
@@ -354,7 +333,7 @@ public class CollisionsEngine {
 
                 goal.getScoringSystem().goalPlayerOne();
                 goal.getScoringSystem().checkScorePlayerOne();
-                puck.resetLeft();
+                resetLeft(puck);
             }
         }
     }
@@ -374,6 +353,26 @@ public class CollisionsEngine {
             paddle.setXspeed(0);
             paddle.setYspeed(0);
         }
+    }
+
+    /**
+     * Set the puck's position on the board to the initial one.
+     */
+    public void resetPuckPosition(Puck puck) {
+        puck.setX(puck.getWidth() / 2);
+        puck.setY(puck.getHeight() / 2);
+        puck.setXspeed(0);
+        puck.setYspeed(0);
+    }
+
+    public void resetLeft(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(50f);
+    }
+
+    public void resetRight(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(-50f);
     }
 
 }

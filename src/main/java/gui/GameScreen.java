@@ -21,7 +21,6 @@ public class GameScreen implements Screen {
     private static final float WIDTH = 1280;
     private static final float HEIGHT = 720;
 
-
     public final transient AirHockeyGame game;
 
     transient Hud hud;
