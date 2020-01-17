@@ -62,6 +62,18 @@ public class CollisionsEngine {
         fixPaddlePosition(paddle, board);
     }
 
+    /**
+     * Method to collide two Collidable objects (Puck and Paddle).
+     * @param c1 First Collidable.
+     * @param c2 Second Collidable.
+     */
+    public void collide(Collidable c1, Collidable c2) {
+        if (isIntersecting(c1, c2)) {
+            newSpeeds(c1, c2);
+            sound.play();
+        }
+    }
+
     public void fixPuckPosition(Puck puck, Board board) {
         fixPuckXPosition(puck, board);
         fixPuckYPosition(puck, board);
@@ -115,18 +127,6 @@ public class CollisionsEngine {
         }
         if (paddle.y > board.height - paddle.radius) {
             paddle.y = board.height - paddle.radius;
-        }
-    }
-
-    /**
-     * Method to collide two Collidable objects (Puck and Paddle).
-     * @param c1 First Collidable.
-     * @param c2 Second Collidable.
-     */
-    public void collide(Collidable c1, Collidable c2) {
-        if (isIntersecting(c1, c2)) {
-            newSpeeds(c1, c2);
-            sound.play();
         }
     }
 
@@ -316,7 +316,7 @@ public class CollisionsEngine {
      * @param goal Goal
      */
     public void checkGoal(Puck puck, Goal goal) {
-        if(goal.getPlayerType() == PlayerType.PLAYER1) {
+        if (goal.getPlayerType() == PlayerType.PLAYER1) {
             if (puck.x - (puck.radius / 2) <= goal.getDepth()
                     && puck.y - (puck.radius / 2) >= goal.getTopPost()
                     && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {
@@ -325,8 +325,7 @@ public class CollisionsEngine {
                 goal.getScoringSystem().checkScorePlayerTwo();
                 resetRight(puck);
             }
-        }
-        else {
+        } else {
             if (puck.x + (puck.radius / 2) >= goal.getDepth()
                     && puck.y + (puck.radius / 2) >= goal.getTopPost()
                     && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {

@@ -36,7 +36,9 @@ public class CollisionsEngineTest {
     private transient Goal goalTwo;
     private transient float coeffRestitution = 0.85f;
 
-    private transient Puck puck1, puck2, puck3;
+    private transient Puck puck1;
+    private transient Puck puck2;
+    private transient Puck puck3;
     private transient int deltaTime1 = 5;
     private transient int deltaTime2 = 10;
 
@@ -530,6 +532,6 @@ public class CollisionsEngineTest {
 //        assertEquals(360, paddle1.x);
 //        assertEquals(360, paddle1.y);
 //
-//    }
+//   }
 
 }
