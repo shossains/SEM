@@ -48,7 +48,7 @@ public class Hud implements Disposable, HudInterface {
 
         viewport = new FitViewport(AirHockeyGame.S_WIDTH,
                 AirHockeyGame.S_HEIGHT, new OrthographicCamera());
-        System.out.println(Gdx.graphics.getWidth());
+        //System.out.println(Gdx.graphics.getWidth());
         stage = new Stage(viewport, spriteBatch);
         font = new BitmapFont();
         font.getData().setScale(2, 2);
