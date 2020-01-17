@@ -1,12 +1,11 @@
 package gamelogic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
 import java.util.ArrayList;
 import scoring.ScoringSystem;
 
-public class LocalGameContainer implements GameContainer{
+public class LocalGameContainer implements GameContainer {
 
     private transient CollisionsEngine collisionsEngine;
 
@@ -58,18 +57,19 @@ public class LocalGameContainer implements GameContainer{
         }
     }
 
+    /**
+     * The methods resets the positions of the paddles
+     * after a goal was scored.
+     */
     public void updateAfterGoal() {
-
         //check if a goal has been scored
         if (scoringSystem.justScored) {
             for (int i = 0; i < entities.size(); i++) {
                 Entity ei = entities.get(i);
-
-                if(ei.getEntityType() == EntityType.PADDLE) {
+                if (ei.getEntityType() == EntityType.PADDLE) {
                     collisionsEngine.resetPosition((Paddle) ei);
                 }
             }
-
             scoringSystem.justScored = false;
         }
 
@@ -86,5 +86,4 @@ public class LocalGameContainer implements GameContainer{
         }
     }
 
-    //sound effect stuff in here
 }

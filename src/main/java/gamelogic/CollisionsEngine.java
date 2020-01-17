@@ -118,9 +118,6 @@ public class CollisionsEngine {
         }
     }
 
-
-
-
     /**
      * Method to collide two Collidable objects (Puck and Paddle).
      * @param c1 First Collidable.
@@ -132,7 +129,6 @@ public class CollisionsEngine {
             sound.play();
         }
     }
-
 
     /**
      * Method that calculates the distance between the circles.
@@ -346,13 +342,12 @@ public class CollisionsEngine {
      * Reset the paddles on the board to their initial positions.
      */
     public void resetPosition(Paddle paddle) {
-        if(paddle.getPlayerType() == PlayerType.PLAYER1) {
+        if (paddle.getPlayerType() == PlayerType.PLAYER1) {
             paddle.setX(1000f);
             paddle.setY(360f);
             paddle.setXspeed(0);
             paddle.setYspeed(0);
-        }
-        else {
+        } else {
             paddle.setX(360f);
             paddle.setY(360f);
             paddle.setXspeed(0);
