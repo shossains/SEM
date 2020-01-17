@@ -6,17 +6,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import gamelogic.*;
 
-import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
+import gamelogic.LocalGameContainer;
+import gamelogic.LocalGameFactory;
 import scoring.Hud;
 
 public class GameScreen implements Screen {
@@ -28,8 +25,6 @@ public class GameScreen implements Screen {
     public final transient AirHockeyGame game;
 
     transient Hud hud;
-    transient Paddle paddle1;
-    transient Paddle paddle2;
 
     private transient LocalGameContainer gameContainer;
 
@@ -163,23 +158,6 @@ public class GameScreen implements Screen {
         game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
-
-
-//    /**
-//     * Reset the paddles on the board to their initial positions.
-//     */
-//    public void resetPaddles() {
-//        this.paddle1.setX(1000f);
-//        this.paddle1.setY(360f);
-//        this.paddle1.setXspeed(0);
-//        this.paddle1.setYspeed(0);
-//
-//        this.paddle2.setX(360f);
-//        this.paddle2.setY(360f);
-//        this.paddle2.setXspeed(0);
-//        this.paddle2.setYspeed(0);
-//    }
-
 
     @Override
     public void resize(int width, int height) {

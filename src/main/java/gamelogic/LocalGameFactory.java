@@ -3,11 +3,15 @@ package gamelogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import gui.AirHockeyGame;
+
 import gui.GameScreen;
-import scoring.*;
 
 import java.util.ArrayList;
+
+import scoring.BasicScoringSystem;
+import scoring.Board;
+import scoring.Goal;
+import scoring.Hud;
 
 public class LocalGameFactory extends GameFactory {
 
@@ -71,7 +75,8 @@ public class LocalGameFactory extends GameFactory {
         entities.add(paddle1);
         entities.add(paddle2);
 
-        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E, PUCK_WALL_E, collisionSound);
+        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E,
+                PUCK_WALL_E, collisionSound);
 
         LocalGameContainer gameContainer = new LocalGameContainer(entities, textures,
                 basicScoringSystem, collisionsEngine);
