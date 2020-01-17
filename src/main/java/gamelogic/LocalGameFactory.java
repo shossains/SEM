@@ -71,7 +71,7 @@ public class LocalGameFactory extends GameFactory {
         entities.add(paddle1);
         entities.add(paddle2);
 
-        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E, collisionSound);
+        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E, PUCK_WALL_E, collisionSound);
 
         LocalGameContainer gameContainer = new LocalGameContainer(entities, textures,
                 basicScoringSystem, collisionsEngine);

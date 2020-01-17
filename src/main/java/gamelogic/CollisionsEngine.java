@@ -6,6 +6,7 @@ import scoring.Board;
 
 public class CollisionsEngine {
 
+    private transient float puckWalle;
     private transient float coefficientr;
     private transient Sound sound;
 
@@ -17,9 +18,10 @@ public class CollisionsEngine {
      * of the collisions.
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
-    public CollisionsEngine(float e, Sound sound) {
+    public CollisionsEngine(float e, float puckWalle, Sound sound) {
         this.coefficientr = e;
         this.sound = sound;
+        this.puckWalle = puckWalle;
     }
 
     /**
@@ -68,12 +70,12 @@ public class CollisionsEngine {
     public void fixPuckXPosition(Puck puck, Board board) {
         if (puck.x - puck.radius < 0) {
             puck.x = 0 + puck.radius;
-            puck.setXspeed(- puck.getXspeed() * coefficientr);
+            puck.setXspeed(- puck.getXspeed() * puckWalle);
             sound.play();
         }
         if (puck.x > board.width - puck.radius) {
             puck.x = board.width - puck.radius;
-            puck.setXspeed(- puck.getXspeed() * coefficientr);
+            puck.setXspeed(- puck.getXspeed() * puckWalle);
             sound.play();
         }
     }
@@ -81,12 +83,12 @@ public class CollisionsEngine {
     public void fixPuckYPosition(Puck puck, Board board) {
         if (puck.y - puck.radius < 0) {
             puck.y = 0 + puck.radius;
-            puck.setYspeed(- puck.getYspeed() * coefficientr);
+            puck.setYspeed(- puck.getYspeed() * puckWalle);
             sound.play();
         }
         if (puck.y > board.height - puck.radius) {
             puck.y = board.height - puck.radius;
-            puck.setYspeed(- puck.getYspeed() * coefficientr);
+            puck.setYspeed(- puck.getYspeed() * puckWalle);
             sound.play();
         }
     }
