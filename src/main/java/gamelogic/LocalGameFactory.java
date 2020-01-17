@@ -58,13 +58,47 @@ public class LocalGameFactory extends GameFactory {
 
         //we should later change it to the resolution and so on...
 
-        Puck puck = new Puck(640f, 360f, 30f, 0f, 30f,
-                5, WIDTH, HEIGHT);
+        Puck puck = new Puck.PuckBuilder()
+                .atX(640f)
+                .atY(360f)
+                .withSpeedX(30f)
+                .withSpeedY(0f)
+                .withRadius(30f)
+                .withMass(5)
+                .onWidth(WIDTH)
+                .onHeight(HEIGHT)
+                .build();
 
-        Paddle paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
-                PlayerType.PLAYER1, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
-        Paddle paddle2 = new Paddle(360, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
-                PlayerType.PLAYER2, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);
+        Paddle paddle1 = new Paddle.PaddleBuilder()
+                .atX(1000f)
+                .atY(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(10)
+                .onWidth(WIDTH)
+                .onHeight(HEIGHT)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(PADDLE_MAX_SPEED)
+                .withAcceleration(PADDLE_ACCELERATION)
+                .withLowSpeed(PADDLE_LOW_SPEED)
+                .build();
+
+        Paddle paddle2 = new Paddle.PaddleBuilder()
+                .atX(360f)
+                .atY(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(10)
+                .onWidth(WIDTH)
+                .onHeight(HEIGHT)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(PADDLE_MAX_SPEED)
+                .withAcceleration(PADDLE_ACCELERATION)
+                .withLowSpeed(PADDLE_LOW_SPEED)
+                .build();
+
         ArrayList<Entity> entities = new ArrayList<>();
 
         entities.add(board);

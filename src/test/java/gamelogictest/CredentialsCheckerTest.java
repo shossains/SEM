@@ -32,6 +32,10 @@ public class CredentialsCheckerTest {
     final transient String email = "test@test.com";
     final transient String response = "empty";
 
+    /**
+     * Setup of every component needed for testing.
+     * Done before every test.
+     */
     @BeforeEach
     public void setUp() {
         screen = mock(Screen.class);

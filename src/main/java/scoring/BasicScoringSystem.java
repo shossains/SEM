@@ -37,7 +37,7 @@ public class BasicScoringSystem extends ScoringSystem {
         this.sound = sound;
         this.justScored = false;
     }
-
+    
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
             endGame();

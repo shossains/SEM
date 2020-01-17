@@ -49,19 +49,81 @@ public class CollisionsEngineTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddlec1 = new Paddle(0, 0, 3, 4, 25, 2, 1280, 720,
-                PlayerType.PLAYER1, 200, 6, 50);
-        paddlec2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
-                PlayerType.PLAYER2, 200, 6, 50);
+        paddlec1 = new Paddle.PaddleBuilder()
+                .atX(0)
+                .atY(0)
+                .withSpeedX(3f)
+                .withSpeedY(4f)
+                .withRadius(25f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
-        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720);
+        paddlec2 = new Paddle.PaddleBuilder()
+                .atX(4f)
+                .atY(3f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(25f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
-        puck1 = new Puck(10, 100, 0, 100, 15,
-                10, 1280, 720);
-        puck2 = new Puck(640, 360, 64, 36, 15,
-                10, 1280, 720);
-        puck3 = new Puck(640, 360, -64, -36, 15,
-                10, 1280, 720);
+        puck = new Puck.PuckBuilder()
+                .atX(30f)
+                .atY(0f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(15f)
+                .withMass(1)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+
+        puck1 = new Puck.PuckBuilder()
+                .atX(10f)
+                .atY(100f)
+                .withSpeedX(0f)
+                .withSpeedY(100f)
+                .withRadius(15f)
+                .withMass(1)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck2 = new Puck.PuckBuilder()
+                .atX(640f)
+                .atY(360f)
+                .withSpeedX(64f)
+                .withSpeedY(36f)
+                .withRadius(15f)
+                .withMass(1)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck3 = new Puck.PuckBuilder()
+                .atX(640f)
+                .atY(360f)
+                .withSpeedX(-64f)
+                .withSpeedY(-36f)
+                .withRadius(15f)
+                .withMass(1)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
         collisionsEngine = new CollisionsEngine(0.8f, 0.85f, mock(Sound.class));
 
         basicScoringSystem = mock(BasicScoringSystem.class);
@@ -73,17 +135,65 @@ public class CollisionsEngineTest {
 
         board1 = new Board(0, 0, 1280, 720, goalOne, goalTwo);
 
-        paddle1 = new Paddle(100, 100, 0, 0, 15, 10, 1280, 720,
-                PlayerType.PLAYER1, 200, 6, 50);
-        paddle2 = new Paddle(300, 200, 0, 0, 15, 10, 1280, 720,
-                PlayerType.PLAYER2, 200, 6, 50);
+        paddle1 = new Paddle.PaddleBuilder()
+                .atX(100f)
+                .atY(100f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(15f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
-        paddle3 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, 1280, 720,
-                PlayerType.PLAYER1, 200, 6, 50);
-        paddle4 = new Paddle(360, 360f, 0f, 0f, 40f, 10, 1280, 720,
-                PlayerType.PLAYER2, 200, 6, 50);
+        paddle2 = new Paddle.PaddleBuilder()
+                .atX(300f)
+                .atY(200f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(15f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
+        paddle3 = new Paddle.PaddleBuilder()
+                .atX(1000f)
+                .atY(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
+        paddle4 = new Paddle.PaddleBuilder()
+                .atX(360f)
+                .atY(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
     }
 
     @Test
@@ -523,15 +633,15 @@ public class CollisionsEngineTest {
         assertEquals(paddle4.radius, paddle4.y);
     }
 
-//    @Test
-//    public void testGoalPlayer1() {
-//        puck.setX(0);
-//        puck.setY(360);
-//        collisionsEngine.collideEntities(puck, goalOne);
-//
-//        assertEquals(360, paddle1.x);
-//        assertEquals(360, paddle1.y);
-//
-//   }
+    //    @Test
+    //    public void testGoalPlayer1() {
+    //        puck.setX(0);
+    //        puck.setY(360);
+    //        collisionsEngine.collideEntities(puck, goalOne);
+    //
+    //        assertEquals(360, paddle1.x);
+    //        assertEquals(360, paddle1.y);
+    //
+    //   }
 
 }

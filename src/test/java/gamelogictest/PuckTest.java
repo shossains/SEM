@@ -19,12 +19,38 @@ public class PuckTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        puck1 = new Puck(10, 100, 0, 100, 15,
-                10, 1280, 720);
-        puck2 = new Puck(640, 360, 64, 36, 15,
-                10, 1280, 720);
-        puck3 = new Puck(640, 360, -64, -36, 15,
-                10, 1280, 720);
+        puck1 = new Puck.PuckBuilder()
+                .atX(10f)
+                .atY(100f)
+                .withSpeedX(0f)
+                .withSpeedY(100f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck2 = new Puck.PuckBuilder()
+                .atX(640f)
+                .atY(360f)
+                .withSpeedX(64f)
+                .withSpeedY(36f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck3 = new Puck.PuckBuilder()
+                .atX(640f)
+                .atY(360f)
+                .withSpeedX(-64f)
+                .withSpeedY(-36f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
 
     }
 
