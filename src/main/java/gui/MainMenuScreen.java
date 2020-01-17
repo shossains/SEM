@@ -81,17 +81,23 @@ public class MainMenuScreen implements Screen {
         p1Controls = new Image(new Texture("assets/player1controls.png"));
         p2Controls = new Image(new Texture("assets/player2controls.png"));
         arrowKeys = new Image(new Texture("assets/arrowKeys.png"));
-        wasdKeys = new Image(new Texture("assets/wasdKeys.png"));
+        wasdKeys = new Image(new Texture("assets/WSAD.png"));
 
         //set image position
-        mtoMute.setPosition(700, 500);
-        escToPause.setPosition(700, 450);
-        p1Controls.setPosition(700, 400);
-        p2Controls.setPosition(700, 300);
-        arrowKeys.setPosition(800, 400);
-        wasdKeys.setPosition(800, 300);
+        mtoMute.setPosition(830, 650);
+        escToPause.setPosition(830, 600);
+        p1Controls.setPosition(830, 550);
+        arrowKeys.setPosition(900, 350);
+        p2Controls.setPosition(830, 270);
+        wasdKeys.setPosition(900, -10);
 
         //set image sizes
+        mtoMute.setScale(0.7f);
+        escToPause.setScale(0.7f);
+        p1Controls.setScale(0.7f);
+        p2Controls.setScale(0.7f);
+        wasdKeys.setScale(0.3f);
+        arrowKeys.setScale(0.28f);
 
         //add images to stage
         stage.addActor(mtoMute);
