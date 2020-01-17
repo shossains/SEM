@@ -3,7 +3,6 @@ package gamelogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-
 import gui.GameScreen;
 
 import java.util.ArrayList;
@@ -50,9 +49,9 @@ public class LocalGameFactory extends GameFactory {
 
         // Create the goals
         Goal goalOne = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
-                BASIC_GOAL_DEPTH, basicScoringSystem);
+                BASIC_GOAL_DEPTH, basicScoringSystem, PlayerType.PLAYER1);
         Goal goalTwo = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
-                (WIDTH - BASIC_GOAL_DEPTH), basicScoringSystem);
+                (WIDTH - BASIC_GOAL_DEPTH), basicScoringSystem, PlayerType.PLAYER2);
 
         // Create the board
         Board board = new Board(0, 0, WIDTH, HEIGHT, goalOne, goalTwo);
@@ -60,7 +59,7 @@ public class LocalGameFactory extends GameFactory {
         //we should later change it to the resolution and so on...
 
         Puck puck = new Puck(640f, 360f, 30f, 0f, 30f,
-                5, WIDTH, HEIGHT, PUCK_WALL_E, collisionSound);
+                5, WIDTH, HEIGHT);
 
         Paddle paddle1 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, WIDTH, HEIGHT,
                 PlayerType.PLAYER1, PADDLE_MAX_SPEED, PADDLE_ACCELERATION, PADDLE_LOW_SPEED);

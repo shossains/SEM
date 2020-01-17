@@ -1,5 +1,4 @@
 package gamelogic;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
 
@@ -9,12 +8,6 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     private transient EntityType entityType = EntityType.PUCK;
 
-    /**
-     * The co-efficient of restitution.
-     */
-    private transient float puckWalle;
-
-    private transient Sound sound;
 
     /**
      * Constructor.
@@ -27,12 +20,9 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param radius The radius.
      */
     public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
-                float height, float e, Sound sound) {
+                float height) {
         super(x, y, radius, xspeed, yspeed, mass, width, height);
 
-        this.puckWalle = e;
-
-        this.sound = sound;
     }
 
     /**

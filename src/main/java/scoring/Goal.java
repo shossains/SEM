@@ -3,6 +3,7 @@ package scoring;
 import com.badlogic.gdx.graphics.Texture;
 import gamelogic.Entity;
 import gamelogic.EntityType;
+import gamelogic.PlayerType;
 import gui.AirHockeyGame;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ public class Goal implements Serializable, Entity {
 
     private static final long serialVersionUID = 13L;
     private transient EntityType entityType = EntityType.GOAL;
+    private transient PlayerType playerType;
 
     public final float topPost;
     public final float bottomPost;
@@ -25,11 +27,12 @@ public class Goal implements Serializable, Entity {
      * @param depth The X coordinate indicating the goal line.
      * @param scoringSystem The scoring system used during the game, updated on goals.
      */
-    public Goal(float topPost, float bottomPost, float depth, BasicScoringSystem scoringSystem) {
+    public Goal(float topPost, float bottomPost, float depth, BasicScoringSystem scoringSystem, PlayerType playerType) {
         this.topPost = topPost;
         this.bottomPost = bottomPost;
         this.depth = depth;
         this.scoringSystem = scoringSystem;
+        this.playerType = playerType;
     }
 
     public float getTopPost() {
@@ -61,5 +64,9 @@ public class Goal implements Serializable, Entity {
     @Override
     public EntityType getEntityType() {
         return this.entityType;
+    }
+
+    public PlayerType getPlayerType() {
+        return  this.playerType;
     }
 }

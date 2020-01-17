@@ -52,22 +52,22 @@ public class CollisionsEngineTest {
         paddlec2 = new Paddle(4, 3, 0, 0, 25, 2, 1280, 720,
                 PlayerType.PLAYER2, 200, 6, 50);
 
-        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720, 0.85f, mock(Sound.class));
+        puck = new Puck(30, 0, 0, 0, 15, 1, 1280, 720);
 
         puck1 = new Puck(10, 100, 0, 100, 15,
-                10, 1280, 720, 0.85f, mock(Sound.class));
+                10, 1280, 720);
         puck2 = new Puck(640, 360, 64, 36, 15,
-                10, 1280, 720, 0.85f,  mock(Sound.class));
+                10, 1280, 720);
         puck3 = new Puck(640, 360, -64, -36, 15,
-                10, 1280, 720, 0.85f,  mock(Sound.class));
+                10, 1280, 720);
         collisionsEngine = new CollisionsEngine(0.8f, 0.85f, mock(Sound.class));
 
         basicScoringSystem = mock(BasicScoringSystem.class);
 
         goalOne = new Goal((1280 / 3), 2 * (720 / 3),
-                15, basicScoringSystem);
+                15, basicScoringSystem, PlayerType.PLAYER1);
         goalTwo = new Goal((720 / 3), 2 * (720 / 3),
-                (1280 - 15), basicScoringSystem);
+                (1280 - 15), basicScoringSystem, PlayerType.PLAYER2);
 
         board1 = new Board(0, 0, 1280, 720, goalOne, goalTwo);
 
