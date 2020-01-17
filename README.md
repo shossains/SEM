@@ -7,4 +7,4 @@ The login credentials are: `test` and `pass` <br/>
 We are using java 13, so please make sure that you are using this version
 
 ##Database script
-Script to create the table for the database can be found under /doc/databaseScript
+Script to create the tables for the database can be found under /doc/databaseScript/databaseScript/md
