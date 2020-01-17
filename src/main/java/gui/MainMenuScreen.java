@@ -91,7 +91,7 @@ public class MainMenuScreen implements Screen {
         p2Controls.setPosition(830, 270);
         wasdKeys.setPosition(900, -10);
 
-        //set image sizes
+        //set the scale of the images
         mtoMute.setScale(0.7f);
         escToPause.setScale(0.7f);
         p1Controls.setScale(0.7f);
