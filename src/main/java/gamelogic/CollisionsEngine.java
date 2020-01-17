@@ -3,6 +3,7 @@ package gamelogic;
 import com.badlogic.gdx.audio.Sound;
 
 import scoring.Board;
+import scoring.Goal;
 
 public class CollisionsEngine {
 
@@ -37,7 +38,7 @@ public class CollisionsEngine {
 
         }
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
-            checkGoal((Puck) e2, (Board) e1);
+            //checkGoal((Puck) e2, (Board) e1);
             collide((Puck) e2, (Board) e1);
 
         }
@@ -46,6 +47,10 @@ public class CollisionsEngine {
 
             collide((Paddle) e2, (Board) e1);
 
+        }
+
+        if (e1.getEntityType() == EntityType.GOAL && e2.getEntityType() == EntityType.PUCK) {
+            checkGoal((Puck) e2, (Goal) e1);
         }
     }
 
@@ -332,6 +337,29 @@ public class CollisionsEngine {
             board.getGoalOne().getScoringSystem().goalPlayerTwo();
             board.getGoalOne().getScoringSystem().checkScorePlayerTwo();
             puck.resetRight();
+        }
+    }
+
+    public void checkGoal(Puck puck, Goal goal) {
+        if(goal.getPlayerType() == PlayerType.PLAYER1) {
+            if (puck.x - (puck.radius / 2) <= goal.getDepth()
+                    && puck.y - (puck.radius / 2) >= goal.getTopPost()
+                    && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {
+
+                goal.getScoringSystem().goalPlayerTwo();
+                goal.getScoringSystem().checkScorePlayerTwo();
+                puck.resetRight();
+            }
+        }
+        else {
+            if (puck.x + (puck.radius / 2) >= goal.getDepth()
+                    && puck.y + (puck.radius / 2) >= goal.getTopPost()
+                    && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {
+
+                goal.getScoringSystem().goalPlayerOne();
+                goal.getScoringSystem().checkScorePlayerOne();
+                puck.resetLeft();
+            }
         }
     }
 
