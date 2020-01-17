@@ -23,8 +23,8 @@ public class Board extends Rectangle implements Serializable, Entity {
      * @param y y coordinate
      * @param width Boards width
      * @param height Boards height
-     * @param goal1 Goal of the Player 1
-     * @param goal2 Goal of the Player 2
+     * @param goalOne Goal of the Player 1
+     * @param goalTwo Goal of the Player 2
      */
     public Board(float x, float y, float width, float height, Goal goalOne, Goal goalTwo) {
         super(x, y, width, height);

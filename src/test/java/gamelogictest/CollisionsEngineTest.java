@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.audio.Sound;
 import gamelogic.CollisionsEngine;
@@ -36,7 +39,9 @@ public class CollisionsEngineTest {
     private transient Goal goalTwo;
     private transient float coeffRestitution = 0.85f;
 
-    private transient Puck puck1, puck2, puck3;
+    private transient Puck puck1;
+    private transient Puck puck2;
+    private transient Puck puck3;
     private transient int deltaTime1 = 5;
     private transient int deltaTime2 = 10;
 
