@@ -25,26 +25,6 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     }
 
-    /**
-     * Set the puck's position on the board to the initial one.
-     */
-    public void resetPosition() {
-        this.setX(getWidth() / 2);
-        this.setY(getHeight() / 2);
-        this.setXspeed(0);
-        this.setYspeed(0);
-    }
-
-    public void resetLeft() {
-        this.resetPosition();
-        this.setXspeed(50f);
-    }
-
-    public void resetRight() {
-        this.resetPosition();
-        this.setXspeed(-50f);
-    }
-
     @Override
     public void update(float delta) {
         this.move(delta);

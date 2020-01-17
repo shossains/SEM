@@ -521,5 +521,15 @@ public class CollisionsEngineTest {
         assertEquals(paddle4.radius, paddle4.y);
     }
 
+//    @Test
+//    public void testGoalPlayer1() {
+//        puck.setX(0);
+//        puck.setY(360);
+//        collisionsEngine.collideEntities(puck, goalOne);
+//
+//        assertEquals(360, paddle1.x);
+//        assertEquals(360, paddle1.y);
+//
+//    }
 
 }
