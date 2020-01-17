@@ -1,8 +1,8 @@
 package scoring;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.Game;
 import gui.GameScreen;
 import gui.ScoresScreen;
 
@@ -36,6 +36,9 @@ public class BasicScoringSystem extends ScoringSystem {
         this.sound = sound;
     }
 
+    /**
+     * Keep checking the game time has depleted.
+     */
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
             endGame();
