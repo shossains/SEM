@@ -84,12 +84,12 @@ public class MainMenuScreen implements Screen {
         wasdKeys = new Image(new Texture("assets/WSAD.png"));
 
         //set image position
-        mtoMute.setPosition(830, 650);
-        escToPause.setPosition(830, 600);
-        p1Controls.setPosition(830, 550);
-        arrowKeys.setPosition(900, 350);
-        p2Controls.setPosition(830, 270);
-        wasdKeys.setPosition(900, -10);
+        mtoMute.setPosition(790, 650);
+        escToPause.setPosition(790, 600);
+        p1Controls.setPosition(790, 550);
+        arrowKeys.setPosition(860, 350);
+        p2Controls.setPosition(790, 270);
+        wasdKeys.setPosition(860, -10);
 
         //set the scale of the images
         mtoMute.setScale(0.7f);
