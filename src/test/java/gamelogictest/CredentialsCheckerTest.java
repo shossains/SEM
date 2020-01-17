@@ -32,6 +32,11 @@ public class CredentialsCheckerTest {
     final transient String email = "test@test.com";
     final transient String response = "empty";
 
+    /**
+     * Method that instantiate the objects used in the
+     * CredentialChecker class, using mocks for emulating the
+     * database responses.
+     */
     @BeforeEach
     public void setUp() {
         screen = mock(Screen.class);
