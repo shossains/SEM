@@ -37,7 +37,10 @@ public class BasicScoringSystem extends ScoringSystem {
         this.sound = sound;
         this.justScored = false;
     }
-    
+
+    /**
+     * The method checks whether the game time has ended.
+     */
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
             endGame();

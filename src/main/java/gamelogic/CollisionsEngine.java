@@ -54,10 +54,20 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method to collide the Puck and the board if the puck is out of bounds.
+     * @param puck The puck.
+     * @param board The board.
+     */
     public void collide(Puck puck, Board board) {
         fixPuckPosition(puck, board);
     }
 
+    /**
+     * Method to collide the Paddle and the board if the puck is out of bounds.
+     * @param paddle The paddle.
+     * @param board The board.
+     */
     public void collide(Paddle paddle, Board board) {
         fixPaddlePosition(paddle, board);
     }
@@ -74,16 +84,31 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method to fix x and y position of the puck and change its speed if necessary.
+     * @param puck The puck.
+     * @param board The board.
+     */
     public void fixPuckPosition(Puck puck, Board board) {
         fixPuckXPosition(puck, board);
         fixPuckYPosition(puck, board);
     }
 
+    /**
+     * Method to fix x and y position of the paddle.
+     * @param paddle The paddle.
+     * @param board The puck.
+     */
     public void fixPaddlePosition(Paddle paddle, Board board) {
         fixPaddleXposition(paddle, board);
         fixPaddleYPosition(paddle, board);
     }
 
+    /**
+     * Method to fix the position of the puck in the x axis if it is out of bounds.
+     * @param puck The puck.
+     * @param board The board with which it can collide.
+     */
     public void fixPuckXPosition(Puck puck, Board board) {
         if (puck.x - puck.radius < 0) {
             puck.x = 0 + puck.radius;
@@ -97,6 +122,11 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method to fix the position of the puck in the y axis if it is out of bounds.
+     * @param puck The puck.
+     * @param board The board with which it can collide.
+     */
     public void fixPuckYPosition(Puck puck, Board board) {
         if (puck.y - puck.radius < 0) {
             puck.y = 0 + puck.radius;
@@ -110,6 +140,11 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method to fix the position of the paddle in the x axis if it is out of bounds.
+     * @param paddle The paddle.
+     * @param board The board with which it can collide.
+     */
     public void fixPaddleXposition(Paddle paddle, Board board) {
 
         if (paddle.x - paddle.radius < paddle.xlower) {
@@ -121,6 +156,11 @@ public class CollisionsEngine {
 
     }
 
+    /**
+     * Method to fix the position of the puck in the y axis if it is out of bounds.
+     * @param paddle The puck.
+     * @param board The board with which it can collide.
+     */
     public void fixPaddleYPosition(Paddle paddle, Board board) {
         if (paddle.y - paddle.radius < 0) {
             paddle.y = 0 + paddle.radius;
