@@ -52,6 +52,9 @@ public class TextButtonFactory implements AbstractButtonFactory {
                             case "ChooseGameScreen":
                                 game.setScreen(new ChooseGameScreen(game));
                                 break;
+                            case "MainMenuScreen":
+                                game.setScreen(new MainMenuScreen(game));
+                                break;
                             default:
                                 throw new IllegalArgumentException("Screen type does not exist");
 
