@@ -20,8 +20,8 @@ public class PuckTest {
     @BeforeEach
     void setupTestEnvironment() {
         puck1 = new Puck.PuckBuilder()
-                .atX(10f)
-                .atY(100f)
+                .atXCoordinate(10f)
+                .atYCoordinate(100f)
                 .withSpeedX(0f)
                 .withSpeedY(100f)
                 .withRadius(15f)
@@ -31,8 +31,8 @@ public class PuckTest {
                 .build();
 
         puck2 = new Puck.PuckBuilder()
-                .atX(640f)
-                .atY(360f)
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
                 .withSpeedX(64f)
                 .withSpeedY(36f)
                 .withRadius(15f)
@@ -42,8 +42,8 @@ public class PuckTest {
                 .build();
 
         puck3 = new Puck.PuckBuilder()
-                .atX(640f)
-                .atY(360f)
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
                 .withSpeedX(-64f)
                 .withSpeedY(-36f)
                 .withRadius(15f)

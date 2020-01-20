@@ -1,6 +1,5 @@
 package scoring;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -116,24 +115,6 @@ public class Hud implements Disposable, HudInterface {
      */
     public int getGameTimer() {
         return this.gameTimer;
-    }
-
-    /**
-     * Getter for the score of the player 1.
-     * @return the score of the player 1.
-     */
-    @Override
-    public int getScoreOne() {
-        return this.score1;
-    }
-
-    /**
-     * Getter for the score of the player 2.
-     * @return the score of the player 2.
-     */
-    @Override
-    public int getScoreTwo() {
-        return this.score2;
     }
 
     @Override

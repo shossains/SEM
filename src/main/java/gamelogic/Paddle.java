@@ -26,7 +26,8 @@ public class Paddle extends Collidable implements java.io.Serializable {
      */
     public Paddle(PaddleBuilder builder) {
 
-        super(builder.x, builder.y, builder.radius, builder.xspeed, builder.yspeed, builder.mass, builder.width, builder.height);
+        super(builder.xcoordinate, builder.ycoordinate, builder.radius, builder.xspeed,
+                builder.yspeed, builder.mass, builder.width, builder.height);
 
         this.playerType = builder.playerType;
 
@@ -203,10 +204,15 @@ public class Paddle extends Collidable implements java.io.Serializable {
         return this.entityType;
     }
 
+    /**
+     * A builder class for Paddle object.
+     * Create this object and specify all needed the parameters
+     * separately. Generates the Paddle Object.
+     */
     public static class PaddleBuilder {
 
-        protected transient float x;
-        protected transient float y;
+        protected transient float xcoordinate;
+        protected transient float ycoordinate;
         protected transient float xspeed;
         protected transient float yspeed;
         protected transient float radius;
@@ -218,13 +224,13 @@ public class Paddle extends Collidable implements java.io.Serializable {
         protected transient float acceleration;
         protected transient float lowSpeed;
 
-        public PaddleBuilder atX(float x) {
-            this.x = x;
+        public PaddleBuilder atXCoordinate(float xcoordinate) {
+            this.xcoordinate = xcoordinate;
             return this;
         }
 
-        public PaddleBuilder atY(float y) {
-            this.y = y;
+        public PaddleBuilder atYCoordinate(float ycoordinate) {
+            this.ycoordinate = ycoordinate;
             return this;
         }
 

@@ -22,8 +22,8 @@ public class PaddleTest {
     @BeforeEach
     void setupTestEnvironment() {
         paddle1 = new Paddle.PaddleBuilder()
-                .atX(100f)
-                .atY(100f)
+                .atXCoordinate(100f)
+                .atYCoordinate(100f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(15f)
@@ -37,8 +37,8 @@ public class PaddleTest {
                 .build();
 
         paddle2 = new Paddle.PaddleBuilder()
-                .atX(300f)
-                .atY(200f)
+                .atXCoordinate(300f)
+                .atYCoordinate(200f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(15f)
@@ -52,8 +52,8 @@ public class PaddleTest {
                 .build();
 
         paddle3 = new Paddle.PaddleBuilder()
-                .atX(1000f)
-                .atY(360f)
+                .atXCoordinate(1000f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)
@@ -67,8 +67,8 @@ public class PaddleTest {
                 .build();
 
         paddle4 = new Paddle.PaddleBuilder()
-                .atX(360f)
-                .atY(360f)
+                .atXCoordinate(360f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)

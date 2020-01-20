@@ -23,7 +23,6 @@ public class BasicScoringSystem extends ScoringSystem {
 
     transient GameScreen gameScreen;
 
-
     /**
      * Constructor of the BasicScoringSystem.
      * @param hud Hud used during the game.
@@ -47,6 +46,11 @@ public class BasicScoringSystem extends ScoringSystem {
         }
     }
 
+    /**
+     * This method checks whether PlayerOne
+     * has scored enough points to win the game.
+     * If so, the game ends.
+     */
     @Override
     public void checkScorePlayerOne() {
         if (this.scorePlayerOne == END_SCORE) {
@@ -54,6 +58,11 @@ public class BasicScoringSystem extends ScoringSystem {
         }
     }
 
+    /**
+     * This method checks whether PlayerTwo
+     * has scored enough points to win the game.
+     * If so, the game ends.
+     */
     @Override
     public void checkScorePlayerTwo() {
         if (this.scorePlayerTwo == END_SCORE) {

@@ -17,7 +17,8 @@ public class Puck extends Collidable implements java.io.Serializable {
      * @param builder PuckBuilder used to create a Puck object.
      */
     public Puck(PuckBuilder builder) {
-        super(builder.x, builder.y, builder.radius, builder.xspeed, builder.yspeed, builder.mass, builder.width, builder.height);
+        super(builder.xcoordinate, builder.ycoordinate, builder.radius, builder.xspeed,
+                builder.yspeed, builder.mass, builder.width, builder.height);
 
     }
 
@@ -40,10 +41,15 @@ public class Puck extends Collidable implements java.io.Serializable {
         return this.entityType;
     }
 
+    /**
+     * A builder class for Puck object.
+     * Create this object and specify all needed the parameters
+     * separately. Generates the Puck Object.
+     */
     public static class PuckBuilder {
 
-        protected transient float x;
-        protected transient float y;
+        protected transient float xcoordinate;
+        protected transient float ycoordinate;
         protected transient float xspeed;
         protected transient float yspeed;
         protected transient float radius;
@@ -51,13 +57,13 @@ public class Puck extends Collidable implements java.io.Serializable {
         protected transient float width;
         protected transient float height;
 
-        public PuckBuilder atX(float x) {
-            this.x = x;
+        public PuckBuilder atXCoordinate(float xcoordinate) {
+            this.xcoordinate = xcoordinate;
             return this;
         }
 
-        public PuckBuilder atY(float y) {
-            this.y = y;
+        public PuckBuilder atYCoordinate(float ycoordinate) {
+            this.ycoordinate = ycoordinate;
             return this;
         }
 

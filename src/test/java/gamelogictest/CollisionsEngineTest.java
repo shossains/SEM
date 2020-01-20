@@ -52,8 +52,8 @@ public class CollisionsEngineTest {
     @BeforeEach
     void setupTestEnvironment() {
         paddlec1 = new Paddle.PaddleBuilder()
-                .atX(0)
-                .atY(0)
+                .atXCoordinate(0)
+                .atYCoordinate(0)
                 .withSpeedX(3f)
                 .withSpeedY(4f)
                 .withRadius(25f)
@@ -67,8 +67,8 @@ public class CollisionsEngineTest {
                 .build();
 
         paddlec2 = new Paddle.PaddleBuilder()
-                .atX(4f)
-                .atY(3f)
+                .atXCoordinate(4f)
+                .atYCoordinate(3f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(25f)
@@ -82,8 +82,8 @@ public class CollisionsEngineTest {
                 .build();
 
         puck = new Puck.PuckBuilder()
-                .atX(30f)
-                .atY(0f)
+                .atXCoordinate(30f)
+                .atYCoordinate(0f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(15f)
@@ -94,8 +94,8 @@ public class CollisionsEngineTest {
 
 
         puck1 = new Puck.PuckBuilder()
-                .atX(10f)
-                .atY(100f)
+                .atXCoordinate(10f)
+                .atYCoordinate(100f)
                 .withSpeedX(0f)
                 .withSpeedY(100f)
                 .withRadius(15f)
@@ -105,8 +105,8 @@ public class CollisionsEngineTest {
                 .build();
 
         puck2 = new Puck.PuckBuilder()
-                .atX(640f)
-                .atY(360f)
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
                 .withSpeedX(64f)
                 .withSpeedY(36f)
                 .withRadius(15f)
@@ -116,8 +116,8 @@ public class CollisionsEngineTest {
                 .build();
 
         puck3 = new Puck.PuckBuilder()
-                .atX(640f)
-                .atY(360f)
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
                 .withSpeedX(-64f)
                 .withSpeedY(-36f)
                 .withRadius(15f)
@@ -138,8 +138,8 @@ public class CollisionsEngineTest {
         board1 = new Board(0, 0, 1280, 720, goalOne, goalTwo);
 
         paddle1 = new Paddle.PaddleBuilder()
-                .atX(100f)
-                .atY(100f)
+                .atXCoordinate(100f)
+                .atYCoordinate(100f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(15f)
@@ -153,8 +153,8 @@ public class CollisionsEngineTest {
                 .build();
 
         paddle2 = new Paddle.PaddleBuilder()
-                .atX(300f)
-                .atY(200f)
+                .atXCoordinate(300f)
+                .atYCoordinate(200f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(15f)
@@ -168,8 +168,8 @@ public class CollisionsEngineTest {
                 .build();
 
         paddle3 = new Paddle.PaddleBuilder()
-                .atX(1000f)
-                .atY(360f)
+                .atXCoordinate(1000f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)
@@ -183,8 +183,8 @@ public class CollisionsEngineTest {
                 .build();
 
         paddle4 = new Paddle.PaddleBuilder()
-                .atX(360f)
-                .atY(360f)
+                .atXCoordinate(360f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)

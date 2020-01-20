@@ -54,7 +54,7 @@ public class LocalGameContainer implements GameContainer {
             for (int j = i + 1; j < entities.size(); j++) {
                 collisionsEngine.collideEntities(entities.get(i), entities.get(j));
 
-                if(scoringSystem.justScored) {
+                if (scoringSystem.justScored) {
                     return;
                 }
             }

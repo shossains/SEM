@@ -59,8 +59,8 @@ public class LocalGameFactory extends GameFactory {
         //we should later change it to the resolution and so on...
 
         Puck puck = new Puck.PuckBuilder()
-                .atX(640f)
-                .atY(360f)
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
                 .withSpeedX(30f)
                 .withSpeedY(0f)
                 .withRadius(30f)
@@ -70,8 +70,8 @@ public class LocalGameFactory extends GameFactory {
                 .build();
 
         Paddle paddle1 = new Paddle.PaddleBuilder()
-                .atX(1000f)
-                .atY(360f)
+                .atXCoordinate(1000f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)
@@ -85,8 +85,7 @@ public class LocalGameFactory extends GameFactory {
                 .build();
 
         Paddle paddle2 = new Paddle.PaddleBuilder()
-                .atX(360f)
-                .atY(360f)
+                .atXCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)
