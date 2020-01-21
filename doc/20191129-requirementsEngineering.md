@@ -62,17 +62,15 @@ Within these functional requirements four categories can be identified using the
     * A player wins the game:  
         * The player scores eleven points before the other player.
         * The player has more points than the other player when the clock stops.  
-        * The player is still in the game after the other player left the current game session.  
     * The players tie the game: 
         * The clock runs out and both players have the same amount of points.  
     * The player loses the game:  
         * The opposing player scores eleven points.  
         * The opposing player has more points than the player when the clock stops.  
-        * The player left the game while the game was still being played.  
  * The game shall not allow any movement on the board after the winner was announced.
  * At the end of each play, the user should be able to enter his/her name together with the recorded score. The data is stored in the database.  
  * At the end of each play, the game should show the top 5 scores that have ever been recorded.  
- * The program shall take the user back to the main menu after the game ends.  
+ * The program shall take the user back to the scoreboard screen after the game ends.
  * After the user presses the Exit button the program closes. 
 
 

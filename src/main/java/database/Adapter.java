@@ -1,22 +1,22 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
-/**
- * The purpose of Adapter class is to
- * create a connection to the database.
- */
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.AssignmentToNonFinalStatic"})
 public class Adapter {
+    public static Connection conn = null;
 
-    public transient Connection conn;
+    transient Properties prop = readPropertiesFile("database.properties");
 
-    private transient String jdbcUrl = "jdbc:postgresql://ec2-176-34-183-20.eu-west-1."
-            + "compute.amazonaws.com:5432/dains1dt33rtkd";
-    private transient String username = "lfxghibojyjdle";
-    private transient String password =
-            "0dc939d4eb5bd22284f2fe0aed23351b366c098a2bf6cf42f9fc697c0d6ba6d7";
+    private transient String jdbcUrl = prop.getProperty("jdbcUrl");
+    private transient String username = prop.getProperty("username");
+    private transient String password = prop.getProperty("password");
 
     public Adapter() {
         conn = this.connect();
@@ -36,5 +36,33 @@ public class Adapter {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * This method retrieves data from a properties file.
+     * This is neccesary since the db credentials are in a seperate file
+     * @param fileName name of the properties file.
+     * @return the property of the attribute.
+     * @throws IOException Throw if something goes wrong.
+     */
+    private static Properties readPropertiesFile(String fileName) {
+        FileInputStream fis = null;
+        Properties prop = null;
+        try {
+            fis = new FileInputStream(fileName);
+            prop = new Properties();
+            prop.load(fis);
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return prop;
     }
 }
