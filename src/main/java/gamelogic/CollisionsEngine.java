@@ -2,9 +2,6 @@ package gamelogic;
 
 import com.badlogic.gdx.audio.Sound;
 
-import scoring.Board;
-import scoring.Goal;
-
 public class CollisionsEngine {
 
     private transient float puckWalle;

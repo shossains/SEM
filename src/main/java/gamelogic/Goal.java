@@ -1,12 +1,11 @@
-package scoring;
+package gamelogic;
 
 import com.badlogic.gdx.graphics.Texture;
-import gamelogic.Entity;
-import gamelogic.EntityType;
-import gamelogic.PlayerType;
 import gui.AirHockeyGame;
-
 import java.io.Serializable;
+import scoring.BasicScoringSystem;
+
+
 
 public class Goal implements Serializable, Entity {
 

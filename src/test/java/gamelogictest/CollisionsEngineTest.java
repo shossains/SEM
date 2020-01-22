@@ -9,17 +9,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.audio.Sound;
+
+import gamelogic.Board;
 import gamelogic.CollisionsEngine;
 import gamelogic.Direction;
+import gamelogic.Goal;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
 
 public class CollisionsEngineTest {
 

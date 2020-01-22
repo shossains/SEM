@@ -1,12 +1,14 @@
 package scoring;
 
+import gui.Hud;
+
 /**
  * Interface for different scoring systems implemented in the game.
  * Provides the basic constructor, and methods for the basic game logic.
  */
 public abstract class ScoringSystem {
 
-    protected transient Hud hud;
+    public transient Hud hud;
     public transient int scorePlayerOne;
     public transient int scorePlayerTwo;
 

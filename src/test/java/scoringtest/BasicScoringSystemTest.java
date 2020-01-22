@@ -6,12 +6,11 @@ import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
+import gui.Hud;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import scoring.BasicScoringSystem;
-import scoring.Hud;
 
 public class BasicScoringSystemTest {
 

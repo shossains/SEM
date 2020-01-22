@@ -11,7 +11,8 @@ import gamelogic.QueryGetter;
 public class SubmitAuthenticationCredentials implements SubmitCredentials {
 
     @Override
-    public void submitCredentials(AirHockeyGame game, LoginScreen screen, String username, String password) {
+    public void submitCredentials(AirHockeyGame game, LoginScreen screen,
+                                  String username, String password) {
 
         DialogFactory dialogFactory = new DialogFactory(game, screen);
         CredentialsChecker credentialsChecker = new CredentialsChecker(screen,
@@ -50,7 +51,8 @@ public class SubmitAuthenticationCredentials implements SubmitCredentials {
 
     @Override
     public void submitCredentials(AirHockeyGame game, RegistrationScreen screen,
-                                  String username, String password, String email, String passwordAgain) {
+                                  String username, String password,
+                                  String email, String passwordAgain) {
         DialogFactory dialogFactory = new DialogFactory(game, screen);
         CredentialsChecker credentialsChecker = new CredentialsChecker(screen,
                 new Adapter(), new QueryGetter());

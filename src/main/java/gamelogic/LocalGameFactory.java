@@ -5,12 +5,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import gui.GameScreen;
 
+import gui.Hud;
 import java.util.ArrayList;
 
 import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
-import scoring.Hud;
 
 public class LocalGameFactory extends GameFactory {
 
