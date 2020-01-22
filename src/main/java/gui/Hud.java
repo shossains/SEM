@@ -1,4 +1,4 @@
-package scoring;
+package gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;

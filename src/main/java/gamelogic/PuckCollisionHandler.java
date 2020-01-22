@@ -1,7 +1,6 @@
 package gamelogic;
 
 import com.badlogic.gdx.audio.Sound;
-import scoring.Board;
 
 public class PuckCollisionHandler {
 

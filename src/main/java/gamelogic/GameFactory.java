@@ -2,7 +2,7 @@ package gamelogic;
 
 import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
-import scoring.Hud;
+import gui.Hud;
 
 public abstract class GameFactory {
 

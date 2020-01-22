@@ -1,7 +1,5 @@
 package gamelogic;
 
-import scoring.Board;
-
 public class PaddleCollisionHandler {
 
     /**

@@ -1,9 +1,7 @@
-package scoring;
+package gamelogic;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import gamelogic.Entity;
-import gamelogic.EntityType;
 import gui.AirHockeyGame;
 
 import java.io.Serializable;

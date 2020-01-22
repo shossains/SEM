@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import gamelogic.LocalGameContainer;
 import gamelogic.LocalGameFactory;
-import scoring.Hud;
 
 public class GameScreen implements Screen {
 

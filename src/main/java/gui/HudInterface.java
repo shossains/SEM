@@ -1,4 +1,4 @@
-package scoring;
+package gui;
 
 public interface HudInterface {
 
