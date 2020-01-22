@@ -21,15 +21,65 @@ public class PaddleTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        paddle1 = new Paddle(100, 100, 0, 0, 15, 10, 1280, 720,
-                PlayerType.PLAYER1, 200, 6, 50);
-        paddle2 = new Paddle(300, 200, 0, 0, 15, 10, 1280, 720,
-                PlayerType.PLAYER2, 200, 6, 50);
+        paddle1 = new Paddle.PaddleBuilder()
+                .atXCoordinate(100f)
+                .atYCoordinate(100f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
 
-        paddle3 = new Paddle(1000f, 360f, 0f, 0f, 40f, 10, 1280, 720,
-                PlayerType.PLAYER1, 200, 6, 50);
-        paddle4 = new Paddle(360, 360f, 0f, 0f, 40f, 10, 1280, 720,
-                PlayerType.PLAYER2, 200, 6, 50);
+        paddle2 = new Paddle.PaddleBuilder()
+                .atXCoordinate(300f)
+                .atYCoordinate(200f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(15f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
+
+        paddle3 = new Paddle.PaddleBuilder()
+                .atXCoordinate(1000f)
+                .atYCoordinate(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER1)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
+
+        paddle4 = new Paddle.PaddleBuilder()
+                .atXCoordinate(360f)
+                .atYCoordinate(360f)
+                .withSpeedX(0f)
+                .withSpeedY(0f)
+                .withRadius(40f)
+                .withMass(2)
+                .onWidth(1280)
+                .onHeight(720)
+                .withPlayerType(PlayerType.PLAYER2)
+                .withMaxSpeed(200)
+                .withAcceleration(6)
+                .withLowSpeed(50)
+                .build();
     }
 
     @Test
@@ -94,74 +144,6 @@ public class PaddleTest {
     }
 
     @Test
-    public void testBoundaries1() {
-        assertEquals(1000, paddle3.x);
-        assertEquals(360, paddle3.y);
-
-        paddle3.direction = new Direction(false, true, false, true);
-
-        paddle3.setSpeeds();
-
-        paddle3.move(deltaTime2);
-        //500, -140
-        paddle3.fixPosition();
-
-        assertEquals(paddle3.radius, paddle3.y);
-        assertEquals(paddle3.radius + 640, paddle3.x);
-    }
-
-    @Test
-    public void testBoundaries2() {
-        assertEquals(1000, paddle3.x);
-        assertEquals(360, paddle3.y);
-
-        paddle3.direction = new Direction(true, false, true, false);
-
-        paddle3.setSpeeds();
-
-        paddle3.move(deltaTime2);
-
-        assertEquals(860, paddle3.y);
-        //1500, 860
-        paddle3.fixPosition();
-
-        assertEquals(720 - paddle3.radius, paddle3.y);
-        assertEquals(1280 - paddle3.radius, paddle3.x);
-    }
-
-    @Test
-    public void testBoundaries3() {
-        assertEquals(360, paddle4.x);
-        assertEquals(360, paddle4.y);
-
-        paddle4.direction = new Direction(true, false, true, false);
-
-        paddle4.setSpeeds();
-
-        paddle4.move(deltaTime2);
-        paddle4.fixPosition();
-
-        assertEquals(640 - paddle4.radius, paddle4.x);
-        assertEquals(720 - paddle4.radius, paddle4.y);
-    }
-
-    @Test
-    public void testBoundaries4() {
-        assertEquals(360, paddle4.x);
-        assertEquals(360, paddle4.y);
-
-        paddle4.direction = new Direction(false, true, false, true);
-
-        paddle4.setSpeeds();
-
-        paddle4.move(deltaTime2);
-        paddle4.fixPosition();
-
-        assertEquals(paddle4.radius, paddle4.x);
-        assertEquals(paddle4.radius, paddle4.y);
-    }
-
-    @Test
     public void testSetRightSpeed() {
         paddle1.setXspeed(100);
 
@@ -216,4 +198,6 @@ public class PaddleTest {
         assertEquals(-200, paddle1.getXspeed());
         assertEquals(-200, paddle1.getYspeed());
     }
+
+
 }

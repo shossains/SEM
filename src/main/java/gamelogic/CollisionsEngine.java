@@ -3,9 +3,11 @@ package gamelogic;
 import com.badlogic.gdx.audio.Sound;
 
 import scoring.Board;
+import scoring.Goal;
 
 public class CollisionsEngine {
 
+    private transient float puckWalle;
     private transient float coefficientr;
     private transient Sound sound;
 
@@ -17,9 +19,10 @@ public class CollisionsEngine {
      * of the collisions.
      * @param e The co-efficient of restitution (how much speed is kept after the collision).
      */
-    public CollisionsEngine(float e, Sound sound) {
+    public CollisionsEngine(float e, float puckWalle, Sound sound) {
         this.coefficientr = e;
         this.sound = sound;
+        this.puckWalle = puckWalle;
     }
 
     /**
@@ -29,16 +32,44 @@ public class CollisionsEngine {
      * @param e2 Second Entity.
      */
     public void collideEntities(Entity e1, Entity e2) {
-        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE
-                || e2.getEntityType() == EntityType.PUCK
-                && e1.getEntityType() == EntityType.PADDLE) {
+        if (e1.getEntityType() == EntityType.PUCK && e2.getEntityType() == EntityType.PADDLE) {
 
             collide((Collidable) e1, (Collidable) e2);
 
         }
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
-            checkGoal((Puck) e2, (Board) e1);
+            //checkGoal((Puck) e2, (Board) e1);
+            collide((Puck) e2, (Board) e1);
+
         }
+
+        if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PADDLE) {
+
+            collide((Paddle) e2, (Board) e1);
+
+        }
+
+        if (e1.getEntityType() == EntityType.GOAL && e2.getEntityType() == EntityType.PUCK) {
+            checkGoal((Puck) e2, (Goal) e1);
+        }
+    }
+
+    /**
+     * Method to collide the Puck and the board if the puck is out of bounds.
+     * @param puck The puck.
+     * @param board The board.
+     */
+    public void collide(Puck puck, Board board) {
+        fixPuckPosition(puck, board);
+    }
+
+    /**
+     * Method to collide the Paddle and the board if the puck is out of bounds.
+     * @param paddle The paddle.
+     * @param board The board.
+     */
+    public void collide(Paddle paddle, Board board) {
+        fixPaddlePosition(paddle, board);
     }
 
     /**
@@ -53,6 +84,91 @@ public class CollisionsEngine {
         }
     }
 
+    /**
+     * Method to fix x and y position of the puck and change its speed if necessary.
+     * @param puck The puck.
+     * @param board The board.
+     */
+    public void fixPuckPosition(Puck puck, Board board) {
+        fixPuckXPosition(puck, board);
+        fixPuckYPosition(puck, board);
+    }
+
+    /**
+     * Method to fix x and y position of the paddle.
+     * @param paddle The paddle.
+     * @param board The puck.
+     */
+    public void fixPaddlePosition(Paddle paddle, Board board) {
+        fixPaddleXposition(paddle, board);
+        fixPaddleYPosition(paddle, board);
+    }
+
+    /**
+     * Method to fix the position of the puck in the x axis if it is out of bounds.
+     * @param puck The puck.
+     * @param board The board with which it can collide.
+     */
+    public void fixPuckXPosition(Puck puck, Board board) {
+        if (puck.x - puck.radius < 0) {
+            puck.x = 0 + puck.radius;
+            puck.setXspeed(- puck.getXspeed() * puckWalle);
+            sound.play();
+        }
+        if (puck.x > board.width - puck.radius) {
+            puck.x = board.width - puck.radius;
+            puck.setXspeed(- puck.getXspeed() * puckWalle);
+            sound.play();
+        }
+    }
+
+    /**
+     * Method to fix the position of the puck in the y axis if it is out of bounds.
+     * @param puck The puck.
+     * @param board The board with which it can collide.
+     */
+    public void fixPuckYPosition(Puck puck, Board board) {
+        if (puck.y - puck.radius < 0) {
+            puck.y = 0 + puck.radius;
+            puck.setYspeed(- puck.getYspeed() * puckWalle);
+            sound.play();
+        }
+        if (puck.y > board.height - puck.radius) {
+            puck.y = board.height - puck.radius;
+            puck.setYspeed(- puck.getYspeed() * puckWalle);
+            sound.play();
+        }
+    }
+
+    /**
+     * Method to fix the position of the paddle in the x axis if it is out of bounds.
+     * @param paddle The paddle.
+     * @param board The board with which it can collide.
+     */
+    public void fixPaddleXposition(Paddle paddle, Board board) {
+
+        if (paddle.x - paddle.radius < paddle.xlower) {
+            paddle.x = paddle.xlower + paddle.radius;
+        }
+        if (paddle.x > paddle.xupper - paddle.radius) {
+            paddle.x = paddle.xupper - paddle.radius;
+        }
+
+    }
+
+    /**
+     * Method to fix the position of the puck in the y axis if it is out of bounds.
+     * @param paddle The puck.
+     * @param board The board with which it can collide.
+     */
+    public void fixPaddleYPosition(Paddle paddle, Board board) {
+        if (paddle.y - paddle.radius < 0) {
+            paddle.y = 0 + paddle.radius;
+        }
+        if (paddle.y > board.height - paddle.radius) {
+            paddle.y = board.height - paddle.radius;
+        }
+    }
 
     /**
      * Method that calculates the distance between the circles.
@@ -237,26 +353,65 @@ public class CollisionsEngine {
     /**
      * Check if there was a goal scored by any of the players.
      * @param puck Puck
-     * @param board Board
+     * @param goal Goal
      */
-    public void checkGoal(Puck puck, Board board) {
-        // Check if the puck is in the goal of Player One
-        if (puck.x + (puck.radius / 2) >= board.getGoalTwo().getDepth()
-            && puck.y + (puck.radius / 2) >= board.getGoalTwo().getTopPost()
-            && puck.y + (puck.radius / 2) <= board.getGoalTwo().getBottomPost()) {
+    public void checkGoal(Puck puck, Goal goal) {
+        if (goal.getPlayerType() == PlayerType.PLAYER1) {
+            if (puck.x - (puck.radius / 2) <= goal.getDepth()
+                    && puck.y - (puck.radius / 2) >= goal.getTopPost()
+                    && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {
 
-            board.getGoalTwo().getScoringSystem().goalPlayerOne();
-            board.getGoalTwo().getScoringSystem().checkScorePlayerOne();
-            puck.resetLeft();
-        }
-        // Check if the puck is in the goal of Player Two
-        if (puck.x - (puck.radius / 2) <= board.getGoalOne().getDepth()
-                && puck.y - (puck.radius / 2) >= board.getGoalOne().getTopPost()
-                && puck.y + (puck.radius / 2) <= board.getGoalOne().getBottomPost()) {
+                goal.getScoringSystem().goalPlayerTwo();
+                goal.getScoringSystem().checkScorePlayerTwo();
+                resetRight(puck);
+            }
+        } else {
+            if (puck.x + (puck.radius / 2) >= goal.getDepth()
+                    && puck.y + (puck.radius / 2) >= goal.getTopPost()
+                    && puck.y + (puck.radius / 2) <= goal.getBottomPost()) {
 
-            board.getGoalOne().getScoringSystem().goalPlayerTwo();
-            board.getGoalOne().getScoringSystem().checkScorePlayerTwo();
-            puck.resetRight();
+                goal.getScoringSystem().goalPlayerOne();
+                goal.getScoringSystem().checkScorePlayerOne();
+                resetLeft(puck);
+            }
         }
     }
+
+    /**
+     * Reset the paddles on the board to their initial positions.
+     */
+    public void resetPosition(Paddle paddle) {
+        if (paddle.getPlayerType() == PlayerType.PLAYER1) {
+            paddle.setX(1000f);
+            paddle.setY(360f);
+            paddle.setXspeed(0);
+            paddle.setYspeed(0);
+        } else {
+            paddle.setX(360f);
+            paddle.setY(360f);
+            paddle.setXspeed(0);
+            paddle.setYspeed(0);
+        }
+    }
+
+    /**
+     * Set the puck's position on the board to the initial one.
+     */
+    public void resetPuckPosition(Puck puck) {
+        puck.setX(puck.getWidth() / 2);
+        puck.setY(puck.getHeight() / 2);
+        puck.setXspeed(0);
+        puck.setYspeed(0);
+    }
+
+    public void resetLeft(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(50f);
+    }
+
+    public void resetRight(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(-50f);
+    }
+
 }

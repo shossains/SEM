@@ -1,6 +1,5 @@
 package gamelogic;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import gui.AirHockeyGame;
 
@@ -10,98 +9,27 @@ public class Puck extends Collidable implements java.io.Serializable {
 
     private transient EntityType entityType = EntityType.PUCK;
 
-    /**
-     * The co-efficient of restitution.
-     */
-    private transient float puckWalle;
-
-    private transient Sound sound;
 
     /**
      * Constructor.
      * The Puck is what is used to actually play the game. It interacts with the paddles
      * (the paddles can move it), and it is what can go into the goals and increase the score.
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @param xspeed Speed in x direction.
-     * @param yspeed Speed in y direction.
-     * @param radius The radius.
+     * @param builder PuckBuilder used to create a Puck object.
      */
-    public Puck(float x, float y, float xspeed, float yspeed, float radius, float mass, float width,
-                float height, float e, Sound sound) {
-        super(x, y, radius, xspeed, yspeed, mass, width, height);
+    public Puck(PuckBuilder builder) {
+        super(builder.xcoordinate, builder.ycoordinate, builder.radius, builder.xspeed,
+                builder.yspeed, builder.mass, builder.width, builder.height);
 
-        this.puckWalle = e;
-
-        this.sound = sound;
-    }
-
-    /**
-     * This method makes sure the paddle is in the correct X boundaries.
-     * We check if the puck is outside of the board boundaries,
-     * and if it has hit an edge we calculate the speed after the resulting collision.
-     */
-    public void fixXPosition() {
-        if (this.x - this.radius < 0) {
-            this.x = 0 + this.radius;
-            this.setXspeed(- this.getXspeed() * puckWalle);
-            sound.play();
-        }
-        if (this.x > getWidth() - this.radius) {
-            this.x = getWidth() - this.radius;
-            this.setXspeed(- this.getXspeed() * puckWalle);
-            sound.play();
-        }
-    }
-
-    /**
-     * This method makes sure the paddle is in the correct Y boundaries.
-     * We check if the puck is outside of the board boundaries,
-     * and if it has hit an edge we calculate the speed after the resulting collision.
-     */
-    public void fixYPosition() {
-        if (this.y - this.radius < 0) {
-            this.y = 0 + this.radius;
-            this.setYspeed(- this.getYspeed() * puckWalle);
-            sound.play();
-        }
-        if (this.y > getHeight() - this.radius) {
-            this.y = getHeight() - this.radius;
-            this.setYspeed(- this.getYspeed() * puckWalle);
-            sound.play();
-        }
-    }
-
-    /**
-     * Set the puck's position on the board to the initial one.
-     */
-    public void resetPosition() {
-        this.setX(getWidth() / 2);
-        this.setY(getHeight() / 2);
-        this.setXspeed(0);
-        this.setYspeed(0);
-    }
-
-    public void resetLeft() {
-        this.resetPosition();
-        this.setXspeed(50f);
-    }
-
-    public void resetRight() {
-        this.resetPosition();
-        this.setXspeed(-50f);
     }
 
     @Override
     public void update(float delta) {
         this.move(delta);
-        this.fixPosition();
+        //this.fixPosition();
     }
 
     @Override
     public void render(AirHockeyGame game, Texture texture) {
-
-        //todo check if only a spritebatch is needed
 
         game.spriteBatch.draw(texture, this.x - this.radius, this.y - this.radius,
                 this.radius * 2, this.radius * 2);
@@ -112,4 +40,70 @@ public class Puck extends Collidable implements java.io.Serializable {
     public EntityType getEntityType() {
         return this.entityType;
     }
+
+    /**
+     * A builder class for Puck object.
+     * Create this object and specify all needed the parameters
+     * separately. Generates the Puck Object.
+     */
+    public static class PuckBuilder {
+
+        protected transient float xcoordinate;
+        protected transient float ycoordinate;
+        protected transient float xspeed;
+        protected transient float yspeed;
+        protected transient float radius;
+        protected transient float mass;
+        protected transient float width;
+        protected transient float height;
+
+        public PuckBuilder atXCoordinate(float xcoordinate) {
+            this.xcoordinate = xcoordinate;
+            return this;
+        }
+
+        public PuckBuilder atYCoordinate(float ycoordinate) {
+            this.ycoordinate = ycoordinate;
+            return this;
+        }
+
+        public PuckBuilder withSpeedX(float speedX) {
+            this.xspeed = speedX;
+            return this;
+        }
+
+        public PuckBuilder withSpeedY(float speedY) {
+            this.yspeed = speedY;
+            return this;
+        }
+
+        public PuckBuilder withRadius(float radius) {
+            this.radius = radius;
+            return this;
+        }
+
+        public PuckBuilder withMass(float mass) {
+            this.mass = mass;
+            return this;
+        }
+
+        public PuckBuilder onWidth(float width) {
+            this.width = width;
+            return this;
+        }
+
+        public PuckBuilder onHeight(float height) {
+            this.height = height;
+            return this;
+        }
+
+        public Puck build() {
+            return new Puck(this);
+        }
+
+    }
+
+
 }
+
+

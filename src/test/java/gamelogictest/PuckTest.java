@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import com.badlogic.gdx.audio.Sound;
 import gamelogic.Puck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +19,38 @@ public class PuckTest {
 
     @BeforeEach
     void setupTestEnvironment() {
-        puck1 = new Puck(10, 100, 0, 100, 15,
-                10, 1280, 720, 0.85f, mock(Sound.class));
-        puck2 = new Puck(640, 360, 64, 36, 15,
-                10, 1280, 720, 0.85f,  mock(Sound.class));
-        puck3 = new Puck(640, 360, -64, -36, 15,
-                10, 1280, 720, 0.85f,  mock(Sound.class));
+        puck1 = new Puck.PuckBuilder()
+                .atXCoordinate(10f)
+                .atYCoordinate(100f)
+                .withSpeedX(0f)
+                .withSpeedY(100f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck2 = new Puck.PuckBuilder()
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
+                .withSpeedX(64f)
+                .withSpeedY(36f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
+
+        puck3 = new Puck.PuckBuilder()
+                .atXCoordinate(640f)
+                .atYCoordinate(360f)
+                .withSpeedX(-64f)
+                .withSpeedY(-36f)
+                .withRadius(15f)
+                .withMass(10)
+                .onWidth(1280)
+                .onHeight(720)
+                .build();
 
     }
 
@@ -51,43 +76,4 @@ public class PuckTest {
         assertEquals(100 + 500, puck1.y);
     }
 
-    @Test
-    public void testBoundaries1() {
-        puck1.move(deltaTime2);
-        puck1.fixPosition();
-
-        assertEquals(720 - puck1.radius, puck1.y);
-
-        puck1.move(deltaTime1);
-
-        assertEquals(720 - puck1.radius - 500 * coeffRestitution, puck1.y);
-    }
-
-    @Test
-    public void testBoundaries2() {
-        puck2.move(deltaTime2);
-        puck2.fixPosition();
-
-        assertEquals(705, puck2.y);
-        assertEquals(1265, puck2.x);
-
-        puck2.move(deltaTime1);
-
-        assertEquals(1265 - 64 * 5 * coeffRestitution, puck2.x);
-        assertEquals(705 - 36 * 5 * coeffRestitution, puck2.y);
-    }
-
-    @Test
-    public void testBoundaries3() {
-        puck3.move(deltaTime2);
-        puck3.fixPosition();
-
-        assertEquals(15, puck3.y);
-        assertEquals(15, puck3.x);
-
-        puck3.move(deltaTime1);
-
-        assertEquals(15 + 64 * 5 * coeffRestitution, puck3.x);
-        assertEquals(15 + 36 * 5 * coeffRestitution, puck3.y);
-    }
 }

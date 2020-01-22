@@ -24,18 +24,4 @@ public interface HudInterface {
      * @return the amount of seconds left for the game.
      */
     int getGameTimer();
-
-    /**
-     * Getter for the score of PlayerOne.
-     * @return The amount of points gathered by PLayerOne.
-     */
-    int getScoreOne();
-
-    /**
-     * Getter for the score of PlayerTwo.
-     * @return The amount of points gathered by PLayerTwo.
-     */
-    int getScoreTwo();
-
-
 }

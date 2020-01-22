@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
+import database.RegisterUser;
 import gamelogic.CredentialsChecker;
 
 /**
@@ -105,7 +106,9 @@ public class RegistrationScreen implements Screen {
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
 
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter());
+        Adapter adapter = new Adapter();
+        RegisterUser registerUser = new RegisterUser(adapter.conn, username, password, email);
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, registerUser);
         String result = credentialsChecker.checkRegisterCredentials(username, password,
                 email, passwordAgain);
 

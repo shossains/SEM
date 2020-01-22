@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 import gamelogic.EntityType;
+import gamelogic.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scoring.BasicScoringSystem;
@@ -19,8 +20,8 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        goalOne = new Goal(240, 480, 15, mock(BasicScoringSystem.class));
-        goalTwo = new Goal(240, 480, 1265, mock(BasicScoringSystem.class));
+        goalOne = new Goal(240, 480, 15, mock(BasicScoringSystem.class), PlayerType.PLAYER1);
+        goalTwo = new Goal(240, 480, 1265, mock(BasicScoringSystem.class), PlayerType.PLAYER2);
         board = new Board(0, 0, 1280, 720, goalOne, goalTwo);
     }
 

@@ -20,8 +20,8 @@ public class BasicScoringSystem extends ScoringSystem {
     private static final int END_TIME = 0;
 
     private transient Sound sound;
-    transient GameScreen gameScreen;
 
+    transient GameScreen gameScreen;
 
     /**
      * Constructor of the BasicScoringSystem.
@@ -34,6 +34,7 @@ public class BasicScoringSystem extends ScoringSystem {
         this.scorePlayerOne = 0;
         this.scorePlayerTwo = 0;
         this.sound = sound;
+        this.justScored = false;
     }
 
     /**
@@ -46,6 +47,11 @@ public class BasicScoringSystem extends ScoringSystem {
         }
     }
 
+    /**
+     * This method checks whether PlayerOne
+     * has scored enough points to win the game.
+     * If so, the game ends.
+     */
     @Override
     public void checkScorePlayerOne() {
         if (this.scorePlayerOne == END_SCORE) {
@@ -53,6 +59,11 @@ public class BasicScoringSystem extends ScoringSystem {
         }
     }
 
+    /**
+     * This method checks whether PlayerTwo
+     * has scored enough points to win the game.
+     * If so, the game ends.
+     */
     @Override
     public void checkScorePlayerTwo() {
         if (this.scorePlayerTwo == END_SCORE) {
@@ -95,7 +106,10 @@ public class BasicScoringSystem extends ScoringSystem {
         sound.play();
         this.hud.modifyScoreOne(this.scorePlayerOne);
         this.gameScreen.pause();
-        this.gameScreen.resetPaddles();
+
+        this.justScored = true;
+        //not in the game screen
+        //this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
 
@@ -109,7 +123,8 @@ public class BasicScoringSystem extends ScoringSystem {
         sound.play();
         this.hud.modifyScoreTwo(this.scorePlayerTwo);
         this.gameScreen.pause();
-        this.gameScreen.resetPaddles();
+        this.justScored = true;
+        //this.gameScreen.resetPaddles();
         this.gameScreen.resume();
     }
 }
