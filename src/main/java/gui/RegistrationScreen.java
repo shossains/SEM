@@ -40,10 +40,10 @@ public class RegistrationScreen implements Screen {
     private transient TextFieldFactory textFieldFactory;
     private transient DialogFactory dialogFactory;
 
-    final transient TextField usernameTextField;
-    final transient TextField passwordTextField;
-    final transient TextField emailTextField;
-    final transient TextField passwordAgainTextField;
+    private transient TextField usernameTextField;
+    private transient TextField passwordTextField;
+    private transient TextField emailTextField;
+    private transient TextField passwordAgainTextField;
 
     /**
      * Constructor for registration screen.
@@ -54,27 +54,20 @@ public class RegistrationScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        textFieldFactory = new TextFieldFactory(this.game, this);
+
         dialogFactory = new DialogFactory(this.game, this);
 
-        usernameTextField = textFieldFactory.createTextField();
-        passwordTextField = textFieldFactory.createTextField();
-        emailTextField = textFieldFactory.createTextField();
-        passwordAgainTextField = textFieldFactory.createTextField();
-        usernameTextField.setPosition(500,250);
-        passwordTextField.setPosition(500, 150);
-        emailTextField.setPosition(500, 350);
-        passwordAgainTextField.setPosition(500, 50);
-        passwordAgainTextField.setPasswordMode(true);
-        passwordAgainTextField.setPasswordCharacter('*');
-        passwordTextField.setPasswordMode(true);
-        passwordTextField.setPasswordCharacter('*');
-        stage.addActor(usernameTextField);
-        stage.addActor(passwordTextField);
-        stage.addActor(emailTextField);
-        stage.addActor(passwordAgainTextField);
+        createFields();
+        createButtons();
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
+
+    }
+
+    /**
+     * Method for creating buttons in constructor.
+     */
+    private void createButtons() {
         AbstractButtonFactory buttonFactory = new TextButtonFactory(this.game, this);
         Button button = buttonFactory.createButton("Done");
         button.setPosition(50, 500);
@@ -89,6 +82,33 @@ public class RegistrationScreen implements Screen {
         Button exit = buttonFactory.createTransButton("Back", "LoginScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
+    }
+
+    /**
+     * Method for creating fields in constructor.
+     */
+    private void createFields() {
+        textFieldFactory = new TextFieldFactory(this.game, this);
+
+        usernameTextField = textFieldFactory.createTextField();
+        passwordTextField = textFieldFactory.createTextField();
+        emailTextField = textFieldFactory.createTextField();
+        passwordAgainTextField = textFieldFactory.createTextField();
+
+        usernameTextField.setPosition(500,250);
+        passwordTextField.setPosition(500, 150);
+        emailTextField.setPosition(500, 350);
+        passwordAgainTextField.setPosition(500, 50);
+
+        passwordAgainTextField.setPasswordMode(true);
+        passwordAgainTextField.setPasswordCharacter('*');
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('*');
+
+        stage.addActor(usernameTextField);
+        stage.addActor(passwordTextField);
+        stage.addActor(emailTextField);
+        stage.addActor(passwordAgainTextField);
     }
 
     /**
@@ -165,10 +185,24 @@ public class RegistrationScreen implements Screen {
             submitCredentials();
         }
 
+        draw();
+    }
+
+    /**
+     * Method called in render in order to implement draw logic.
+     */
+    private void draw() {
         Gdx.gl.glClearColor((float)1, (float)150 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        drawSpriteBatch();
+    }
+
+    /**
+     * Method that handles spriteBatch logic
+     */
+    private void drawSpriteBatch() {
         game.spriteBatch.begin();
         image.setSize(200, 200);
         image.setPosition(10, 100);
