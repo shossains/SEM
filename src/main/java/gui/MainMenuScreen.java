@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -26,6 +28,14 @@ public class MainMenuScreen implements Screen {
     private transient Button exitButton;
     private transient Button scoresButton;
     private transient AbstractButtonFactory abstractButtonFactory;
+
+    private transient Image mtoMute;
+    private transient Image escToPause;
+    private transient Image p1Controls;
+    private transient Image p2Controls;
+    private transient Image arrowKeys;
+    private transient Image wasdKeys;
+
 
     private transient boolean mutePressed;
 
@@ -65,6 +75,38 @@ public class MainMenuScreen implements Screen {
 
         game.font.setColor(Color.RED);
 
+        //initialize images
+        mtoMute = new Image(new Texture("assets/MtoMute.png"));
+        escToPause = new Image(new Texture("assets/ESCtoPause.png"));
+        p1Controls = new Image(new Texture("assets/player1controls.png"));
+        p2Controls = new Image(new Texture("assets/player2controls.png"));
+        arrowKeys = new Image(new Texture("assets/arrowKeys.png"));
+        wasdKeys = new Image(new Texture("assets/WSAD.png"));
+
+        //set image position
+        mtoMute.setPosition(790, 650);
+        escToPause.setPosition(790, 600);
+        p1Controls.setPosition(790, 550);
+        arrowKeys.setPosition(860, 350);
+        p2Controls.setPosition(790, 270);
+        wasdKeys.setPosition(860, -10);
+
+        //set the scale of the images
+        mtoMute.setScale(0.7f);
+        escToPause.setScale(0.7f);
+        p1Controls.setScale(0.7f);
+        p2Controls.setScale(0.7f);
+        wasdKeys.setScale(0.3f);
+        arrowKeys.setScale(0.28f);
+
+        //add images to stage
+        stage.addActor(mtoMute);
+        stage.addActor(escToPause);
+        stage.addActor(p1Controls);
+        stage.addActor(p2Controls);
+        stage.addActor(arrowKeys);
+        stage.addActor(wasdKeys);
+
 
     }
 
@@ -88,6 +130,7 @@ public class MainMenuScreen implements Screen {
         game.font.getData().setScale(1.4f);
         game.font.draw(game.spriteBatch, "Welcome, " + username + " !!!", 230, 600);
         game.spriteBatch.end();
+
     }
 
     @Override

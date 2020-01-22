@@ -86,6 +86,7 @@ public class LocalGameFactory extends GameFactory {
 
         Paddle paddle2 = new Paddle.PaddleBuilder()
                 .atXCoordinate(360f)
+                .atYCoordinate(360f)
                 .withSpeedX(0f)
                 .withSpeedY(0f)
                 .withRadius(40f)

@@ -66,7 +66,7 @@ public class ScoresScreen implements Screen {
 
         stage.addActor(button);
 
-        Button exit = buttonFactory.createTransButton("Back", "ChooseGameScreen");
+        Button exit = buttonFactory.createTransButton("Back", "MainMenuScreen");
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }

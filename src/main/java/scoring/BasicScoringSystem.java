@@ -38,7 +38,8 @@ public class BasicScoringSystem extends ScoringSystem {
     }
 
     /**
-     * The method checks whether the game time has ended.
+     * Get the information from the HUD if the game clock expired.
+     * If so, call a method to end the current game.
      */
     public void checkTime() {
         if (this.hud.getGameTimer() <= END_TIME) {
