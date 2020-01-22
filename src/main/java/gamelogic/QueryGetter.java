@@ -11,7 +11,8 @@ public class QueryGetter {
         return new VerifyLogin(conn, username, password);
     }
 
-    public RegisterUser getRegisterUser(Connection conn, String username, String password, String email) {
+    public RegisterUser getRegisterUser(Connection conn, String username,
+                                        String password, String email) {
         return new RegisterUser(conn, username, password, email);
     }
 }

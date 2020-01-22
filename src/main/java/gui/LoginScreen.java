@@ -103,6 +103,7 @@ public class LoginScreen implements Screen {
         exit.setPosition(900, 600);
         stage.addActor(exit);
     }
+
     /**
      * Method that checks if a user already has an account.
      * Given an username and a password, this method
@@ -115,7 +116,8 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
         dialogFactory = new DialogFactory(game, this);
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter(), new QueryGetter());
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this,
+                new Adapter(), new QueryGetter());
         String response = credentialsChecker.checkLoginCredentials(username, password);
 
         switch (response) {
