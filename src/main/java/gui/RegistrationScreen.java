@@ -1,6 +1,5 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,15 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import database.Adapter;
-import database.RegisterUser;
-import gamelogic.CredentialsChecker;
-import gamelogic.QueryGetter;
 
 /**
  * The purpose of this class is to create a graphical user interface
@@ -124,48 +118,8 @@ public class RegistrationScreen implements Screen {
         password = passwordTextField.getText();
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
-
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this,
-                new Adapter(), new QueryGetter());
-        String result = credentialsChecker.checkRegisterCredentials(username, password,
-                email, passwordAgain);
-
-        switch (result) {
-            case "empty": {
-                Dialog dialog = dialogFactory.createDialog("Empty fields",
-                        "Please fill in all fields!");
-                dialog.show(stage);
-                break;
-            }
-
-            case "passwordsNotMatching": {
-                Dialog dialog = dialogFactory.createDialog("Warning - wrong password",
-                        "Please enter the password again."
-                        + " Your passwords do not match.");
-                dialog.show(stage);
-                break;
-            }
-
-            case "correct": {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                        MainMenuScreen(game));
-                break;
-            }
-
-            case "incorrect": {
-                Dialog dialog = dialogFactory.createDialog("Email or username already in use.",
-                        "Please try again.");
-                dialog.show(stage);
-                break;
-            }
-
-            default: {
-                Dialog dialog = dialogFactory.createDialog("Error.",
-                        "Please try again.");
-                dialog.show(stage);
-                break;
-            }
-        }
+        SubmitCredentials submitCredentials = new SubmitAuthenticationCredentials();
+        submitCredentials.submitCredentials(game, this, username, password, email, passwordAgain);
     }
 
     @Override
