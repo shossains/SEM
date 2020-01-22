@@ -1,4 +1,4 @@
-package scoring;
+package gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,21 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import gui.AirHockeyGame;
 
 public class Hud implements Disposable, HudInterface {
 
     private static final int ONE = 1;
 
-    public transient Stage stage;
-    private transient Viewport viewport;
-    private transient Table table;
-    private transient BitmapFont font;
+    private transient Stage stage;
 
-    private transient Integer gameTimer;
-    transient float timeCount;
-    private transient Integer score1;
-    private transient Integer score2;
+    private transient int gameTimer;
+    private transient float timeCount;
     private transient int minutes;
     private transient int seconds;
 
@@ -39,19 +33,20 @@ public class Hud implements Disposable, HudInterface {
      * clock and scores of both players.
      * @param spriteBatch spriteBatch used by the game.
      */
-    public Hud(SpriteBatch spriteBatch) {
+    public Hud(SpriteBatch spriteBatch, float width, float height) {
         gameTimer = 300;
         timeCount = 0;
-        score1 = 0;
-        score2 = 0;
 
-        viewport = new FitViewport(AirHockeyGame.S_WIDTH,
-                AirHockeyGame.S_HEIGHT, new OrthographicCamera());
-        //System.out.println(Gdx.graphics.getWidth());
+        Viewport viewport;
+        viewport = new FitViewport(width,
+                height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
+
+        BitmapFont font;
         font = new BitmapFont();
         font.getData().setScale(2, 2);
 
+        Table table;
         table = new Table();
         table.top();
         table.setFillParent(true);
@@ -60,7 +55,9 @@ public class Hud implements Disposable, HudInterface {
         minutes = gameTimer / 60;
         scoreFormat = "%02d";
 
-        timeLabel = new Label(String.format(minutes + ":" + seconds),
+        int score1 = 0;
+        int score2 = 0;
+        timeLabel = new Label(String.format("%d:%d", minutes, seconds),
                 new Label.LabelStyle(font, Color.BLACK));
         scoreLabel1 = new Label(String.format(scoreFormat, score1),
                 new Label.LabelStyle(font, Color.BLACK));
@@ -86,7 +83,7 @@ public class Hud implements Disposable, HudInterface {
             gameTimer--;
             seconds = gameTimer % 60;
             minutes = gameTimer / 60;
-            timeLabel.setText(String.format(minutes + ":" + seconds));
+            timeLabel.setText(String.format("%d:%d", minutes, seconds));
             timeCount = 0;
         }
     }
@@ -115,6 +112,10 @@ public class Hud implements Disposable, HudInterface {
      */
     public int getGameTimer() {
         return this.gameTimer;
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,14 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import database.Adapter;
-import database.RegisterUser;
-import gamelogic.CredentialsChecker;
 
 /**
  * The purpose of this class is to create a graphical user interface
@@ -39,12 +34,10 @@ public class RegistrationScreen implements Screen {
     private transient TextFieldFactory textFieldFactory;
     private transient DialogFactory dialogFactory;
 
-    final transient TextField usernameTextField;
-    final transient TextField passwordTextField;
-    final transient TextField emailTextField;
-    final transient TextField passwordAgainTextField;
-
-    private transient boolean mutePressed;
+    private transient TextField usernameTextField;
+    private transient TextField passwordTextField;
+    private transient TextField emailTextField;
+    private transient TextField passwordAgainTextField;
 
     /**
      * Constructor for registration screen.
@@ -55,27 +48,20 @@ public class RegistrationScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        textFieldFactory = new TextFieldFactory(this.game, this);
+
         dialogFactory = new DialogFactory(this.game, this);
 
-        usernameTextField = textFieldFactory.createTextField();
-        passwordTextField = textFieldFactory.createTextField();
-        emailTextField = textFieldFactory.createTextField();
-        passwordAgainTextField = textFieldFactory.createTextField();
-        usernameTextField.setPosition(500,250);
-        passwordTextField.setPosition(500, 150);
-        emailTextField.setPosition(500, 350);
-        passwordAgainTextField.setPosition(500, 50);
-        passwordAgainTextField.setPasswordMode(true);
-        passwordAgainTextField.setPasswordCharacter('*');
-        passwordTextField.setPasswordMode(true);
-        passwordTextField.setPasswordCharacter('*');
-        stage.addActor(usernameTextField);
-        stage.addActor(passwordTextField);
-        stage.addActor(emailTextField);
-        stage.addActor(passwordAgainTextField);
+        createFields();
+        createButtons();
         image = new Image(new Texture("assets/air2.png"));
         stage.addActor(image);
+
+    }
+
+    /**
+     * Method for creating buttons in constructor.
+     */
+    private void createButtons() {
         AbstractButtonFactory buttonFactory = new TextButtonFactory(this.game, this);
         Button button = buttonFactory.createButton("Done");
         button.setPosition(50, 500);
@@ -93,6 +79,33 @@ public class RegistrationScreen implements Screen {
     }
 
     /**
+     * Method for creating fields in constructor.
+     */
+    private void createFields() {
+        textFieldFactory = new TextFieldFactory(this.game, this);
+
+        usernameTextField = textFieldFactory.createTextField();
+        passwordTextField = textFieldFactory.createTextField();
+        emailTextField = textFieldFactory.createTextField();
+        passwordAgainTextField = textFieldFactory.createTextField();
+
+        usernameTextField.setPosition(500,250);
+        passwordTextField.setPosition(500, 150);
+        emailTextField.setPosition(500, 350);
+        passwordAgainTextField.setPosition(500, 50);
+
+        passwordAgainTextField.setPasswordMode(true);
+        passwordAgainTextField.setPasswordCharacter('*');
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('*');
+
+        stage.addActor(usernameTextField);
+        stage.addActor(passwordTextField);
+        stage.addActor(emailTextField);
+        stage.addActor(passwordAgainTextField);
+    }
+
+    /**
      * Method for verifying that an account can be created.
      * If the username or email are already registered in the database,
      * a pop-up will be shown and the user will be notified.
@@ -105,49 +118,8 @@ public class RegistrationScreen implements Screen {
         password = passwordTextField.getText();
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
-
-        Adapter adapter = new Adapter();
-        RegisterUser registerUser = new RegisterUser(adapter.conn, username, password, email);
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, registerUser);
-        String result = credentialsChecker.checkRegisterCredentials(username, password,
-                email, passwordAgain);
-
-        switch (result) {
-            case "empty": {
-                Dialog dialog = dialogFactory.createDialog("Empty fields",
-                        "Please fill in all fields!");
-                dialog.show(stage);
-                break;
-            }
-
-            case "passwordsNotMatching": {
-                Dialog dialog = dialogFactory.createDialog("Warning - wrong password",
-                        "Please enter the password again."
-                        + " Your passwords do not match.");
-                dialog.show(stage);
-                break;
-            }
-
-            case "correct": {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                        MainMenuScreen(game));
-                break;
-            }
-
-            case "incorrect": {
-                Dialog dialog = dialogFactory.createDialog("Email or username already in use.",
-                        "Please try again.");
-                dialog.show(stage);
-                break;
-            }
-
-            default: {
-                Dialog dialog = dialogFactory.createDialog("Error.",
-                        "Please try again.");
-                dialog.show(stage);
-                break;
-            }
-        }
+        SubmitCredentials submitCredentials = new SubmitAuthenticationCredentials();
+        submitCredentials.submitCredentials(game, this, username, password, email, passwordAgain);
     }
 
     @Override
@@ -157,7 +129,7 @@ public class RegistrationScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }
@@ -167,10 +139,24 @@ public class RegistrationScreen implements Screen {
             submitCredentials();
         }
 
+        draw();
+    }
+
+    /**
+     * Method called in render in order to implement draw logic.
+     */
+    private void draw() {
         Gdx.gl.glClearColor((float)1, (float)150 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        drawSpriteBatch();
+    }
+
+    /**
+     * Method that handles spriteBatch logic.
+     */
+    private void drawSpriteBatch() {
         game.spriteBatch.begin();
         image.setSize(200, 200);
         image.setPosition(10, 100);

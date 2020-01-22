@@ -5,12 +5,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import gui.GameScreen;
 
+import gui.Hud;
 import java.util.ArrayList;
 
 import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
-import scoring.Hud;
 
 public class LocalGameFactory extends GameFactory {
 
@@ -28,25 +26,28 @@ public class LocalGameFactory extends GameFactory {
     @Override
     public LocalGameContainer createGameContainer(Sound scoreSound, Sound collisionSound,
                                                   GameScreen screen, Hud hud) {
-        Texture boardImage = new Texture(Gdx.files.internal("assets/board.png"));
-        Texture goalOneImage = new Texture(Gdx.files.internal("assets/leftGoal.png"));
-        Texture goalTwoImage = new Texture(Gdx.files.internal("assets/rightGoal.png"));
-        Texture puckImage = new Texture(Gdx.files.internal("assets/puck.png"));
-        Texture paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
-        Texture paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 
-        ArrayList<Texture> textures = new ArrayList<>();
-
-        textures.add(boardImage);
-        textures.add(goalOneImage);
-        textures.add(goalTwoImage);
-        textures.add(puckImage);
-        textures.add(paddle1Image);
-        textures.add(paddle2Image);
+        ArrayList<Texture> textures = createTexturesList();
 
         // Create the scoring system
         BasicScoringSystem basicScoringSystem = new BasicScoringSystem(hud, screen, scoreSound);
 
+        ArrayList<Entity> entities = createEntitiesList(basicScoringSystem);
+
+        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E,
+                PUCK_WALL_E, collisionSound);
+
+        return new LocalGameContainer(entities, textures, basicScoringSystem, collisionsEngine);
+
+    }
+
+    /**
+     * Method to return a list of entities. These are the objects that are rendered
+     * and interact with each other when the game is running.
+     * @param basicScoringSystem ScoringSystem
+     * @return List of entities.
+     */
+    public ArrayList<Entity> createEntitiesList(BasicScoringSystem basicScoringSystem) {
         // Create the goals
         Goal goalOne = new Goal((HEIGHT / 3), 2 * (HEIGHT / 3),
                 BASIC_GOAL_DEPTH, basicScoringSystem, PlayerType.PLAYER1);
@@ -108,12 +109,30 @@ public class LocalGameFactory extends GameFactory {
         entities.add(paddle1);
         entities.add(paddle2);
 
-        CollisionsEngine collisionsEngine = new CollisionsEngine(PADDLE_PUCK_E,
-                PUCK_WALL_E, collisionSound);
+        return entities;
+    }
 
-        LocalGameContainer gameContainer = new LocalGameContainer(entities, textures,
-                basicScoringSystem, collisionsEngine);
+    /**
+     * Method to create the list of textures for rendering the objects.
+     * @return list of textures.
+     */
+    public ArrayList<Texture> createTexturesList() {
+        Texture boardImage = new Texture(Gdx.files.internal("assets/board.png"));
+        Texture goalOneImage = new Texture(Gdx.files.internal("assets/leftGoal.png"));
+        Texture goalTwoImage = new Texture(Gdx.files.internal("assets/rightGoal.png"));
+        Texture puckImage = new Texture(Gdx.files.internal("assets/puck.png"));
+        Texture paddle1Image = new Texture(Gdx.files.internal("assets/redPaddle.png"));
+        Texture paddle2Image = new Texture(Gdx.files.internal("assets/bluePaddle.png"));
 
-        return gameContainer;
+        ArrayList<Texture> textures = new ArrayList<>();
+
+        textures.add(boardImage);
+        textures.add(goalOneImage);
+        textures.add(goalTwoImage);
+        textures.add(puckImage);
+        textures.add(paddle1Image);
+        textures.add(paddle2Image);
+
+        return textures;
     }
 }

@@ -4,11 +4,10 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
+import gui.Hud;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
 import scoring.BasicScoringSystem;
-import scoring.Hud;
 
 public class GoalPlayerOneTests {
 

@@ -24,8 +24,6 @@ public class ChooseGameScreen implements Screen {
     public transient Button onlineGameButton;
     public transient AbstractButtonFactory abstractButtonFactory;
 
-    private transient boolean mutePressed;
-
     /**
      * Constructor for this Screen.
      * Here, the most important objects that are created are
@@ -64,7 +62,7 @@ public class ChooseGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }

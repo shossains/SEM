@@ -1,16 +1,16 @@
-package scoringtest;
+package gamelogictest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
+import gamelogic.Board;
 import gamelogic.EntityType;
+import gamelogic.Goal;
 import gamelogic.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
 
 public class BoardTest {
 

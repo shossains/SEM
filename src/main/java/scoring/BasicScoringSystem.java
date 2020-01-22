@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import gui.GameScreen;
+import gui.Hud;
 import gui.ScoresScreen;
 
 /**

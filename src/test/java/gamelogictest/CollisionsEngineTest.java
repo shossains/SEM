@@ -9,17 +9,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.audio.Sound;
+
+import gamelogic.Board;
 import gamelogic.CollisionsEngine;
 import gamelogic.Direction;
+import gamelogic.Goal;
 import gamelogic.Paddle;
 import gamelogic.PlayerType;
 import gamelogic.Puck;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scoring.BasicScoringSystem;
-import scoring.Board;
-import scoring.Goal;
 
 public class CollisionsEngineTest {
 
@@ -526,7 +526,7 @@ public class CollisionsEngineTest {
     public void testPuckBoundaries1() {
         puck1.move(deltaTime2);
 
-        collisionsEngine.collide(puck1, board1);
+        collisionsEngine.collideEntities(board1, puck1);
 
         assertEquals(720 - puck1.radius, puck1.y);
 
@@ -538,7 +538,7 @@ public class CollisionsEngineTest {
     @Test
     public void testPuckBoundaries2() {
         puck2.move(deltaTime2);
-        collisionsEngine.collide(puck2, board1);
+        collisionsEngine.collideEntities(board1, puck2);
 
         assertEquals(705, puck2.y);
         assertEquals(1265, puck2.x);
@@ -552,7 +552,7 @@ public class CollisionsEngineTest {
     @Test
     public void testPuckBoundaries3() {
         puck3.move(deltaTime2);
-        collisionsEngine.collide(puck3, board1);
+        collisionsEngine.collideEntities(board1, puck3);
 
         assertEquals(15, puck3.y);
         assertEquals(15, puck3.x);

@@ -1,6 +1,5 @@
 package gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,20 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import database.Adapter;
-import database.VerifyLogin;
-import gamelogic.CredentialsChecker;
-
-import java.sql.SQLException;
 
 /**
  * The meaning of this class is to create an graphical user interface
- * for loggin in. If the user already has an account, he/she can enter
+ * for logging in. If the user already has an account, he/she can enter
  * the username and password. If the data is correct, the user will be redirected
  * to the MainMenuScreen.
  */
@@ -35,12 +28,10 @@ public class LoginScreen implements Screen {
     private transient String password;
     private transient Image image;
 
-    final transient TextFieldFactory textFieldFactory;
     private transient AbstractButtonFactory buttonFactory;
 
-    private transient boolean mutePressed;
-    final transient TextField usernameTextField;
-    final transient TextField passwordTextField;
+    transient TextField usernameTextField;
+    transient TextField passwordTextField;
 
     private transient DialogFactory dialogFactory;
 
@@ -57,9 +48,20 @@ public class LoginScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.dialogFactory = new DialogFactory(game, this);
 
-        textFieldFactory = new TextFieldFactory(this.game, this);
+        createTextFields();
+
+        addImage("assets/air3.png");
+
+        buttonFactory = new TextButtonFactory(this.game, this);
+        addExitButton();
+
+        addDoneButton();
+
+    }
+
+    private void createTextFields() {
+        TextFieldFactory textFieldFactory = new TextFieldFactory(this.game, this);
         usernameTextField = textFieldFactory.createTextField();
         passwordTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(250,200);
@@ -69,13 +71,15 @@ public class LoginScreen implements Screen {
 
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
+    }
 
-        image = new Image(new Texture("assets/air3.png"));
+    private void addImage(String path) {
+        image = new Image(new Texture(path));
         stage.addActor(image);
 
-        buttonFactory = new TextButtonFactory(this.game, this);
-        Button exit = buttonFactory.createTransButton("Exit!", "LoginScreen");
-        exit.setPosition(900, 600);
+    }
+
+    private void addDoneButton() {
         Button button = buttonFactory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
@@ -87,6 +91,11 @@ public class LoginScreen implements Screen {
                 });
 
         stage.addActor(button);
+    }
+
+    private void addExitButton() {
+        Button exit = buttonFactory.createTransButton("Exit!", "LoginScreen");
+        exit.setPosition(900, 600);
         stage.addActor(exit);
     }
 
@@ -102,39 +111,8 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
 
-        Adapter adapter = new Adapter();
-        VerifyLogin verifyLogin = new VerifyLogin(adapter.conn, username, password);
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, verifyLogin);
-        String response = credentialsChecker.checkLoginCredentials(username, password);
-
-        switch (response) {
-            case "empty" : {
-                Dialog dialog = dialogFactory.createDialog("Empty fields",
-                        "Please fill in all fields!");
-                dialog.show(stage);
-                break;
-            }
-
-            case "correct": {
-                MainMenuScreen m = new MainMenuScreen(game);
-                m.username = username;
-                ((Game) Gdx.app.getApplicationListener()).setScreen(m);
-                break;
-            }
-
-            case "incorrect": {
-                Dialog dialog = dialogFactory.createDialog("Incorrect credentials",
-                        "Incorrect username and/or password");
-                dialog.show(stage);
-                break;
-            }
-            default: {
-                Dialog dialog = dialogFactory.createDialog("Error",
-                        "Please try again");
-                dialog.show(stage);
-                break;
-            }
-        }
+        SubmitCredentials submitCredentials = new SubmitAuthenticationCredentials();
+        submitCredentials.submitCredentials(game, this, username, password);
 
     }
 
@@ -145,7 +123,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }
@@ -154,10 +132,18 @@ public class LoginScreen implements Screen {
         if (enterPressed) {
             submitCredentials();
         }
+        draw();
+    }
+
+    private void draw() {
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        drawSpriteBatch();
+    }
+
+    private void drawSpriteBatch() {
         game.spriteBatch.begin();
         game.font.setColor(Color.ROYAL);
         game.font.draw(game.spriteBatch, "username", 130, 225);
