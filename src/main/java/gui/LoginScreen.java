@@ -38,7 +38,6 @@ public class LoginScreen implements Screen {
     final transient TextFieldFactory textFieldFactory;
     private transient AbstractButtonFactory buttonFactory;
 
-    private transient boolean mutePressed;
     final transient TextField usernameTextField;
     final transient TextField passwordTextField;
 
@@ -145,7 +144,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }

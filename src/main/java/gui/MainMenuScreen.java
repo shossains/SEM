@@ -37,9 +37,6 @@ public class MainMenuScreen implements Screen {
     private transient Image wasdKeys;
 
 
-    private transient boolean mutePressed;
-
-
     /**
      * Constructor for this Screen.
      * Here, the 4 main buttons are created,
@@ -117,7 +114,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }

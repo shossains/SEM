@@ -34,8 +34,6 @@ public class GameScreen implements Screen {
 
     transient OrthographicCamera camera;
 
-    private transient boolean mutePressed;
-
     private transient boolean escPressed;
     private transient State state = State.RUN;
 
@@ -97,7 +95,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }

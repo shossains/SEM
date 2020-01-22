@@ -22,8 +22,6 @@ public class SettingsScreen implements Screen {
     public transient Button backButton;
     public transient AbstractButtonFactory abstractButtonFactory;
 
-    private transient boolean mutePressed;
-
 
     /**
      * Constructor for this Screen.
@@ -49,7 +47,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }
