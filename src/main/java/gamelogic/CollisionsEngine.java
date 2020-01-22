@@ -44,36 +44,20 @@ public class CollisionsEngine {
 
         }
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PUCK) {
-            collide((Puck) e2, (Board) e1);
+            //collide((Puck) e2, (Board) e1);
+            puch.collide(e2, e1);
 
         }
 
         if (e1.getEntityType() == EntityType.BOARD && e2.getEntityType() == EntityType.PADDLE) {
-            collide((Paddle) e2, (Board) e1);
+            //collide((Paddle) e2, (Board) e1);
+            pach.collide(e2, e1);
 
         }
 
         if (e1.getEntityType() == EntityType.GOAL && e2.getEntityType() == EntityType.PUCK) {
             checkGoal((Puck) e2, (Goal) e1);
         }
-    }
-
-    /**
-     * Method to collide the Puck and the board if the puck is out of bounds.
-     * @param puck The puck.
-     * @param board The board.
-     */
-    public void collide(Puck puck, Board board) {
-        puch.fixPuckPosition(puck, board);
-    }
-
-    /**
-     * Method to collide the Paddle and the board if the puck is out of bounds.
-     * @param paddle The paddle.
-     * @param board The board.
-     */
-    public void collide(Paddle paddle, Board board) {
-        pach.fixPaddlePosition(paddle, board);
     }
 
     /**
@@ -281,7 +265,7 @@ public class CollisionsEngine {
 
                 goal.getScoringSystem().goalPlayerTwo();
                 goal.getScoringSystem().checkScorePlayerTwo();
-                resetRight(puck);
+                puch.resetRight(puck);
             }
         } else {
             if (puck.x + (puck.radius / 2) >= goal.getDepth()
@@ -290,7 +274,7 @@ public class CollisionsEngine {
 
                 goal.getScoringSystem().goalPlayerOne();
                 goal.getScoringSystem().checkScorePlayerOne();
-                resetLeft(puck);
+                puch.resetLeft(puck);
             }
         }
     }
@@ -312,24 +296,5 @@ public class CollisionsEngine {
         }
     }
 
-    /**
-     * Set the puck's position on the board to the initial one.
-     */
-    public void resetPuckPosition(Puck puck) {
-        puck.setX(puck.getWidth() / 2);
-        puck.setY(puck.getHeight() / 2);
-        puck.setXspeed(0);
-        puck.setYspeed(0);
-    }
-
-    public void resetLeft(Puck puck) {
-        resetPuckPosition(puck);
-        puck.setXspeed(50f);
-    }
-
-    public void resetRight(Puck puck) {
-        resetPuckPosition(puck);
-        puck.setXspeed(-50f);
-    }
 
 }

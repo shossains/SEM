@@ -5,6 +5,15 @@ import scoring.Board;
 public class PaddleCollisionHandler {
 
     /**
+     * Method to collide the entities and cast them to the appropriate types.
+     * @param e1 Entity 1
+     * @param e2 Entity 2
+     */
+    public void collide(Entity e1, Entity e2) {
+        fixPaddlePosition((Paddle) e1, (Board) e2);
+    }
+
+    /**
      * Method to fix x and y position of the paddle.
      * @param paddle The paddle.
      * @param board The puck.

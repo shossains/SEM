@@ -15,6 +15,15 @@ public class PuckCollisionHandler {
     }
 
     /**
+     * Method to collide the entities and cast them to the appropriate types.
+     * @param e1 Entity 1
+     * @param e2 Entity 2
+     */
+    public void collide(Entity e1, Entity e2) {
+        fixPuckPosition((Puck) e1, (Board) e2);
+    }
+
+    /**
      * Method to fix x and y position of the puck and change its speed if necessary.
      * @param puck The puck.
      * @param board The board.
@@ -58,5 +67,25 @@ public class PuckCollisionHandler {
             puck.setYspeed(- puck.getYspeed() * puckWalle);
             sound.play();
         }
+    }
+
+    /**
+     * Set the puck's position on the board to the initial one.
+     */
+    public void resetPuckPosition(Puck puck) {
+        puck.setX(puck.getWidth() / 2);
+        puck.setY(puck.getHeight() / 2);
+        puck.setXspeed(0);
+        puck.setYspeed(0);
+    }
+
+    public void resetLeft(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(50f);
+    }
+
+    public void resetRight(Puck puck) {
+        resetPuckPosition(puck);
+        puck.setXspeed(-50f);
     }
 }
