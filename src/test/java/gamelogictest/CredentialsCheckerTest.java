@@ -46,7 +46,8 @@ public class CredentialsCheckerTest {
         registerUser = mock(RegisterUser.class);
         QueryGetter queryGetter = mock(QueryGetter.class);
         credentialsChecker = new CredentialsChecker(screen, adapter, queryGetter);
-        when(queryGetter.getRegisterUser(any(), anyString(), anyString(), anyString())).thenReturn(registerUser);
+        when(queryGetter.getRegisterUser(any(), anyString(),
+                anyString(), anyString())).thenReturn(registerUser);
         when(queryGetter.getVerifyLogin(any(), anyString(), anyString())).thenReturn(verifyLogin);
     }
 

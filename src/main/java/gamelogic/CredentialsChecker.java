@@ -31,7 +31,8 @@ public class CredentialsChecker {
         if (username.equals("") || password.equals("")) {
             return "empty";
         }
-        if (queryGetter.getVerifyLogin(this.adapter.conn, username, password).execute(adapter.conn)) {
+        if (queryGetter.getVerifyLogin(this.adapter.conn, username, password)
+                .execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";
@@ -58,7 +59,8 @@ public class CredentialsChecker {
         if (!password.equals(passwordAgain)) {
             return "passwordsNotMatching";
         }
-        if (queryGetter.getRegisterUser(this.adapter.conn, username, password, email).execute(adapter.conn)) {
+        if (queryGetter.getRegisterUser(this.adapter.conn, username, password, email)
+                .execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";

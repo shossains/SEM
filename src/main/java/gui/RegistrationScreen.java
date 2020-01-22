@@ -105,7 +105,8 @@ public class RegistrationScreen implements Screen {
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
 
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter(), new QueryGetter());
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this,
+                new Adapter(), new QueryGetter());
         String result = credentialsChecker.checkRegisterCredentials(username, password,
                 email, passwordAgain);
 

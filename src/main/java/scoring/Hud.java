@@ -34,23 +34,19 @@ public class Hud implements Disposable, HudInterface {
      * @param spriteBatch spriteBatch used by the game.
      */
     public Hud(SpriteBatch spriteBatch, float width, float height) {
-        Viewport viewport;
-        Table table;
-        BitmapFont font;
-        int score1;
-        int score2;
-
         gameTimer = 300;
         timeCount = 0;
-        score1 = 0;
-        score2 = 0;
 
+        Viewport viewport;
         viewport = new FitViewport(width,
                 height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
+
+        BitmapFont font;
         font = new BitmapFont();
         font.getData().setScale(2, 2);
 
+        Table table;
         table = new Table();
         table.top();
         table.setFillParent(true);
@@ -59,6 +55,8 @@ public class Hud implements Disposable, HudInterface {
         minutes = gameTimer / 60;
         scoreFormat = "%02d";
 
+        int score1 = 0;
+        int score2 = 0;
         timeLabel = new Label(String.format("%d:%d", minutes, seconds),
                 new Label.LabelStyle(font, Color.BLACK));
         scoreLabel1 = new Label(String.format(scoreFormat, score1),
