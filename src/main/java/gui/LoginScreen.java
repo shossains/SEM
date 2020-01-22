@@ -16,15 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
-import database.VerifyLogin;
 import gamelogic.CredentialsChecker;
 import gamelogic.QueryGetter;
 
-import java.sql.SQLException;
-
 /**
  * The meaning of this class is to create an graphical user interface
- * for loggin in. If the user already has an account, he/she can enter
+ * for logging in. If the user already has an account, he/she can enter
  * the username and password. If the data is correct, the user will be redirected
  * to the MainMenuScreen.
  */
@@ -36,11 +33,10 @@ public class LoginScreen implements Screen {
     private transient String password;
     private transient Image image;
 
-    final transient TextFieldFactory textFieldFactory;
     private transient AbstractButtonFactory buttonFactory;
 
-    final transient TextField usernameTextField;
-    final transient TextField passwordTextField;
+    transient TextField usernameTextField;
+    transient TextField passwordTextField;
 
     private transient DialogFactory dialogFactory;
 
@@ -57,9 +53,20 @@ public class LoginScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.dialogFactory = new DialogFactory(game, this);
 
-        textFieldFactory = new TextFieldFactory(this.game, this);
+        createTextFields();
+
+        addImage("assets/air3.png");
+
+        buttonFactory = new TextButtonFactory(this.game, this);
+        addExitButton();
+
+        addDoneButton();
+
+    }
+
+    private void createTextFields() {
+        TextFieldFactory textFieldFactory = new TextFieldFactory(this.game, this);
         usernameTextField = textFieldFactory.createTextField();
         passwordTextField = textFieldFactory.createTextField();
         usernameTextField.setPosition(250,200);
@@ -69,13 +76,15 @@ public class LoginScreen implements Screen {
 
         stage.addActor(usernameTextField);
         stage.addActor(passwordTextField);
+    }
 
-        image = new Image(new Texture("assets/air3.png"));
+    private void addImage(String path) {
+        image = new Image(new Texture(path));
         stage.addActor(image);
 
-        buttonFactory = new TextButtonFactory(this.game, this);
-        Button exit = buttonFactory.createTransButton("Exit!", "LoginScreen");
-        exit.setPosition(900, 600);
+    }
+
+    private void addDoneButton() {
         Button button = buttonFactory.createButton("Done!");
         button.setPosition(100, 300);
         button.addListener(
@@ -87,9 +96,13 @@ public class LoginScreen implements Screen {
                 });
 
         stage.addActor(button);
-        stage.addActor(exit);
     }
 
+    private void addExitButton() {
+        Button exit = buttonFactory.createTransButton("Exit!", "LoginScreen");
+        exit.setPosition(900, 600);
+        stage.addActor(exit);
+    }
     /**
      * Method that checks if a user already has an account.
      * Given an username and a password, this method
@@ -101,7 +114,7 @@ public class LoginScreen implements Screen {
     private void submitCredentials() {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
-
+        dialogFactory = new DialogFactory(game, this);
         CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter(), new QueryGetter());
         String response = credentialsChecker.checkLoginCredentials(username, password);
 
