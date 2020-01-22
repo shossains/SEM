@@ -154,7 +154,7 @@ public class RegistrationScreen implements Screen {
     }
 
     /**
-     * Method that handles spriteBatch logic
+     * Method that handles spriteBatch logic.
      */
     private void drawSpriteBatch() {
         game.spriteBatch.begin();
