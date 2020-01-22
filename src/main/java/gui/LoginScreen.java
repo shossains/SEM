@@ -167,10 +167,18 @@ public class LoginScreen implements Screen {
         if (enterPressed) {
             submitCredentials();
         }
+        draw();
+    }
+
+    private void draw() {
         Gdx.gl.glClearColor((float)1, (float)204 / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        drawSpriteBatch();
+    }
+
+    private void drawSpriteBatch() {
         game.spriteBatch.begin();
         game.font.setColor(Color.ROYAL);
         game.font.draw(game.spriteBatch, "username", 130, 225);
