@@ -2,34 +2,21 @@ package gamelogic;
 
 import com.badlogic.gdx.Screen;
 import database.Adapter;
-import database.RegisterUser;
-import database.VerifyLogin;
 
 public class CredentialsChecker {
 
     transient Screen screen;
     private transient Adapter adapter;
-    private transient VerifyLogin verifyLogin;
-    private transient RegisterUser registerUser;
+    private transient QueryGetter queryGetter;
 
     /**
      * Constructor for the credentials checker class.
      * @param screen the screen that is currently on.
      */
-    public CredentialsChecker(Screen screen, Adapter adapter, VerifyLogin verifyLogin) {
+    public CredentialsChecker(Screen screen, Adapter adapter, QueryGetter queryGetter) {
         this.screen = screen;
         this.adapter = adapter;
-        this.verifyLogin = verifyLogin;
-    }
-
-    /**
-     * Constructor for the credentials checker class.
-     * @param screen the screen that is currently on.
-     */
-    public CredentialsChecker(Screen screen, Adapter adapter, RegisterUser registerUser) {
-        this.screen = screen;
-        this.adapter = adapter;
-        this.registerUser = registerUser;
+        this.queryGetter = queryGetter;
     }
 
     /**
@@ -44,7 +31,7 @@ public class CredentialsChecker {
         if (username.equals("") || password.equals("")) {
             return "empty";
         }
-        if (verifyLogin.execute(adapter.conn)) {
+        if (queryGetter.getVerifyLogin(this.adapter.conn, username, password).execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";
@@ -71,7 +58,7 @@ public class CredentialsChecker {
         if (!password.equals(passwordAgain)) {
             return "passwordsNotMatching";
         }
-        if (registerUser.execute(adapter.conn)) {
+        if (queryGetter.getRegisterUser(this.adapter.conn, username, password, email).execute(adapter.conn)) {
             return "correct";
         } else {
             return "incorrect";

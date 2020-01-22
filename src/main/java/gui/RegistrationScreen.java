@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
 import database.RegisterUser;
 import gamelogic.CredentialsChecker;
+import gamelogic.QueryGetter;
 
 /**
  * The purpose of this class is to create a graphical user interface
@@ -104,9 +105,7 @@ public class RegistrationScreen implements Screen {
         email = emailTextField.getText();
         passwordAgain = passwordAgainTextField.getText();
 
-        Adapter adapter = new Adapter();
-        RegisterUser registerUser = new RegisterUser(adapter.conn, username, password, email);
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, registerUser);
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter(), new QueryGetter());
         String result = credentialsChecker.checkRegisterCredentials(username, password,
                 email, passwordAgain);
 

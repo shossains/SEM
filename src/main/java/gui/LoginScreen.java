@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import database.Adapter;
 import database.VerifyLogin;
 import gamelogic.CredentialsChecker;
+import gamelogic.QueryGetter;
 
 import java.sql.SQLException;
 
@@ -101,9 +102,7 @@ public class LoginScreen implements Screen {
         username = usernameTextField.getText();
         password = passwordTextField.getText();
 
-        Adapter adapter = new Adapter();
-        VerifyLogin verifyLogin = new VerifyLogin(adapter.conn, username, password);
-        CredentialsChecker credentialsChecker = new CredentialsChecker(this, adapter, verifyLogin);
+        CredentialsChecker credentialsChecker = new CredentialsChecker(this, new Adapter(), new QueryGetter());
         String response = credentialsChecker.checkLoginCredentials(username, password);
 
         switch (response) {
