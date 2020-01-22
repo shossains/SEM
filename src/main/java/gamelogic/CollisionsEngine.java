@@ -11,6 +11,9 @@ public class CollisionsEngine {
     private transient float coefficientr;
     private transient Sound sound;
 
+    PaddleCollisionHandler pach;
+    PuckCollisionHandler puch;
+
     /**
      * Constructor.
      * The Collisions engine is the physics engine behind the
@@ -23,6 +26,9 @@ public class CollisionsEngine {
         this.coefficientr = e;
         this.sound = sound;
         this.puckWalle = puckWalle;
+
+        pach = new PaddleCollisionHandler();
+        puch = new PuckCollisionHandler(sound, puckWalle);
     }
 
     /**
@@ -60,7 +66,7 @@ public class CollisionsEngine {
      * @param board The board.
      */
     public void collide(Puck puck, Board board) {
-        fixPuckPosition(puck, board);
+        puch.fixPuckPosition(puck, board);
     }
 
     /**
@@ -69,7 +75,7 @@ public class CollisionsEngine {
      * @param board The board.
      */
     public void collide(Paddle paddle, Board board) {
-        fixPaddlePosition(paddle, board);
+        pach.fixPaddlePosition(paddle, board);
     }
 
     /**
@@ -84,91 +90,91 @@ public class CollisionsEngine {
         }
     }
 
-    /**
-     * Method to fix x and y position of the puck and change its speed if necessary.
-     * @param puck The puck.
-     * @param board The board.
-     */
-    public void fixPuckPosition(Puck puck, Board board) {
-        fixPuckXPosition(puck, board);
-        fixPuckYPosition(puck, board);
-    }
+//    /**
+//     * Method to fix x and y position of the puck and change its speed if necessary.
+//     * @param puck The puck.
+//     * @param board The board.
+//     */
+//    public void fixPuckPosition(Puck puck, Board board) {
+//        fixPuckXPosition(puck, board);
+//        fixPuckYPosition(puck, board);
+//    }
 
-    /**
-     * Method to fix x and y position of the paddle.
-     * @param paddle The paddle.
-     * @param board The puck.
-     */
-    public void fixPaddlePosition(Paddle paddle, Board board) {
-        fixPaddleXposition(paddle, board);
-        fixPaddleYPosition(paddle, board);
-    }
+//    /**
+//     * Method to fix x and y position of the paddle.
+//     * @param paddle The paddle.
+//     * @param board The puck.
+//     */
+//    public void fixPaddlePosition(Paddle paddle, Board board) {
+//        fixPaddleXposition(paddle, board);
+//        fixPaddleYPosition(paddle, board);
+//    }
 
-    /**
-     * Method to fix the position of the puck in the x axis if it is out of bounds.
-     * @param puck The puck.
-     * @param board The board with which it can collide.
-     */
-    public void fixPuckXPosition(Puck puck, Board board) {
-        if (puck.x - puck.radius < 0) {
-            puck.x = 0 + puck.radius;
-            puck.setXspeed(- puck.getXspeed() * puckWalle);
-            sound.play();
-        }
-        if (puck.x > board.width - puck.radius) {
-            puck.x = board.width - puck.radius;
-            puck.setXspeed(- puck.getXspeed() * puckWalle);
-            sound.play();
-        }
-    }
+//    /**
+//     * Method to fix the position of the puck in the x axis if it is out of bounds.
+//     * @param puck The puck.
+//     * @param board The board with which it can collide.
+//     */
+//    public void fixPuckXPosition(Puck puck, Board board) {
+//        if (puck.x - puck.radius < 0) {
+//            puck.x = 0 + puck.radius;
+//            puck.setXspeed(- puck.getXspeed() * puckWalle);
+//            sound.play();
+//        }
+//        if (puck.x > board.width - puck.radius) {
+//            puck.x = board.width - puck.radius;
+//            puck.setXspeed(- puck.getXspeed() * puckWalle);
+//            sound.play();
+//        }
+//    }
+//
+//    /**
+//     * Method to fix the position of the puck in the y axis if it is out of bounds.
+//     * @param puck The puck.
+//     * @param board The board with which it can collide.
+//     */
+//    public void fixPuckYPosition(Puck puck, Board board) {
+//        if (puck.y - puck.radius < 0) {
+//            puck.y = 0 + puck.radius;
+//            puck.setYspeed(- puck.getYspeed() * puckWalle);
+//            sound.play();
+//        }
+//        if (puck.y > board.height - puck.radius) {
+//            puck.y = board.height - puck.radius;
+//            puck.setYspeed(- puck.getYspeed() * puckWalle);
+//            sound.play();
+//        }
+//    }
 
-    /**
-     * Method to fix the position of the puck in the y axis if it is out of bounds.
-     * @param puck The puck.
-     * @param board The board with which it can collide.
-     */
-    public void fixPuckYPosition(Puck puck, Board board) {
-        if (puck.y - puck.radius < 0) {
-            puck.y = 0 + puck.radius;
-            puck.setYspeed(- puck.getYspeed() * puckWalle);
-            sound.play();
-        }
-        if (puck.y > board.height - puck.radius) {
-            puck.y = board.height - puck.radius;
-            puck.setYspeed(- puck.getYspeed() * puckWalle);
-            sound.play();
-        }
-    }
-
-    /**
-     * Method to fix the position of the paddle in the x axis if it is out of bounds.
-     * @param paddle The paddle.
-     * @param board The board with which it can collide.
-     */
-    public void fixPaddleXposition(Paddle paddle, Board board) {
-
-        if (paddle.x - paddle.radius < paddle.xlower) {
-            paddle.x = paddle.xlower + paddle.radius;
-        }
-        if (paddle.x > paddle.xupper - paddle.radius) {
-            paddle.x = paddle.xupper - paddle.radius;
-        }
-
-    }
-
-    /**
-     * Method to fix the position of the puck in the y axis if it is out of bounds.
-     * @param paddle The puck.
-     * @param board The board with which it can collide.
-     */
-    public void fixPaddleYPosition(Paddle paddle, Board board) {
-        if (paddle.y - paddle.radius < 0) {
-            paddle.y = 0 + paddle.radius;
-        }
-        if (paddle.y > board.height - paddle.radius) {
-            paddle.y = board.height - paddle.radius;
-        }
-    }
+//    /**
+//     * Method to fix the position of the paddle in the x axis if it is out of bounds.
+//     * @param paddle The paddle.
+//     * @param board The board with which it can collide.
+//     */
+//    public void fixPaddleXposition(Paddle paddle, Board board) {
+//
+//        if (paddle.x - paddle.radius < paddle.xlower) {
+//            paddle.x = paddle.xlower + paddle.radius;
+//        }
+//        if (paddle.x > paddle.xupper - paddle.radius) {
+//            paddle.x = paddle.xupper - paddle.radius;
+//        }
+//
+//    }
+//
+//    /**
+//     * Method to fix the position of the puck in the y axis if it is out of bounds.
+//     * @param paddle The puck.
+//     * @param board The board with which it can collide.
+//     */
+//    public void fixPaddleYPosition(Paddle paddle, Board board) {
+//        if (paddle.y - paddle.radius < 0) {
+//            paddle.y = 0 + paddle.radius;
+//        }
+//        if (paddle.y > board.height - paddle.radius) {
+//            paddle.y = board.height - paddle.radius;
+//        }
+//    }
 
     /**
      * Method that calculates the distance between the circles.
