@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
         //we can change the resolution to whatever is appropriate later
         camera.setToOrtho(false, WIDTH, HEIGHT);
 
-        hud = new Hud(game.spriteBatch);
+        hud = new Hud(game.spriteBatch, WIDTH, HEIGHT);
 
         LocalGameFactory gameFactory = new LocalGameFactory();
         gameContainer = gameFactory.createGameContainer(scoreSound, collisionSound, this, hud);
@@ -154,8 +154,8 @@ public class GameScreen implements Screen {
 
         game.spriteBatch.end();
         // Draw the hud on top of the board.
-        game.spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        game.spriteBatch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        hud.getStage().draw();
     }
 
     @Override
