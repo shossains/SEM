@@ -44,8 +44,6 @@ public class RegistrationScreen implements Screen {
     final transient TextField emailTextField;
     final transient TextField passwordAgainTextField;
 
-    private transient boolean mutePressed;
-
     /**
      * Constructor for registration screen.
      * Initialize every object used in this scene.
@@ -157,7 +155,7 @@ public class RegistrationScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
+        boolean mutePressed = Gdx.input.isKeyJustPressed(Input.Keys.M);
         if (mutePressed) {
             game.muteUnmute();
         }
