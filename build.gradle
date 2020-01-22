@@ -58,9 +58,9 @@ jacocoTestReport {
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
-    implementation 'org.postgresql:postgresql:42.2.8.jre7'
     testCompile "org.mockito:mockito-core:2.+"
 
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
     compile group: 'com.badlogicgames.gdx', name: 'gdx', version: '1.9.10'
     compile group: 'com.badlogicgames.gdx', name: 'gdx-box2d', version: '1.9.10'
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.10"

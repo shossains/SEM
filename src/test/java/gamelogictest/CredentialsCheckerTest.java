@@ -113,5 +113,5 @@ public class CredentialsCheckerTest {
         when(registerUser.execute(any())).thenReturn(true);
         assertEquals(checkerRegister.checkRegisterCredentials(randomNumber + "", pass,
                 randomNumber + "", pass), "correct");
-    }
+    }*/
 }
