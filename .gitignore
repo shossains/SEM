@@ -14,4 +14,4 @@ desktop/build/**
 .idea/**
 
 core/build/
-codemr/
+/codemr
