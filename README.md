@@ -10,7 +10,6 @@ We are using java 13, so please make sure that you are using this version
 Script to create the tables for the database can be found under /doc/databaseScript/databaseScript.md
 
 ## Database credentails
-The credentials for the database can be found under the following link:
-https://drive.google.com/file/d/124rb00SqQfP7IaTsVE1L3Ia9ryzbWCyW/view?usp=sharing
+The credentials for the database can be found <b>[here](https://drive.google.com/file/d/124rb00SqQfP7IaTsVE1L3Ia9ryzbWCyW/view?usp=sharing)</b>
 
-This file should be placed in the main directory of the repository (next to the build.gradle and README.md for example) 
+This file should be placed in the main directory of the repository (next to the `build.gradle` and `README.md` file for example) 
